@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v1.0.0...react-mfe-shell-v2.0.0) (2025-08-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* Repository identity changed from template to production MFE shell
+
+### Features
+
+* add comprehensive code analysis system with scc integration ([b3fe166](https://github.com/jonmatum/react-mfe-shell/commit/b3fe166048f6c0bf2fb20bf736d47a0c5b016716))
+* rebrand as React MFE Shell and add comprehensive GitHub configuration ([61108cb](https://github.com/jonmatum/react-mfe-shell/commit/61108cb3d568ccb0361ded4ca311b601d99e0098))
+
+
+### Bug Fixes
+
+* **ci:** add issues:write permission for release-please label creation ([a41e26f](https://github.com/jonmatum/react-mfe-shell/commit/a41e26fd41852c7a3e2fc4278ebf1740e05139d9))
+
+
+### Code Refactoring
+
+* remove emojis and add GitHub wiki sync functionality ([82f92c5](https://github.com/jonmatum/react-mfe-shell/commit/82f92c5aa2eeeca1dddf64615a3b81f202cd53ae))
+
 ## [1.0.0] - 2025-08-15
 
 ### Added
