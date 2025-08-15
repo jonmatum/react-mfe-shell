@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v2.0.0...react-mfe-shell-v2.1.0) (2025-08-15)
+
+
+### Features
+
+* enable npm publishing and fix repository URLs ([7e975a4](https://github.com/jonmatum/react-mfe-shell/commit/7e975a44d1d4dffaa08122aa7d4cbf372d9811ef))
+
+
+### Bug Fixes
+
+* **ci:** use correct NODE_AUTH_TOKEN secret name for npm publishing ([13abdf9](https://github.com/jonmatum/react-mfe-shell/commit/13abdf94821b97378c30d4cbcfa4d8b778f2c1e3))
+
 ## [2.0.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v1.0.0...react-mfe-shell-v2.0.0) (2025-08-15)
 
 
