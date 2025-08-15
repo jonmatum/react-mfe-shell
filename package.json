@@ -56,6 +56,11 @@
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest --watch",
+    "analyze": "node scripts/code-analysis.js",
+    "analyze:detailed": "node scripts/code-analysis.js --detailed",
+    "analyze:complexity": "node scripts/code-analysis.js --complexity",
+    "analyze:json": "node scripts/code-analysis.js --json",
+    "analyze:bash": "./scripts/code-analysis.sh",
     "prepare": "npm run build"
   },
   "dependencies": {
