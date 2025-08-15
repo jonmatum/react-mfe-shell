@@ -52,6 +52,14 @@ jobs:
           # Install tsup dependencies explicitly
           npm install tsup esbuild --force
 
+      - name: Install scc for code analysis
+        run: |
+          # Install scc (Source Code Counter) for code analysis
+          wget https://github.com/boyter/scc/releases/latest/download/scc-3.3.5-x86_64-unknown-linux.zip
+          unzip scc-3.3.5-x86_64-unknown-linux.zip
+          sudo mv scc /usr/local/bin/
+          scc --version
+
       - name: Run tests
         run: npm run test:run
 
