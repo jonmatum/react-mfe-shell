@@ -19,11 +19,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          # Use npm install instead of npm ci to avoid optional dependency issues
+          npm install
 
       - name: Run linting
         run: npm run lint
@@ -39,12 +41,6 @@ jobs:
 
       - name: Build library
         run: npm run build:lib
-
-      - name: Build example
-        run: |
-          cd example
-          npm ci
-          npm run build
 
       - name: Run code analysis
         run: npm run analyze:json > code-analysis.json

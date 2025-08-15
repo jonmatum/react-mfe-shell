@@ -37,12 +37,23 @@ src/components/
 
 ## Quick Start
 
+### Prerequisites
+
+- Node.js 22.x LTS (jod) or higher
+- npm 10.x or higher
+
 ### Installation
 
 ```bash
 # Clone the repository
 git clone https://github.com/jonmatum/react-mfe-shell.git
 cd react-mfe-shell
+
+# Setup Node.js (if using nvm)
+nvm use
+
+# Or run the setup script
+./scripts/setup-node.sh
 
 # Install dependencies
 npm install
