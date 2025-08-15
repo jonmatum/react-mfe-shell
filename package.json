@@ -1,13 +1,15 @@
 {
-  "name": "react-mfe-template",
+  "name": "@jonmatum/react-mfe-shell",
   "version": "1.0.0",
   "type": "module",
-  "description": "Production-ready React micro frontend template with atomic design system, 95%+ quality score, and zero configuration setup",
+  "description": "Production-ready React micro frontend shell with atomic design system, shared components, and utilities for building scalable MFE applications",
   "keywords": [
     "react",
     "micro-frontend",
     "mfe",
-    "template",
+    "shell",
+    "component-library",
+    "design-system",
     "typescript",
     "tailwind",
     "atomic-design",

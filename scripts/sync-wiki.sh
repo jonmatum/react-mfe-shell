@@ -13,7 +13,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-REPO_URL="https://github.com/jonmatum/react-mfe-template.wiki.git"
+REPO_URL="https://github.com/jonmatum/react-mfe-shell.wiki.git"
 WIKI_DIR="temp-wiki"
 
 echo -e "${BLUE}Syncing documentation to GitHub Wiki${NC}"
@@ -73,7 +73,7 @@ done
 cat > "$WIKI_DIR/Documentation-Index.md" << EOF
 # Documentation Index
 
-Welcome to the React MFE Template documentation! This wiki contains comprehensive guides and references for using and extending the template.
+Welcome to the React MFE Shell documentation! This wiki contains comprehensive guides and references for using and extending the shell.
 
 ## Main Documentation
 

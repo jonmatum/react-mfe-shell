@@ -1,75 +1,95 @@
-# React MFE Template
+# React MFE Shell
 
-A production-ready template for building micro frontend (MFE) applications with React, TypeScript, and modern tooling. This template provides essential components, utilities, and patterns to quickly scaffold new MFE projects.
+A production-ready micro frontend (MFE) app shell built with React, TypeScript, and modern tooling. This shell provides the foundational architecture, shared components, and utilities for building scalable micro frontend applications.
 
-## Features
+## Overview
 
-- **Atomic Design**: Components organized as Atoms → Molecules → Organisms
-- **Design System**: Comprehensive design tokens with WCAG AA compliance
-- **Theme Support**: Light, dark, and system theme modes
-- **Modern Stack**: React 18, TypeScript, Vite, Tailwind CSS
-- **Testing Ready**: Vitest configuration with 90%+ coverage thresholds
-- **Build Optimized**: tsup for library builds, Vite for development
-- **Developer Experience**: ESLint, Prettier, and comprehensive tooling
-- **Accessibility**: ARIA labels, keyboard navigation, semantic HTML
+The React MFE Shell serves as the core foundation for micro frontend architectures, providing:
+
+- **Shared Component Library**: Atomic design system with reusable components
+- **Design System**: Comprehensive design tokens with WCAG AA compliance  
+- **Theme Management**: Light, dark, and system theme modes
+- **State Management**: Global settings and context providers
+- **Modern Tooling**: React 18, TypeScript, Vite, Tailwind CSS
+- **Quality Assurance**: 90%+ test coverage, comprehensive linting, code analysis
+- **Developer Experience**: Hot reload, type safety, automated formatting
+
+## Architecture
+
+This MFE shell follows atomic design principles and provides the foundation for multiple micro frontend applications to share common components and utilities.
+
+### Component Architecture
+
+```
+src/components/
+├── atoms/           # Basic building blocks (Button, Input, etc.)
+├── molecules/       # Simple combinations (Modal, SearchBox, etc.)
+└── organisms/       # Complex combinations (Navigation, Layout, etc.)
+```
+
+### Core Features
+
+- **Settings Management**: Global theme and layout preferences
+- **Component Library**: Production-ready, accessible components
+- **Design Tokens**: Consistent styling across all micro frontends
+- **Utility Functions**: Shared helpers for common operations
+- **Type Definitions**: Comprehensive TypeScript support
 
 ## Quick Start
 
-### Using this template
+### Installation
 
 ```bash
-# Clone the template
-git clone https://github.com/jonmatum/react-mfe-template.git my-mfe-project
-cd my-mfe-project
+# Clone the repository
+git clone https://github.com/jonmatum/react-mfe-shell.git
+cd react-mfe-shell
 
 # Install dependencies
 npm install
 
-# Start development
+# Start development server
 npm run dev
-
-# Build for production
-npm run build
 ```
 
-### Basic Usage
+### Using in Your MFE
 
 ```tsx
 import React from 'react';
-import { SettingsProvider, Button, Modal, useSettings } from 'my-mfe-library';
-import 'my-mfe-library/dist/style.css';
+import { SettingsProvider, Button, Modal, useSettings } from '@jonmatum/react-mfe-shell';
+import '@jonmatum/react-mfe-shell/dist/style.css';
 
 function App() {
   return (
     <SettingsProvider>
-      <MyComponent />
+      <MyMicroFrontend />
     </SettingsProvider>
   );
 }
 
-function MyComponent() {
+function MyMicroFrontend() {
   const { settings, updateSettings } = useSettings();
   
   return (
     <div className="p-4">
-      <Button onClick={() => console.log('Clicked!')}>
-        Hello MFE!
+      <Button 
+        variant="primary"
+        onClick={() => console.log('MFE Shell Button clicked!')}
+      >
+        Shared Shell Component
       </Button>
     </div>
   );
 }
 ```
 
-## What's Included
+## Available Components
 
-### Components
-
-#### Atoms
+### Atoms
 - **Button**: Configurable button with variants (primary, secondary, ghost)
 - **LoadingSpinner**: Animated loading indicator with customizable sizes
 - **Switch**: Toggle switch for settings and preferences
 
-#### Molecules
+### Molecules
 - **Modal**: Accessible modal dialog with backdrop and keyboard support
 
 ### Contexts
@@ -81,43 +101,121 @@ function MyComponent() {
 - **theme**: Theme management utilities
 - **tokens**: Comprehensive design token system
 
+## Development
+
+### Available Scripts
+
+```bash
+# Development
+npm run dev              # Start development server
+npm run build           # Build for production
+npm run build:lib       # Build library for distribution
+
+# Quality Assurance
+npm run lint            # Run ESLint
+npm run lint:fix        # Fix ESLint issues
+npm run type-check      # TypeScript type checking
+npm run test            # Run tests
+npm run test:coverage   # Run tests with coverage
+npm run analyze         # Run code analysis
+
+# Code Analysis
+npm run analyze:detailed    # Detailed file-by-file analysis
+npm run analyze:complexity  # Focus on code complexity
+npm run analyze:json       # Export analysis as JSON
+
+# Formatting
+npm run format          # Format with Prettier
+npm run format:check    # Check formatting
+
+# Documentation
+npm run wiki:sync       # Sync documentation to GitHub Wiki
+```
+
+### Code Quality
+
+This project maintains high code quality standards:
+
+- **Test Coverage**: 90%+ across all components
+- **Type Safety**: Strict TypeScript configuration
+- **Code Analysis**: Automated complexity and quality metrics
+- **Accessibility**: WCAG AA compliance
+- **Performance**: Optimized bundle size and runtime performance
+
+### Adding New Components
+
+When adding components to the shell, follow the atomic design principles:
+
+1. **Atoms**: Basic UI elements that can't be broken down further
+2. **Molecules**: Simple combinations of atoms
+3. **Organisms**: Complex combinations that form distinct sections
+
+```tsx
+// Example: Adding a new atom
+// src/components/atoms/Badge.tsx
+import React from 'react';
+import { BaseComponentProps } from '../../types';
+import { classNames } from '../../utils';
+
+interface BadgeProps extends BaseComponentProps {
+  variant?: 'default' | 'success' | 'warning' | 'error';
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const Badge: React.FC<BadgeProps> = ({ 
+  variant = 'default',
+  size = 'md',
+  className,
+  children,
+  ...props 
+}) => {
+  return (
+    <span
+      className={classNames(
+        'inline-flex items-center rounded-full font-medium',
+        {
+          'px-2 py-1 text-xs': size === 'sm',
+          'px-3 py-1 text-sm': size === 'md',
+          'px-4 py-2 text-base': size === 'lg',
+        },
+        {
+          'bg-gray-100 text-gray-800': variant === 'default',
+          'bg-green-100 text-green-800': variant === 'success',
+          'bg-yellow-100 text-yellow-800': variant === 'warning',
+          'bg-red-100 text-red-800': variant === 'error',
+        },
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </span>
+  );
+};
+
+export default Badge;
+```
+
+Don't forget to export new components in `src/index.ts`:
+
+```tsx
+export { default as Badge } from './components/atoms/Badge';
+```
+
+## Design System
+
+The shell includes a comprehensive design system with:
+
 ### Design Tokens
 - **Colors**: Primary, secondary, and semantic color palettes
-- **Typography**: Font families, sizes, and weights
+- **Typography**: Font families, sizes, and weights  
 - **Spacing**: Consistent spacing scale
 - **Shadows**: Elevation system
 - **Breakpoints**: Responsive design breakpoints
 
-## Project Structure
-
-```
-src/
-├── components/
-│   ├── atoms/           # Basic building blocks
-│   │   ├── Button.tsx
-│   │   ├── LoadingSpinner.tsx
-│   │   └── Switch.tsx
-│   ├── molecules/       # Simple combinations
-│   │   └── Modal.tsx
-│   └── organisms/       # Complex combinations (add as needed)
-├── contexts/            # React contexts
-│   └── SettingsContext.tsx
-├── types/              # TypeScript definitions
-│   └── index.ts
-├── utils/              # Utility functions
-│   ├── index.ts
-│   └── tokens.ts
-├── styles/             # CSS files
-│   └── index.css
-└── index.ts            # Main exports
-```
-
-## Theming
-
-The template includes a comprehensive theming system:
-
+### Theme Support
 ```tsx
-import { useSettings } from 'my-mfe-library';
+import { useSettings } from '@jonmatum/react-mfe-shell';
 
 function ThemeToggle() {
   const { settings, updateSettings } = useSettings();
@@ -134,196 +232,50 @@ function ThemeToggle() {
 }
 ```
 
-### Available Themes
+Available themes:
 - `light`: Light theme
 - `dark`: Dark theme  
 - `system`: Follows system preference
 
-## Development
+## Testing
 
-### Available Scripts
-
-```bash
-# Development
-npm run dev              # Start development server
-npm run build           # Build for production
-npm run build:lib       # Build library only
-
-# Quality
-npm run lint            # Run ESLint
-npm run lint:fix        # Fix ESLint issues
-npm run type-check      # TypeScript type checking
-npm run test            # Run tests
-npm run test:coverage   # Run tests with coverage
-
-# Formatting
-npm run format          # Format with Prettier
-npm run format:check    # Check formatting
-```
-
-### Adding New Components
-
-1. **Atoms**: Basic UI elements (buttons, inputs, icons)
-2. **Molecules**: Simple combinations (search box, card header)
-3. **Organisms**: Complex combinations (navigation, forms)
+The shell uses Vitest for testing with comprehensive coverage requirements:
 
 ```tsx
-// Example: Adding a new atom
-// src/components/atoms/Input.tsx
-import React from 'react';
-import { BaseComponentProps } from '../../types';
-import { classNames } from '../../utils';
-
-interface InputProps extends BaseComponentProps {
-  type?: string;
-  placeholder?: string;
-  value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-const Input: React.FC<InputProps> = ({ className, ...props }) => {
-  return (
-    <input
-      className={classNames(
-        'block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500',
-        className
-      )}
-      {...props}
-    />
-  );
-};
-
-export default Input;
-```
-
-Don't forget to export new components in `src/index.ts`:
-
-```tsx
-export { default as Input } from './components/atoms/Input';
-```
-
-### Building Molecules and Organisms
-
-Use atoms to build more complex components:
-
-```tsx
-// src/components/molecules/SearchBox.tsx
-import React, { useState } from 'react';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import Input from '../atoms/Input';
-import Button from '../atoms/Button';
-
-interface SearchBoxProps {
-  onSearch: (query: string) => void;
-  placeholder?: string;
-}
-
-const SearchBox: React.FC<SearchBoxProps> = ({
-  onSearch,
-  placeholder = 'Search...'
-}) => {
-  const [query, setQuery] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSearch(query);
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="flex gap-2">
-      <Input
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder={placeholder}
-        className="flex-1"
-      />
-      <Button type="submit" variant="primary">
-        <MagnifyingGlassIcon className="h-5 w-5" />
-      </Button>
-    </form>
-  );
-};
-
-export default SearchBox;
-```
-
-## Styling Guidelines
-
-### Using Design Tokens
-
-```tsx
-import { colors, spacing, typography } from 'your-mfe-project';
-
-// Use tokens in your components
-const customStyles = {
-  backgroundColor: colors.primary[500],
-  padding: spacing[4],
-  fontSize: typography.fontSize.base[0],
-};
-```
-
-### Tailwind CSS Classes
-
-```tsx
-// Prefer utility classes
-<div className="bg-blue-500 p-4 text-base rounded-md shadow-sm">
-  Content
-</div>
-
-// Use design tokens for consistency
-<div className="bg-primary-500 p-4 text-base rounded-md shadow-sm">
-  Content
-</div>
-```
-
-## Testing Strategy
-
-### Component Testing
-
-```tsx
-// Test component behavior
-describe('MyComponent', () => {
+// Example component test
+describe('Button', () => {
   it('renders correctly', () => {
-    render(<MyComponent />);
+    render(<Button>Test Button</Button>);
     expect(screen.getByRole('button')).toBeInTheDocument();
   });
 
-  it('handles user interactions', () => {
+  it('applies variant styles', () => {
+    render(<Button variant="primary">Primary Button</Button>);
+    expect(screen.getByRole('button')).toHaveClass('bg-blue-600');
+  });
+
+  it('handles click events', () => {
     const handleClick = vi.fn();
-    render(<MyComponent onClick={handleClick} />);
+    render(<Button onClick={handleClick}>Click Me</Button>);
     
     fireEvent.click(screen.getByRole('button'));
     expect(handleClick).toHaveBeenCalled();
-  });
-
-  it('applies custom className', () => {
-    render(<MyComponent className="custom-class" />);
-    expect(screen.getByRole('button')).toHaveClass('custom-class');
   });
 });
 ```
 
 ### Coverage Requirements
-
-The template enforces 90%+ coverage thresholds:
 - Statements: 90%
 - Branches: 90%
 - Functions: 90%
 - Lines: 90%
 
-## Building and Publishing
+## Building and Distribution
 
-### Development Build
-
-```bash
-npm run build:watch  # Watch mode for development
-```
-
-### Production Build
+### Library Build
 
 ```bash
-npm run build       # Full production build
-npm run build:lib   # Library build only
+npm run build:lib  # Creates dist/ with ESM and CJS builds
 ```
 
 ### Publishing to npm
@@ -336,23 +288,59 @@ npm version patch|minor|major
 npm publish
 ```
 
+## Micro Frontend Integration
+
+This shell is designed to be consumed by multiple micro frontend applications:
+
+### Installation in MFE Apps
+
+```bash
+npm install @jonmatum/react-mfe-shell
+```
+
+### Usage Patterns
+
+```tsx
+// In your micro frontend application
+import { 
+  SettingsProvider, 
+  Button, 
+  Modal, 
+  useSettings,
+  tokens 
+} from '@jonmatum/react-mfe-shell';
+
+// Use shared components and utilities
+function MyMFEApp() {
+  return (
+    <SettingsProvider>
+      <div style={{ padding: tokens.spacing[4] }}>
+        <Button variant="primary">
+          Consistent Button Across MFEs
+        </Button>
+      </div>
+    </SettingsProvider>
+  );
+}
+```
+
 ## Configuration
 
 ### Environment Variables
 
-Create `.env` files for different environments:
-
 ```bash
 # .env.development
 VITE_API_URL=http://localhost:3001
+VITE_MFE_SHELL_DEBUG=true
 
-# .env.production
-VITE_API_URL=https://api.yourproject.com
+# .env.production  
+VITE_API_URL=https://api.yourapp.com
+VITE_MFE_SHELL_DEBUG=false
 ```
 
-### Customizing Build
+### Build Configuration
 
-Modify `tsup.config.ts` for build customization:
+Customize the build in `tsup.config.ts`:
 
 ```typescript
 export default defineConfig({
@@ -360,49 +348,38 @@ export default defineConfig({
   format: ['cjs', 'esm'],
   dts: true,
   sourcemap: true,
-  external: ['react', 'react-dom', '@heroicons/react'],
-  // Add your customizations
+  external: ['react', 'react-dom'],
+  // Shell-specific optimizations
 });
 ```
 
-## Deployment
-
-### GitHub Pages
-
-```bash
-# Build for production
-npm run build
-
-# Deploy to GitHub Pages (if configured)
-npm run deploy
-```
-
-### npm Package
-
-```bash
-# Ensure you're logged in to npm
-npm login
-
-# Publish the package
-npm publish
-```
-
-## Additional Resources
-
-- [React Documentation](https://reactjs.org/docs)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [Heroicons](https://heroicons.com/)
-- [Vitest Documentation](https://vitest.dev/)
-
 ## Contributing
 
-1. Follow the atomic design principles
-2. Write comprehensive tests
-3. Use TypeScript for all new code
-4. Follow the existing code style
-5. Update documentation as needed
+We welcome contributions to the MFE Shell! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+### Development Workflow
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes with tests
+4. Run quality checks: `npm run lint && npm run test && npm run analyze`
+5. Submit a pull request
+
+## Documentation
+
+- **[Code Analysis Guide](docs/CODE_ANALYSIS.md)**: Comprehensive code quality analysis
+- **[Implementation Guide](docs/IMPLEMENTATION_GUIDE.md)**: Detailed implementation instructions
+- **[GitHub Wiki](https://github.com/jonmatum/react-mfe-shell/wiki)**: Auto-synced documentation
 
 ## License
 
-This template is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+
+## Related Projects
+
+- **[MFE App Shell](https://github.com/jonmatum/mfe-appshell)**: Complete micro frontend application shell
+- **[React MFE Template](https://github.com/jonmatum/react-mfe-template)**: Template for creating new MFE projects
+
+---
+
+**Built with ❤️ for the micro frontend community**
