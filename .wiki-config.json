@@ -1,0 +1,52 @@
+{
+  "wiki": {
+    "repository": "https://github.com/jonmatum/react-mfe-template.wiki.git",
+    "branch": "master",
+    "sync": {
+      "enabled": true,
+      "auto_sync_on_push": true,
+      "include_sidebar": true,
+      "include_footer": false
+    },
+    "file_mappings": {
+      "README.md": "Home.md",
+      "docs/CODE_ANALYSIS.md": "Code-Analysis.md",
+      "docs/IMPLEMENTATION_GUIDE.md": "Implementation-Guide.md",
+      "docs/TEMPLATE_USAGE.md": "Template-Usage.md",
+      "docs/QUICK_START_EXAMPLE.md": "Quick-Start-Example.md"
+    },
+    "generated_files": {
+      "Documentation-Index.md": {
+        "type": "index",
+        "title": "Documentation Index",
+        "description": "Comprehensive guide index for the React MFE Template"
+      },
+      "_Sidebar.md": {
+        "type": "sidebar",
+        "sections": [
+          {
+            "title": "Getting Started",
+            "links": [
+              {"name": "Home", "file": "Home"},
+              {"name": "Template Usage", "file": "Template-Usage"},
+              {"name": "Quick Start", "file": "Quick-Start-Example"}
+            ]
+          },
+          {
+            "title": "Implementation",
+            "links": [
+              {"name": "Implementation Guide", "file": "Implementation-Guide"},
+              {"name": "Code Analysis", "file": "Code-Analysis"}
+            ]
+          },
+          {
+            "title": "Reference",
+            "links": [
+              {"name": "Documentation Index", "file": "Documentation-Index"}
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

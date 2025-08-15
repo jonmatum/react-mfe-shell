@@ -1,0 +1,146 @@
+name: Sync Documentation to Wiki
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'README.md'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  sync-wiki:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout wiki
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}.wiki
+          path: wiki
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Sync documentation files
+        run: |
+          # Create wiki directory if it doesn't exist
+          mkdir -p wiki
+          
+          # Copy main README as Home page
+          cp README.md wiki/Home.md
+          
+          # Copy all documentation files
+          cp docs/CODE_ANALYSIS.md wiki/Code-Analysis.md
+          cp docs/IMPLEMENTATION_GUIDE.md wiki/Implementation-Guide.md
+          cp docs/TEMPLATE_USAGE.md wiki/Template-Usage.md
+          cp docs/QUICK_START_EXAMPLE.md wiki/Quick-Start-Example.md
+          
+          # Create a comprehensive index page
+          cat > wiki/Documentation-Index.md << 'EOF'
+          # Documentation Index
+          
+          Welcome to the React MFE Template documentation! This wiki contains comprehensive guides and references for using and extending the template.
+          
+          ## Main Documentation
+          
+          - **[Home](Home)** - Project overview and quick start
+          - **[Template Usage](Template-Usage)** - How to use this template
+          - **[Implementation Guide](Implementation-Guide)** - Detailed implementation instructions
+          - **[Quick Start Example](Quick-Start-Example)** - Get started quickly
+          
+          ## Tools & Analysis
+          
+          - **[Code Analysis](Code-Analysis)** - Comprehensive code quality analysis tools
+          
+          ## Quick Links
+          
+          ### Getting Started
+          ```bash
+          # Clone and setup
+          git clone https://github.com/jonmatum/react-mfe-template.git my-project
+          cd my-project
+          npm install
+          npm run dev
+          ```
+          
+          ### Code Analysis
+          ```bash
+          # Analyze your code
+          npm run analyze
+          npm run analyze:detailed
+          npm run analyze:complexity
+          ```
+          
+          ### Development Commands
+          ```bash
+          npm run dev              # Start development
+          npm run build           # Build for production
+          npm run test            # Run tests
+          npm run lint            # Lint code
+          ```
+          
+          ## Additional Resources
+          
+          - [GitHub Repository](https://github.com/jonmatum/react-mfe-template)
+          - [Issues & Bug Reports](https://github.com/jonmatum/react-mfe-template/issues)
+          - [Contributing Guidelines](https://github.com/jonmatum/react-mfe-template/blob/main/CONTRIBUTING.md)
+          
+          ---
+          
+          *Last updated: $(date)*
+          *Auto-synced from repository documentation*
+          EOF
+          
+          # Create sidebar navigation
+          cat > wiki/_Sidebar.md << 'EOF'
+          ## Documentation
+          
+          **Getting Started**
+          - [Home](Home)
+          - [Template Usage](Template-Usage)
+          - [Quick Start](Quick-Start-Example)
+          
+          **Implementation**
+          - [Implementation Guide](Implementation-Guide)
+          - [Code Analysis](Code-Analysis)
+          
+          **Reference**
+          - [Documentation Index](Documentation-Index)
+          
+          ---
+          
+          **Quick Commands**
+          ```bash
+          npm run analyze
+          npm run dev
+          npm run build
+          ```
+          EOF
+
+      - name: Commit and push wiki changes
+        run: |
+          cd wiki
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          # Add all changes
+          git add .
+          
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "docs: sync documentation from main repository
+            
+            Auto-sync triggered by commit: ${{ github.sha }}
+            Updated: $(date -u +"%Y-%m-%d %H:%M:%S UTC")"
+            git push
+          fi

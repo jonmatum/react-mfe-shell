@@ -11,18 +11,18 @@ describe('LoadingSpinner', () => {
   });
 
   it('applies correct size classes', () => {
-    const { rerender } = render(<LoadingSpinner size="sm" />);
+    const { rerender } = render(<LoadingSpinner size='sm' />);
     expect(screen.getByRole('status')).toHaveClass('h-4', 'w-4');
 
-    rerender(<LoadingSpinner size="md" />);
+    rerender(<LoadingSpinner size='md' />);
     expect(screen.getByRole('status')).toHaveClass('h-8', 'w-8');
 
-    rerender(<LoadingSpinner size="lg" />);
+    rerender(<LoadingSpinner size='lg' />);
     expect(screen.getByRole('status')).toHaveClass('h-12', 'w-12');
   });
 
   it('displays text when provided', () => {
-    render(<LoadingSpinner text="Loading data..." />);
+    render(<LoadingSpinner text='Loading data...' />);
     expect(screen.getByText('Loading data...')).toBeInTheDocument();
   });
 
@@ -32,7 +32,7 @@ describe('LoadingSpinner', () => {
   });
 
   it('accepts custom className', () => {
-    render(<LoadingSpinner className="custom-spinner" />);
+    render(<LoadingSpinner className='custom-spinner' />);
     const container = screen.getByRole('status').parentElement;
     expect(container).toHaveClass('custom-spinner');
   });
@@ -51,10 +51,10 @@ describe('LoadingSpinner', () => {
   });
 
   it('combines size and custom className correctly', () => {
-    render(<LoadingSpinner size="lg" className="custom-class" />);
+    render(<LoadingSpinner size='lg' className='custom-class' />);
     const spinner = screen.getByRole('status');
     const container = spinner.parentElement;
-    
+
     expect(spinner).toHaveClass('h-12', 'w-12');
     expect(container).toHaveClass('custom-class');
   });

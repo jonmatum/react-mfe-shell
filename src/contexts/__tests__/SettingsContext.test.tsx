@@ -16,28 +16,25 @@ vi.mock('../../utils', () => ({
 // Test component that uses the settings context
 const TestComponent = () => {
   const { settings, updateSettings, resetSettings } = useSettings();
-  
+
   return (
     <div>
-      <div data-testid="theme">{settings.theme}</div>
-      <div data-testid="layout">{settings.layout}</div>
-      <div data-testid="container-width">{settings.containerWidth}</div>
-      <button 
+      <div data-testid='theme'>{settings.theme}</div>
+      <div data-testid='layout'>{settings.layout}</div>
+      <div data-testid='container-width'>{settings.containerWidth}</div>
+      <button
         onClick={() => updateSettings({ theme: 'dark' })}
-        data-testid="update-theme"
+        data-testid='update-theme'
       >
         Update Theme
       </button>
-      <button 
+      <button
         onClick={() => updateSettings({ layout: 'sidebar' })}
-        data-testid="update-layout"
+        data-testid='update-layout'
       >
         Update Layout
       </button>
-      <button 
-        onClick={() => resetSettings()}
-        data-testid="reset"
-      >
+      <button onClick={() => resetSettings()} data-testid='reset'>
         Reset
       </button>
     </div>
@@ -54,7 +51,7 @@ describe('SettingsContext', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockStorage.get.mockReturnValue({});
-    
+
     // Mock matchMedia
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
@@ -200,7 +197,7 @@ describe('SettingsContext', () => {
 
   it('uses custom storage key', () => {
     render(
-      <SettingsProvider storageKey="custom-key">
+      <SettingsProvider storageKey='custom-key'>
         <TestComponent />
       </SettingsProvider>
     );
@@ -211,7 +208,10 @@ describe('SettingsContext', () => {
       fireEvent.click(screen.getByTestId('update-theme'));
     });
 
-    expect(mockStorage.set).toHaveBeenCalledWith('custom-key', expect.any(Object));
+    expect(mockStorage.set).toHaveBeenCalledWith(
+      'custom-key',
+      expect.any(Object)
+    );
   });
 
   it('applies theme on mount', () => {
@@ -254,8 +254,13 @@ describe('SettingsContext', () => {
       </SettingsProvider>
     );
 
-    expect(window.matchMedia).toHaveBeenCalledWith('(prefers-color-scheme: dark)');
-    expect(mockMediaQuery.addEventListener).toHaveBeenCalledWith('change', expect.any(Function));
+    expect(window.matchMedia).toHaveBeenCalledWith(
+      '(prefers-color-scheme: dark)'
+    );
+    expect(mockMediaQuery.addEventListener).toHaveBeenCalledWith(
+      'change',
+      expect.any(Function)
+    );
   });
 
   it('does not listen for system theme changes when theme is not system', () => {
@@ -306,6 +311,9 @@ describe('SettingsContext', () => {
 
     unmount();
 
-    expect(mockMediaQuery.removeEventListener).toHaveBeenCalledWith('change', expect.any(Function));
+    expect(mockMediaQuery.removeEventListener).toHaveBeenCalledWith(
+      'change',
+      expect.any(Function)
+    );
   });
 });

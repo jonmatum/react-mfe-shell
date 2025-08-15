@@ -170,12 +170,12 @@ function runAnalysis() {
   
   const projectName = basename(process.cwd());
   
-  printHeader(`📊 Code Analysis Report for: ${projectName}`);
+  printHeader(`Code Analysis Report for: ${projectName}`);
   console.log(`Generated on: ${colors.yellow}${new Date().toLocaleString()}${colors.reset}`);
   console.log(`Directory: ${colors.yellow}${process.cwd()}${colors.reset}`);
   
   if (options.json) {
-    printHeader('📋 Raw Data (JSON Format)');
+    printHeader('Raw Data (JSON Format)');
     const jsonOutput = runScc('--format json');
     console.log(jsonOutput);
     return;
@@ -185,21 +185,21 @@ function runAnalysis() {
   const basicOutput = runScc();
   const totals = parseSccOutput(basicOutput);
   
-  printHeader('📈 Basic Statistics');
+  printHeader('Basic Statistics');
   console.log(basicOutput);
   
   // Calculate and show metrics
   if (totals) {
-    printHeader('🎯 Quality Metrics');
+    printHeader('Quality Metrics');
     calculateMetrics(totals);
     
     // Show language breakdown
-    printHeader('🌐 Language Breakdown');
+    printHeader('Language Breakdown');
     showLanguageBreakdown(basicOutput, totals.code);
   }
   
   if (options.complexity) {
-    printHeader('🧠 Complexity Analysis');
+    printHeader('Complexity Analysis');
     console.log(`${colors.cyan}Most Complex Files:${colors.reset}`);
     const complexityOutput = runScc('--by-file --sort complexity');
     const lines = complexityOutput.split('\n').slice(0, 20);
@@ -211,7 +211,7 @@ function runAnalysis() {
   }
   
   if (options.detailed) {
-    printHeader('📁 Detailed File Breakdown');
+    printHeader('Detailed File Breakdown');
     console.log(`${colors.cyan}Largest Files by Code Lines:${colors.reset}`);
     const detailedOutput = runScc('--by-file --sort code');
     const lines = detailedOutput.split('\n').slice(0, 20);
@@ -225,7 +225,7 @@ function runAnalysis() {
   
   // Project insights
   if (totals) {
-    printHeader('💡 Project Insights');
+    printHeader('Project Insights');
     const avgLinesPerFile = Math.round(totals.code / totals.files);
     
     console.log(`${colors.cyan}Project Size Assessment:${colors.reset}`);
@@ -249,7 +249,7 @@ function runAnalysis() {
     }
     
     // Recommendations
-    printHeader('🚀 Recommendations');
+    printHeader('Recommendations');
     const commentRatio = totals.comments * 100 / totals.code;
     
     if (commentRatio < 10) {

@@ -148,12 +148,12 @@ show_language_breakdown() {
 run_analysis() {
     local project_name=$(basename "$(pwd)")
     
-    print_header "📊 Code Analysis Report for: $project_name"
+    print_header "Code Analysis Report for: $project_name"
     echo -e "Generated on: ${YELLOW}$(date)${NC}"
     echo -e "Directory: ${YELLOW}$(pwd)${NC}"
     
     if [ "$JSON_OUTPUT" = true ]; then
-        print_header "📋 Raw Data (JSON Format)"
+        print_header "Raw Data (JSON Format)"
         scc --format json
         return
     fi
@@ -161,19 +161,19 @@ run_analysis() {
     # Get basic scc output
     local scc_basic=$(scc)
     
-    print_header "📈 Basic Statistics"
+    print_header "Basic Statistics"
     echo "$scc_basic"
     
     # Calculate and show metrics
-    print_header "🎯 Quality Metrics"
+    print_header "Quality Metrics"
     calculate_metrics "$scc_basic"
     
     # Show language breakdown
-    print_header "🌐 Language Breakdown"
+    print_header "Language Breakdown"
     show_language_breakdown "$scc_basic"
     
     if [ "$COMPLEXITY_FOCUS" = true ]; then
-        print_header "🧠 Complexity Analysis"
+        print_header "Complexity Analysis"
         echo -e "${CYAN}Most Complex Files:${NC}"
         scc --by-file --sort complexity | head -20
         
@@ -182,7 +182,7 @@ run_analysis() {
     fi
     
     if [ "$DETAILED" = true ]; then
-        print_header "📁 Detailed File Breakdown"
+        print_header "Detailed File Breakdown"
         echo -e "${CYAN}Largest Files by Code Lines:${NC}"
         scc --by-file --sort code | head -20
         
@@ -191,7 +191,7 @@ run_analysis() {
     fi
     
     # Project insights
-    print_header "💡 Project Insights"
+    print_header "Project Insights"
     local total_files=$(echo "$scc_basic" | grep "^Total" | awk '{print $2}')
     local total_code=$(echo "$scc_basic" | grep "^Total" | awk '{print $6}')
     local avg_lines_per_file=$(echo "scale=0; $total_code / $total_files" | bc -l)
@@ -217,7 +217,7 @@ run_analysis() {
     fi
     
     # Recommendations
-    print_header "🚀 Recommendations"
+    print_header "Recommendations"
     local comment_ratio=$(echo "$scc_basic" | grep "^Total" | awk '{
         total_comments = $5
         total_code = $6

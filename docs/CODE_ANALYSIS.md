@@ -174,7 +174,7 @@ You can create quality gates based on the metrics:
 # Example: Fail if comment ratio is too low
 COMMENT_RATIO=$(npm run analyze:json | jq '.Total.Comments / .Total.Code * 100')
 if (( $(echo "$COMMENT_RATIO < 5" | bc -l) )); then
-  echo "❌ Comment ratio too low: $COMMENT_RATIO%"
+  echo "Error: Comment ratio too low: $COMMENT_RATIO%"
   exit 1
 fi
 ```
@@ -283,10 +283,10 @@ Track metrics over time to identify:
 ## Example Output Interpretation
 
 ```
-📊 Code Analysis Report for: react-mfe-shell
+Code Analysis Report for: react-mfe-shell
 Generated on: 8/15/2025, 12:27:29 PM
 
-🎯 Quality Metrics
+Quality Metrics
 Comment Ratio: 3.3% (Industry standard: 10-20%)
 Blank Line Ratio: 16.3% (Good readability: 15-25%)
 Complexity per Line: 0.03 (Lower is better)
@@ -295,13 +295,13 @@ Quality Assessment:
   Comments: Low - Consider adding more documentation
   Complexity: Low - Very maintainable code
 
-💡 Project Insights
+Project Insights
 Project Size Assessment:
   Size: Medium (4597 lines) - Well manageable
   Average lines per file: 104
   File organization: Good - Reasonable file sizes
 
-🚀 Recommendations
+Recommendations
   • Add more inline comments and documentation
   • Run with --detailed for file-by-file analysis
   • Run with --complexity to identify complex code areas

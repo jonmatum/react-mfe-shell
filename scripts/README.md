@@ -1,6 +1,6 @@
 # Code Analysis Scripts - Quick Reference
 
-## 🚀 Quick Commands
+## Quick Commands
 
 ```bash
 # Basic analysis
@@ -16,7 +16,7 @@ npm run analyze:complexity
 npm run analyze:json > stats.json
 ```
 
-## 📊 What Each Metric Means
+## What Each Metric Means
 
 | Metric | Good Range | What It Tells You |
 |--------|------------|-------------------|
@@ -25,27 +25,27 @@ npm run analyze:json > stats.json
 | **Complexity per Line** | < 0.1 | How complex/maintainable your code is |
 | **Average Lines per File** | < 300 | File organization quality |
 
-## 🎯 Quality Indicators
+## Quality Indicators
 
-### 🟢 Excellent Code
+### Excellent Code
 - Comment ratio: 10-20%
 - Complexity per line: < 0.1
 - Average file size: < 100 lines
 - Good language distribution
 
-### 🟡 Good Code
+### Good Code
 - Comment ratio: 5-10% or 20-30%
 - Complexity per line: 0.1-0.2
 - Average file size: 100-300 lines
 - Reasonable organization
 
-### 🔴 Needs Attention
+### Needs Attention
 - Comment ratio: < 5%
 - Complexity per line: > 0.2
 - Average file size: > 300 lines
 - Poor organization
 
-## 🛠️ Script Options
+## Script Options
 
 | Option | Description | Example |
 |--------|-------------|---------|
@@ -54,7 +54,7 @@ npm run analyze:json > stats.json
 | `--json` | Export raw data | `npm run analyze:json` |
 | `--help` | Show help message | `node scripts/code-analysis.js --help` |
 
-## 📈 Understanding Your Project
+## Understanding Your Project
 
 ### Project Size Categories
 - **Small** (< 1K lines): Easy to maintain
@@ -67,7 +67,7 @@ npm run analyze:json > stats.json
 - **Balanced code/tests**: Good testing practices
 - **Too much configuration**: Might be over-engineered
 
-## 🔧 Customization
+## Customization
 
 Edit the scripts to:
 - Change quality thresholds
@@ -75,7 +75,7 @@ Edit the scripts to:
 - Focus on certain languages
 - Add custom metrics
 
-## 📝 Example Interpretation
+## Example Interpretation
 
 ```
 Comment Ratio: 3.3% (Low - Add more documentation)
@@ -85,7 +85,7 @@ Size: Medium (4827 lines - Well manageable)
 
 **Translation**: Your code is very well-structured and maintainable, but needs more comments and documentation for better team collaboration.
 
-## 🚨 Common Issues
+## Common Issues
 
 | Issue | Solution |
 |-------|----------|
@@ -93,6 +93,6 @@ Size: Medium (4827 lines - Well manageable)
 | Permission denied | `chmod +x scripts/*.sh` |
 | Node.js errors | Update to Node.js 14+ |
 
-## 📚 More Info
+## More Info
 
 See [docs/CODE_ANALYSIS.md](../docs/CODE_ANALYSIS.md) for complete documentation.

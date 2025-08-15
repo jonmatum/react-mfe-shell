@@ -58,9 +58,18 @@ describe('Design Tokens', () => {
     });
 
     it('has font sizes with line heights', () => {
-      expect(typography.fontSize.xs).toEqual(['0.75rem', { lineHeight: '1rem' }]);
-      expect(typography.fontSize.base).toEqual(['1rem', { lineHeight: '1.5rem' }]);
-      expect(typography.fontSize['4xl']).toEqual(['2.25rem', { lineHeight: '2.5rem' }]);
+      expect(typography.fontSize.xs).toEqual([
+        '0.75rem',
+        { lineHeight: '1rem' },
+      ]);
+      expect(typography.fontSize.base).toEqual([
+        '1rem',
+        { lineHeight: '1.5rem' },
+      ]);
+      expect(typography.fontSize['4xl']).toEqual([
+        '2.25rem',
+        { lineHeight: '2.5rem' },
+      ]);
     });
 
     it('has font weights', () => {
@@ -135,7 +144,7 @@ describe('Design Tokens', () => {
     it('all color palettes have consistent structure', () => {
       const colorPalettes = [colors.primary, colors.secondary];
       const expectedShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
-      
+
       colorPalettes.forEach(palette => {
         expectedShades.forEach(shade => {
           expect(palette[shade]).toBeDefined();
@@ -146,9 +155,14 @@ describe('Design Tokens', () => {
     });
 
     it('semantic colors have proper structure', () => {
-      const semanticColors = [colors.success, colors.warning, colors.error, colors.info];
+      const semanticColors = [
+        colors.success,
+        colors.warning,
+        colors.error,
+        colors.info,
+      ];
       const expectedShades = [50, 500, 600, 700];
-      
+
       semanticColors.forEach(palette => {
         expectedShades.forEach(shade => {
           expect(palette[shade]).toBeDefined();

@@ -61,6 +61,7 @@
     "analyze:complexity": "node scripts/code-analysis.js --complexity",
     "analyze:json": "node scripts/code-analysis.js --json",
     "analyze:bash": "./scripts/code-analysis.sh",
+    "wiki:sync": "./scripts/sync-wiki.sh",
     "prepare": "npm run build"
   },
   "dependencies": {

@@ -1,21 +1,25 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { 
-  classNames, 
-  storage, 
-  theme, 
-  debounce, 
-  generateId, 
-  formatNumber, 
-  truncate 
+import {
+  classNames,
+  storage,
+  theme,
+  debounce,
+  generateId,
+  formatNumber,
+  truncate,
 } from '../index';
 
 describe('classNames', () => {
   it('combines multiple class names', () => {
-    expect(classNames('class1', 'class2', 'class3')).toBe('class1 class2 class3');
+    expect(classNames('class1', 'class2', 'class3')).toBe(
+      'class1 class2 class3'
+    );
   });
 
   it('filters out falsy values', () => {
-    expect(classNames('class1', null, 'class2', undefined, false, 'class3')).toBe('class1 class2 class3');
+    expect(
+      classNames('class1', null, 'class2', undefined, false, 'class3')
+    ).toBe('class1 class2 class3');
   });
 
   it('handles empty input', () => {
@@ -48,7 +52,9 @@ describe('storage', () => {
   describe('get', () => {
     it('returns parsed value from localStorage', () => {
       const mockValue = { test: 'value' };
-      vi.mocked(localStorage.getItem).mockReturnValue(JSON.stringify(mockValue));
+      vi.mocked(localStorage.getItem).mockReturnValue(
+        JSON.stringify(mockValue)
+      );
 
       const result = storage.get('test-key', {});
       expect(result).toEqual(mockValue);
@@ -87,7 +93,10 @@ describe('storage', () => {
       const value = { test: 'value' };
       storage.set('test-key', value);
 
-      expect(localStorage.setItem).toHaveBeenCalledWith('test-key', JSON.stringify(value));
+      expect(localStorage.setItem).toHaveBeenCalledWith(
+        'test-key',
+        JSON.stringify(value)
+      );
     });
 
     it('handles localStorage errors silently', () => {
@@ -157,9 +166,9 @@ describe('theme', () => {
       const originalWindow = global.window;
       // @ts-expect-error - Testing SSR scenario
       delete global.window;
-      
+
       expect(theme.getSystemTheme()).toBe('light');
-      
+
       global.window = originalWindow;
     });
   });
@@ -168,32 +177,47 @@ describe('theme', () => {
     it('applies light theme', () => {
       theme.applyTheme('light');
 
-      expect(document.documentElement.classList.remove).toHaveBeenCalledWith('light', 'dark');
-      expect(document.documentElement.classList.add).toHaveBeenCalledWith('light');
+      expect(document.documentElement.classList.remove).toHaveBeenCalledWith(
+        'light',
+        'dark'
+      );
+      expect(document.documentElement.classList.add).toHaveBeenCalledWith(
+        'light'
+      );
     });
 
     it('applies dark theme', () => {
       theme.applyTheme('dark');
 
-      expect(document.documentElement.classList.remove).toHaveBeenCalledWith('light', 'dark');
-      expect(document.documentElement.classList.add).toHaveBeenCalledWith('dark');
+      expect(document.documentElement.classList.remove).toHaveBeenCalledWith(
+        'light',
+        'dark'
+      );
+      expect(document.documentElement.classList.add).toHaveBeenCalledWith(
+        'dark'
+      );
     });
 
     it('applies system theme based on media query', () => {
       window.matchMedia = vi.fn().mockReturnValue({ matches: true });
       theme.applyTheme('system');
 
-      expect(document.documentElement.classList.remove).toHaveBeenCalledWith('light', 'dark');
-      expect(document.documentElement.classList.add).toHaveBeenCalledWith('dark');
+      expect(document.documentElement.classList.remove).toHaveBeenCalledWith(
+        'light',
+        'dark'
+      );
+      expect(document.documentElement.classList.add).toHaveBeenCalledWith(
+        'dark'
+      );
     });
 
     it('does nothing when document is undefined (SSR)', () => {
       const originalDocument = global.document;
       // @ts-expect-error - Testing SSR scenario
       delete global.document;
-      
+
       expect(() => theme.applyTheme('light')).not.toThrow();
-      
+
       global.document = originalDocument;
     });
   });
