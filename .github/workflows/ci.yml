@@ -24,8 +24,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # Use npm install instead of npm ci to avoid optional dependency issues
-          npm install
+          # Clean install to avoid npm cache issues
+          rm -rf node_modules package-lock.json
+          # Install without optional dependencies to avoid rollup native binaries issue
+          npm install --no-optional
+          # Install tsup dependencies explicitly
+          npm install tsup esbuild --force
 
       - name: Run linting
         run: npm run lint

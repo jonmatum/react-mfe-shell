@@ -44,7 +44,13 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          # Clean install to avoid npm cache issues
+          rm -rf node_modules package-lock.json
+          # Install without optional dependencies to avoid rollup native binaries issue
+          npm install --no-optional
+          # Install tsup dependencies explicitly
+          npm install tsup esbuild --force
 
       - name: Run tests
         run: npm run test:run
@@ -102,7 +108,13 @@ jobs:
         uses: actions/configure-pages@v4
 
       - name: Install main dependencies
-        run: npm install
+        run: |
+          # Clean install to avoid npm cache issues
+          rm -rf node_modules package-lock.json
+          # Install without optional dependencies to avoid rollup native binaries issue
+          npm install --no-optional
+          # Install tsup dependencies explicitly
+          npm install tsup esbuild --force
 
       - name: Build library
         run: npm run build:lib

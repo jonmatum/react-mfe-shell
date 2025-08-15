@@ -7,9 +7,11 @@ export default defineConfig({
   splitting: false,
   sourcemap: true,
   clean: true,
-  // Use esbuild instead of rollup to avoid native dependency issues
+  // Force esbuild usage to avoid rollup native dependency issues
   bundle: true,
   minify: false,
+  // Explicitly disable rollup-specific features
+  treeshake: false,
   external: ['react', 'react-dom', '@heroicons/react'],
   tsconfig: 'tsconfig.lib.json',
   esbuildOptions(options) {
@@ -19,5 +21,6 @@ export default defineConfig({
     options.jsx = 'automatic';
     // Ensure we're using esbuild for everything
     options.platform = 'neutral';
+    options.target = 'es2020';
   },
 });
