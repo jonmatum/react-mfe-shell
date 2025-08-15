@@ -33,10 +33,10 @@ jobs:
 
       - name: Install scc for code analysis
         run: |
-          # Install scc (Source Code Counter) for code analysis
-          wget https://github.com/boyter/scc/releases/latest/download/scc-3.3.5-x86_64-unknown-linux.zip
-          unzip scc-3.3.5-x86_64-unknown-linux.zip
-          sudo mv scc /usr/local/bin/
+          # Install scc (Source Code Counter) using Go
+          go install github.com/boyter/scc/v3@latest
+          echo "$HOME/go/bin" >> $GITHUB_PATH
+          export PATH="$HOME/go/bin:$PATH"
           scc --version
 
       - name: Run linting
@@ -55,7 +55,9 @@ jobs:
         run: npm run build:lib
 
       - name: Run code analysis
-        run: npm run analyze:json > code-analysis.json
+        run: |
+          export PATH="$HOME/go/bin:$PATH"
+          npm run analyze:json > code-analysis.json
 
       - name: Upload code analysis results
         uses: actions/upload-artifact@v4
