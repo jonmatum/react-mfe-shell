@@ -58,11 +58,11 @@ jobs:
       - name: Run type check
         run: npm run type-check
 
-      # Uncomment to publish to npm
-      # - name: Publish to npm
-      #   run: npm publish
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # Publish to npm
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4

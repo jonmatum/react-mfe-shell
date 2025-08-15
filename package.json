@@ -107,10 +107,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jonmatum/react-mfe-template.git"
+    "url": "https://github.com/jonmatum/react-mfe-shell.git"
   },
   "bugs": {
-    "url": "https://github.com/jonmatum/react-mfe-template/issues"
+    "url": "https://github.com/jonmatum/react-mfe-shell/issues"
   },
-  "homepage": "https://github.com/jonmatum/react-mfe-template#readme"
+  "homepage": "https://github.com/jonmatum/react-mfe-shell#readme"
 }
