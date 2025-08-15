@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v2.1.0...react-mfe-shell-v3.0.0) (2025-08-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* Node.js 22 or higher is now required
+
+### Bug Fixes
+
+* **ci:** install scc tool for code analysis in workflows ([8e4799a](https://github.com/jonmatum/react-mfe-shell/commit/8e4799a0f33f4b49a6e239de532802a04d72f6ae))
+* **ci:** resolve tsup/rollup native dependency issues in workflows ([b320997](https://github.com/jonmatum/react-mfe-shell/commit/b320997779f7e15dd9a0a19f9eb71cdc723f08a3))
+* **ci:** use Go to install scc tool instead of binary download ([eff4996](https://github.com/jonmatum/react-mfe-shell/commit/eff4996c0471906a40f8d2849b8ae71c3a233bab))
+
+
+### Build System
+
+* upgrade to Node.js 22 LTS and fix CI workflows ([53d9664](https://github.com/jonmatum/react-mfe-shell/commit/53d9664c1d9857ab4fc1f86a01ea30dc021a16c7))
+
 ## [2.1.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v2.0.0...react-mfe-shell-v2.1.0) (2025-08-15)
 
 
