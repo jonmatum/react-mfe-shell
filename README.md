@@ -382,4 +382,4 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for detai
 
 ---
 
-**Built with ❤️ for the micro frontend community**
+**Built with care for the micro frontend community**
