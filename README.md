@@ -35,6 +35,20 @@ src/components/
 - **Utility Functions**: Shared helpers for common operations
 - **Type Definitions**: Comprehensive TypeScript support
 
+## Live Demo
+
+🚀 **[View Live Demo](https://jonmatum.github.io/react-mfe-shell/)**
+
+The interactive demo showcases all components and features of the React MFE Shell, including:
+
+- Complete component library with atomic design system
+- Theme switching (light/dark/system modes)
+- Accessibility features and keyboard navigation
+- Responsive design across all screen sizes
+- Real-time component interactions
+
+The demo is automatically deployed to GitHub Pages on every push to the main branch.
+
 ## Quick Start
 
 ### Prerequisites
