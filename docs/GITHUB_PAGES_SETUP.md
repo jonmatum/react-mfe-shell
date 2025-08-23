@@ -47,9 +47,32 @@ Once GitHub Pages is enabled:
 1. **Pages not enabled**: Make sure GitHub Pages is enabled in repository settings
 2. **Workflow permissions**: The workflow has the necessary permissions to deploy to Pages
 3. **Build failures**: Check the Actions tab for detailed error logs
-4. **npm optional dependencies error**: The workflows include a workaround for the known npm/rollup issue
+4. **Jekyll warning**: Can be safely ignored when using GitHub Actions deployment
+5. **Native binding errors**: The workflows include fixes for SWC and Rollup native bindings
 
 ### Known Issues and Fixes
+
+#### Jekyll Warning (Safe to Ignore)
+If you see a warning like:
+```
+Actions is currently unavailable for your repository, and your Pages site requires a Jekyll build step
+```
+
+This warning can be **safely ignored** because:
+- We're using GitHub Actions for deployment, not Jekyll
+- The workflow will deploy successfully despite this warning
+- GitHub Pages will work correctly with our custom deployment process
+
+#### SWC Native Binding Error
+If you see an error like:
+```
+Error: Failed to load native binding
+```
+
+This is caused by cached or incorrect native bindings for SWC. The workflows include a fix:
+- Clean install dependencies to avoid cached bindings
+- Explicitly reinstall `@swc/core` and `@swc/helpers`
+- Remove `package-lock.json` for fresh dependency resolution
 
 #### Rollup Optional Dependencies Error
 If you see an error like:
@@ -67,6 +90,7 @@ Common causes and solutions:
 - **TypeScript errors**: Fix type issues in the source code
 - **Missing dependencies**: Ensure all dependencies are in package.json
 - **Build script issues**: Verify build scripts work locally first
+- **Native binding issues**: Clean install usually resolves platform-specific problems
 
 ### Checking Deployment Status
 
