@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v3.0.0...react-mfe-shell-v4.0.0) (2025-08-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* Token structure has been reorganized for better consistency and type safety
+
+### Features
+
+* establish comprehensive design token foundation ([3a81d0b](https://github.com/jonmatum/react-mfe-shell/commit/3a81d0b03f2ad9c9b4d4b90f216c9d69d427e4ea))
+
 ## [3.0.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v2.1.0...react-mfe-shell-v3.0.0) (2025-08-15)
 
 
