@@ -24,11 +24,16 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Install dependencies
+      - name: Clean install dependencies
         run: |
-          npm ci --prefer-offline --no-audit
-          # Workaround for rollup optional dependencies issue
-          npm install --no-save @rollup/rollup-linux-x64-gnu || true
+          # Clean install to avoid cached native bindings issues
+          rm -rf node_modules package-lock.json
+          npm install
+
+      - name: Verify SWC installation
+        run: |
+          # Reinstall SWC to ensure correct native bindings
+          npm install --no-save @swc/core @swc/helpers
 
       - name: Run tests
         run: npm run test:run
