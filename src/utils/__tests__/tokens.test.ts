@@ -1,87 +1,127 @@
 import { describe, it, expect } from 'vitest';
 import {
-  colors,
+  baseColors,
+  semanticColors,
+  themeColors,
+  fontFamily,
+  fontSize,
+  fontWeight,
   spacing,
-  typography,
+  boxShadow,
   borderRadius,
-  shadows,
   breakpoints,
-  transitions,
+  animationTimingFunction,
   zIndex,
+  tokens,
 } from '../tokens';
 
 describe('Design Tokens', () => {
-  describe('colors', () => {
-    it('has primary color palette', () => {
-      expect(colors.primary).toBeDefined();
-      expect(colors.primary[50]).toBe('#eff6ff');
-      expect(colors.primary[500]).toBe('#3b82f6');
-      expect(colors.primary[900]).toBe('#1e3a8a');
+  describe('Base Colors', () => {
+    it('should have all base colors defined', () => {
+      expect(baseColors.white).toBe('#ffffff');
+      expect(baseColors.black).toBe('#000000');
+
+      // Test gray scale
+      expect(baseColors.gray).toHaveProperty('50');
+      expect(baseColors.gray).toHaveProperty('500');
+      expect(baseColors.gray).toHaveProperty('900');
+
+      // Test color scales
+      ['blue', 'green', 'yellow', 'red', 'cyan'].forEach(color => {
+        expect(baseColors[color as keyof typeof baseColors]).toHaveProperty(
+          '50'
+        );
+        expect(baseColors[color as keyof typeof baseColors]).toHaveProperty(
+          '500'
+        );
+        expect(baseColors[color as keyof typeof baseColors]).toHaveProperty(
+          '950'
+        );
+      });
     });
 
-    it('has secondary color palette', () => {
-      expect(colors.secondary).toBeDefined();
-      expect(colors.secondary[50]).toBe('#f8fafc');
-      expect(colors.secondary[500]).toBe('#64748b');
-      expect(colors.secondary[900]).toBe('#0f172a');
-    });
+    it('should have valid hex color values', () => {
+      const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
 
-    it('has semantic colors', () => {
-      expect(colors.success).toBeDefined();
-      expect(colors.warning).toBeDefined();
-      expect(colors.error).toBeDefined();
-      expect(colors.info).toBeDefined();
-    });
-  });
+      expect(baseColors.white).toMatch(hexColorRegex);
+      expect(baseColors.black).toMatch(hexColorRegex);
 
-  describe('spacing', () => {
-    it('has consistent spacing scale', () => {
-      expect(spacing[0]).toBe('0');
-      expect(spacing[1]).toBe('0.25rem');
-      expect(spacing[4]).toBe('1rem');
-      expect(spacing[8]).toBe('2rem');
-      expect(spacing[16]).toBe('4rem');
-    });
-
-    it('has all required spacing values', () => {
-      const expectedKeys = [0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32];
-      expectedKeys.forEach(key => {
-        expect(spacing[key]).toBeDefined();
+      Object.values(baseColors.gray).forEach(color => {
+        expect(color).toMatch(hexColorRegex);
       });
     });
   });
 
-  describe('typography', () => {
-    it('has font families', () => {
-      expect(typography.fontFamily.sans).toContain('Inter');
-      expect(typography.fontFamily.mono).toContain('JetBrains Mono');
-    });
-
-    it('has font sizes with line heights', () => {
-      expect(typography.fontSize.xs).toEqual([
-        '0.75rem',
-        { lineHeight: '1rem' },
-      ]);
-      expect(typography.fontSize.base).toEqual([
-        '1rem',
-        { lineHeight: '1.5rem' },
-      ]);
-      expect(typography.fontSize['4xl']).toEqual([
-        '2.25rem',
-        { lineHeight: '2.5rem' },
-      ]);
-    });
-
-    it('has font weights', () => {
-      expect(typography.fontWeight.normal).toBe('400');
-      expect(typography.fontWeight.medium).toBe('500');
-      expect(typography.fontWeight.bold).toBe('700');
+  describe('Semantic Colors', () => {
+    it('should have semantic colors mapped correctly', () => {
+      expect(semanticColors.primary).toBe(baseColors.blue);
+      expect(semanticColors.secondary).toBe(baseColors.gray);
+      expect(semanticColors.success).toBe(baseColors.green);
+      expect(semanticColors.warning).toBe(baseColors.yellow);
+      expect(semanticColors.error).toBe(baseColors.red);
+      expect(semanticColors.info).toBe(baseColors.cyan);
     });
   });
 
-  describe('borderRadius', () => {
-    it('has border radius values', () => {
-      expect(borderRadius.none).toBe('0');
+  describe('Theme Colors', () => {
+    it('should have theme colors for light and dark modes', () => {
+      // Light theme
+      expect(themeColors.light).toHaveProperty('background');
+      expect(themeColors.light).toHaveProperty('surface');
+      expect(themeColors.light).toHaveProperty('text');
+      expect(themeColors.light).toHaveProperty('border');
+      expect(themeColors.light).toHaveProperty('interactive');
+      expect(themeColors.light).toHaveProperty('status');
+
+      // Dark theme
+      expect(themeColors.dark).toHaveProperty('background');
+      expect(themeColors.dark).toHaveProperty('surface');
+      expect(themeColors.dark).toHaveProperty('text');
+      expect(themeColors.dark).toHaveProperty('border');
+      expect(themeColors.dark).toHaveProperty('interactive');
+      expect(themeColors.dark).toHaveProperty('status');
+    });
+  });
+
+  describe('Spacing', () => {
+    it('should have consistent spacing scale', () => {
+      expect(spacing[0]).toBe('0px');
+      expect(spacing.px).toBe('1px');
+      expect(spacing[1]).toBe('0.25rem');
+      expect(spacing[4]).toBe('1rem');
+      expect(spacing[8]).toBe('2rem');
+    });
+
+    it('should have all spacing values as strings with units', () => {
+      Object.values(spacing).forEach(value => {
+        expect(typeof value).toBe('string');
+        expect(value).toMatch(/^(\d+(\.\d+)?(px|rem)|0px)$/);
+      });
+    });
+  });
+
+  describe('Typography', () => {
+    it('should have font families', () => {
+      expect(fontFamily.sans).toContain('Inter');
+      expect(fontFamily.mono).toContain('"JetBrains Mono"');
+    });
+
+    it('should have font sizes with line heights', () => {
+      expect(fontSize.xs).toEqual(['0.75rem', { lineHeight: '1rem' }]);
+      expect(fontSize.base).toEqual(['1rem', { lineHeight: '1.5rem' }]);
+      expect(fontSize['4xl']).toEqual(['2.25rem', { lineHeight: '2.5rem' }]);
+    });
+
+    it('should have font weights', () => {
+      expect(fontWeight.normal).toBe('400');
+      expect(fontWeight.medium).toBe('500');
+      expect(fontWeight.bold).toBe('700');
+    });
+  });
+
+  describe('Border Radius', () => {
+    it('should have border radius values', () => {
+      expect(borderRadius.none).toBe('0px');
       expect(borderRadius.sm).toBe('0.125rem');
       expect(borderRadius.md).toBe('0.375rem');
       expect(borderRadius.lg).toBe('0.5rem');
@@ -89,22 +129,23 @@ describe('Design Tokens', () => {
     });
   });
 
-  describe('shadows', () => {
-    it('has shadow definitions', () => {
-      expect(shadows.sm).toBeDefined();
-      expect(shadows.md).toBeDefined();
-      expect(shadows.lg).toBeDefined();
-      expect(shadows.xl).toBeDefined();
+  describe('Shadows', () => {
+    it('should have shadow definitions', () => {
+      expect(boxShadow.sm).toBeDefined();
+      expect(boxShadow.md).toBeDefined();
+      expect(boxShadow.lg).toBeDefined();
+      expect(boxShadow.xl).toBeDefined();
     });
 
-    it('has proper shadow format', () => {
-      expect(shadows.sm).toContain('rgb');
-      expect(shadows.md).toContain('rgb');
+    it('should have proper shadow format', () => {
+      expect(boxShadow.sm).toContain('rgb');
+      expect(boxShadow.md).toContain('rgb');
     });
   });
 
-  describe('breakpoints', () => {
-    it('has responsive breakpoints', () => {
+  describe('Breakpoints', () => {
+    it('should have responsive breakpoints', () => {
+      expect(breakpoints.xs).toBe('475px');
       expect(breakpoints.sm).toBe('640px');
       expect(breakpoints.md).toBe('768px');
       expect(breakpoints.lg).toBe('1024px');
@@ -113,75 +154,94 @@ describe('Design Tokens', () => {
     });
   });
 
-  describe('transitions', () => {
-    it('has transition values', () => {
-      expect(transitions.fast).toBe('150ms ease-in-out');
-      expect(transitions.base).toBe('200ms ease-in-out');
-      expect(transitions.slow).toBe('300ms ease-in-out');
+  describe('Animation Timing Functions', () => {
+    it('should have timing functions', () => {
+      expect(animationTimingFunction.linear).toBe('linear');
+      expect(animationTimingFunction.in).toBe('cubic-bezier(0.4, 0, 1, 1)');
+      expect(animationTimingFunction.out).toBe('cubic-bezier(0, 0, 0.2, 1)');
+      expect(animationTimingFunction['in-out']).toBe(
+        'cubic-bezier(0.4, 0, 0.2, 1)'
+      );
     });
   });
 
-  describe('zIndex', () => {
-    it('has z-index values', () => {
-      expect(zIndex.dropdown).toBe(1000);
-      expect(zIndex.sticky).toBe(1020);
-      expect(zIndex.fixed).toBe(1030);
-      expect(zIndex.modal).toBe(1040);
-      expect(zIndex.popover).toBe(1050);
-      expect(zIndex.tooltip).toBe(1060);
+  describe('Z-Index', () => {
+    it('should have z-index values', () => {
+      expect(zIndex.dropdown).toBe('1000');
+      expect(zIndex.sticky).toBe('1020');
+      expect(zIndex.fixed).toBe('1030');
+      expect(zIndex.modal).toBe('1040');
+      expect(zIndex.popover).toBe('1050');
+      expect(zIndex.tooltip).toBe('1060');
     });
 
-    it('has proper z-index hierarchy', () => {
-      expect(zIndex.dropdown).toBeLessThan(zIndex.sticky);
-      expect(zIndex.sticky).toBeLessThan(zIndex.fixed);
-      expect(zIndex.fixed).toBeLessThan(zIndex.modal);
-      expect(zIndex.modal).toBeLessThan(zIndex.popover);
-      expect(zIndex.popover).toBeLessThan(zIndex.tooltip);
+    it('should have proper z-index hierarchy', () => {
+      expect(parseInt(zIndex.dropdown)).toBeLessThan(parseInt(zIndex.sticky));
+      expect(parseInt(zIndex.sticky)).toBeLessThan(parseInt(zIndex.fixed));
+      expect(parseInt(zIndex.fixed)).toBeLessThan(parseInt(zIndex.modal));
+      expect(parseInt(zIndex.modal)).toBeLessThan(parseInt(zIndex.popover));
+      expect(parseInt(zIndex.popover)).toBeLessThan(parseInt(zIndex.tooltip));
     });
   });
 
-  describe('token consistency', () => {
-    it('all color palettes have consistent structure', () => {
-      const colorPalettes = [colors.primary, colors.secondary];
-      const expectedShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900];
-
-      colorPalettes.forEach(palette => {
-        expectedShades.forEach(shade => {
-          expect(palette[shade]).toBeDefined();
-          expect(typeof palette[shade]).toBe('string');
-          expect(palette[shade]).toMatch(/^#[0-9a-f]{6}$/i);
-        });
-      });
+  describe('Complete Token System', () => {
+    it('should export complete tokens object', () => {
+      expect(tokens).toHaveProperty('colors');
+      expect(tokens).toHaveProperty('typography');
+      expect(tokens).toHaveProperty('spacing');
+      expect(tokens).toHaveProperty('shadows');
+      expect(tokens).toHaveProperty('borderRadius');
+      expect(tokens).toHaveProperty('breakpoints');
+      expect(tokens).toHaveProperty('animation');
+      expect(tokens).toHaveProperty('zIndex');
+      expect(tokens).toHaveProperty('components');
     });
 
-    it('semantic colors have proper structure', () => {
-      const semanticColors = [
-        colors.success,
-        colors.warning,
-        colors.error,
-        colors.info,
+    it('should have nested color structure', () => {
+      expect(tokens.colors).toHaveProperty('base');
+      expect(tokens.colors).toHaveProperty('semantic');
+      expect(tokens.colors).toHaveProperty('theme');
+
+      expect(tokens.colors.base).toBe(baseColors);
+      expect(tokens.colors.semantic).toBe(semanticColors);
+      expect(tokens.colors.theme).toBe(themeColors);
+    });
+  });
+
+  describe('Token Consistency', () => {
+    it('should have consistent color scale structure', () => {
+      const colorScaleKeys = [
+        '50',
+        '100',
+        '200',
+        '300',
+        '400',
+        '500',
+        '600',
+        '700',
+        '800',
+        '900',
+        '950',
       ];
-      const expectedShades = [50, 500, 600, 700];
 
-      semanticColors.forEach(palette => {
-        expectedShades.forEach(shade => {
-          expect(palette[shade]).toBeDefined();
-          expect(typeof palette[shade]).toBe('string');
-          expect(palette[shade]).toMatch(/^#[0-9a-f]{6}$/i);
+      [
+        baseColors.gray,
+        baseColors.blue,
+        baseColors.green,
+        baseColors.yellow,
+        baseColors.red,
+        baseColors.cyan,
+      ].forEach(colorScale => {
+        colorScaleKeys.forEach(key => {
+          expect(colorScale).toHaveProperty(key);
         });
       });
     });
 
-    it('spacing values are in rem or zero', () => {
-      Object.values(spacing).forEach(value => {
-        expect(value).toMatch(/^(\d+(\.\d+)?rem|0)$/);
-      });
-    });
-
-    it('font sizes have proper structure', () => {
-      Object.values(typography.fontSize).forEach(([size, config]) => {
+    it('should have consistent unit usage', () => {
+      // Font sizes should use rem
+      Object.values(fontSize).forEach(([size]) => {
         expect(size).toMatch(/^\d+(\.\d+)?rem$/);
-        expect(config).toHaveProperty('lineHeight');
       });
     });
   });

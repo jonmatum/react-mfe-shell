@@ -76,7 +76,8 @@ describe('Switch', () => {
       />
     );
 
-    expect(screen.getByText('Enable notifications')).toBeInTheDocument();
+    // Use getByLabelText to find the label specifically
+    expect(screen.getByLabelText('Enable notifications')).toBeInTheDocument();
   });
 
   it('displays description when provided', () => {
@@ -105,7 +106,8 @@ describe('Switch', () => {
       />
     );
 
-    expect(screen.getByText('Notifications')).toBeInTheDocument();
+    // Use getByLabelText for the label to avoid duplicate text issues
+    expect(screen.getByLabelText('Notifications')).toBeInTheDocument();
     expect(screen.getByText('Enable email notifications')).toBeInTheDocument();
   });
 
@@ -133,11 +135,12 @@ describe('Switch', () => {
     const onChange = vi.fn();
     const { rerender } = render(<Switch checked={false} onChange={onChange} />);
 
-    let thumb = screen.getByRole('switch').querySelector('span');
+    // Select the thumb element (the second span, not the sr-only span)
+    let thumb = screen.getByRole('switch').querySelectorAll('span')[1];
     expect(thumb).toHaveClass('translate-x-0');
 
     rerender(<Switch checked={true} onChange={onChange} />);
-    thumb = screen.getByRole('switch').querySelector('span');
+    thumb = screen.getByRole('switch').querySelectorAll('span')[1];
     expect(thumb).toHaveClass('translate-x-5');
   });
 });

@@ -3,22 +3,9 @@ import react from '@vitejs/plugin-react-swc';
 
 export default defineConfig({
   plugins: [react()],
+  root: '.',
   build: {
-    lib: {
-      entry: 'src/index.ts',
-      name: 'ReactMFETemplate',
-      fileName: format => `react-mfe-template.${format}.js`,
-    },
-    rollupOptions: {
-      external: ['react', 'react-dom', '@heroicons/react'],
-      output: {
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-          '@heroicons/react': 'HeroiconsReact',
-        },
-      },
-    },
+    outDir: 'dist-demo',
     sourcemap: true,
     minify: 'esbuild',
   },

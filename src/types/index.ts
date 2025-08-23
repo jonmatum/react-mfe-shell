@@ -50,12 +50,37 @@ export interface BaseComponentProps {
   children?: React.ReactNode;
 }
 
+// Button constants for better type inference and reusability
+export const BUTTON_VARIANTS = [
+  'primary',
+  'secondary',
+  'ghost',
+  'danger',
+  'success',
+  'warning',
+] as const;
+export const BUTTON_SIZES = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
+
+export type ButtonVariant = (typeof BUTTON_VARIANTS)[number];
+export type ButtonSize = (typeof BUTTON_SIZES)[number];
+
 export interface ButtonProps extends BaseComponentProps {
-  variant?: 'primary' | 'secondary' | 'ghost';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: ButtonVariant;
+  size?: ButtonSize;
   disabled?: boolean;
+  loading?: boolean;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   type?: 'button' | 'submit' | 'reset';
+  fullWidth?: boolean;
+}
+
+// Button Group for compound component pattern
+export interface ButtonGroupProps extends BaseComponentProps {
+  orientation?: 'horizontal' | 'vertical';
+  spacing?: 'none' | 'sm' | 'md' | 'lg';
+  attached?: boolean;
 }
 
 export interface ModalProps extends BaseComponentProps {
@@ -63,3 +88,6 @@ export interface ModalProps extends BaseComponentProps {
   onClose: () => void;
   title?: string;
 }
+
+// Re-export design token types
+export * from './tokens';

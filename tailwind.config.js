@@ -1,44 +1,83 @@
 /** @type {import('tailwindcss').Config} */
+// Import tokens from the built library
+const { tokens } = require('./dist/index.cjs');
+
 export default {
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',
+    './demo/**/*.{js,ts,jsx,tsx}',
   ],
   darkMode: 'class',
   theme: {
+    // Override default Tailwind tokens with our design system
     extend: {
-      fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Consolas', 'monospace'],
-      },
+      // Colors from design tokens
       colors: {
-        primary: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
+        // Base colors
+        ...tokens.colors.base,
+        
+        // Semantic colors
+        primary: tokens.colors.semantic.primary,
+        secondary: tokens.colors.semantic.secondary,
+        success: tokens.colors.semantic.success,
+        warning: tokens.colors.semantic.warning,
+        error: tokens.colors.semantic.error,
+        danger: tokens.colors.semantic.error, // Alias for error
+        info: tokens.colors.semantic.info,
+        
+        // Theme-aware colors (CSS custom properties)
+        background: {
+          primary: 'var(--color-background-primary)',
+          secondary: 'var(--color-background-secondary)',
+          tertiary: 'var(--color-background-tertiary)',
+        },
+        surface: {
+          primary: 'var(--color-surface-primary)',
+          secondary: 'var(--color-surface-secondary)',
+          tertiary: 'var(--color-surface-tertiary)',
+          elevated: 'var(--color-surface-elevated)',
+        },
+        text: {
+          primary: 'var(--color-text-primary)',
+          secondary: 'var(--color-text-secondary)',
+          tertiary: 'var(--color-text-tertiary)',
+          inverse: 'var(--color-text-inverse)',
+          disabled: 'var(--color-text-disabled)',
+        },
+        border: {
+          primary: 'var(--color-border-primary)',
+          secondary: 'var(--color-border-secondary)',
+          tertiary: 'var(--color-border-tertiary)',
+          focus: 'var(--color-border-focus)',
         },
       },
-      animation: {
-        'fade-in': 'fadeIn 0.2s ease-in-out',
-        'slide-up': 'slideUp 0.3s ease-out',
-      },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        slideUp: {
-          '0%': { transform: 'translateY(10px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-      },
+      
+      // Typography from design tokens
+      fontFamily: tokens.typography.fontFamily,
+      fontSize: tokens.typography.fontSize,
+      fontWeight: tokens.typography.fontWeight,
+      letterSpacing: tokens.typography.letterSpacing,
+      
+      // Spacing from design tokens
+      spacing: tokens.spacing,
+      
+      // Shadows from design tokens
+      boxShadow: tokens.shadows.box,
+      dropShadow: tokens.shadows.drop,
+      
+      // Border radius from design tokens
+      borderRadius: tokens.borderRadius,
+      
+      // Breakpoints from design tokens
+      screens: tokens.breakpoints,
+      
+      // Animation from design tokens
+      transitionDuration: tokens.animation.duration,
+      transitionTimingFunction: tokens.animation.timingFunction,
+      
+      // Z-index from design tokens
+      zIndex: tokens.zIndex,
     },
   },
   plugins: [],

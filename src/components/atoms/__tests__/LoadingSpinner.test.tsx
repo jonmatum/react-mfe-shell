@@ -26,9 +26,12 @@ describe('LoadingSpinner', () => {
     expect(screen.getByText('Loading data...')).toBeInTheDocument();
   });
 
-  it('does not display text when not provided', () => {
+  it('does not display visible text when not provided', () => {
     render(<LoadingSpinner />);
-    expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
+    // Should not have visible text (the p element), but aria-label is still present for accessibility
+    expect(screen.queryByRole('paragraph')).not.toBeInTheDocument();
+    // The sr-only text for accessibility should still be present
+    expect(screen.getByText('Loading')).toHaveClass('sr-only');
   });
 
   it('accepts custom className', () => {

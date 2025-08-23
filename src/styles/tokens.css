@@ -1,0 +1,313 @@
+/**
+ * Design Token CSS Custom Properties
+ * Provides theme-aware CSS variables for consistent styling
+ */
+
+/* =============================================================================
+   ROOT VARIABLES - Light Theme (Default)
+   ============================================================================= */
+
+:root {
+  /* Background Colors */
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f9fafb;
+  --color-background-tertiary: #f3f4f6;
+  
+  /* Surface Colors */
+  --color-surface-primary: #ffffff;
+  --color-surface-secondary: #f9fafb;
+  --color-surface-tertiary: #f3f4f6;
+  --color-surface-elevated: #ffffff;
+  
+  /* Text Colors */
+  --color-text-primary: #111827;
+  --color-text-secondary: #4b5563;
+  --color-text-tertiary: #6b7280;
+  --color-text-inverse: #ffffff;
+  --color-text-disabled: #9ca3af;
+  
+  /* Border Colors */
+  --color-border-primary: #e5e7eb;
+  --color-border-secondary: #d1d5db;
+  --color-border-tertiary: #9ca3af;
+  --color-border-focus: #2563eb;
+  
+  /* Interactive Colors */
+  --color-interactive-primary: #2563eb;
+  --color-interactive-primary-hover: #1d4ed8;
+  --color-interactive-primary-active: #1e40af;
+  --color-interactive-secondary: #f3f4f6;
+  --color-interactive-secondary-hover: #e5e7eb;
+  --color-interactive-secondary-active: #d1d5db;
+  
+  /* Status Colors */
+  --color-status-success: #16a34a;
+  --color-status-warning: #d97706;
+  --color-status-error: #dc2626;
+  --color-status-info: #0891b2;
+  
+  /* Shadow Variables */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  
+  /* Animation Variables */
+  --transition-duration-fast: 150ms;
+  --transition-duration-normal: 200ms;
+  --transition-duration-slow: 300ms;
+  --transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Component Variables */
+  --component-border-radius: 0.375rem;
+  --component-focus-ring: 0 0 0 2px var(--color-border-focus);
+}
+
+/* =============================================================================
+   DARK THEME OVERRIDES
+   ============================================================================= */
+
+.dark {
+  /* Background Colors */
+  --color-background-primary: #111827;
+  --color-background-secondary: #1f2937;
+  --color-background-tertiary: #374151;
+  
+  /* Surface Colors */
+  --color-surface-primary: #1f2937;
+  --color-surface-secondary: #374151;
+  --color-surface-tertiary: #4b5563;
+  --color-surface-elevated: #1f2937;
+  
+  /* Text Colors */
+  --color-text-primary: #f3f4f6;
+  --color-text-secondary: #d1d5db;
+  --color-text-tertiary: #9ca3af;
+  --color-text-inverse: #111827;
+  --color-text-disabled: #6b7280;
+  
+  /* Border Colors */
+  --color-border-primary: #374151;
+  --color-border-secondary: #4b5563;
+  --color-border-tertiary: #6b7280;
+  --color-border-focus: #60a5fa;
+  
+  /* Interactive Colors */
+  --color-interactive-primary: #3b82f6;
+  --color-interactive-primary-hover: #60a5fa;
+  --color-interactive-primary-active: #93c5fd;
+  --color-interactive-secondary: #374151;
+  --color-interactive-secondary-hover: #4b5563;
+  --color-interactive-secondary-active: #6b7280;
+  
+  /* Status Colors */
+  --color-status-success: #22c55e;
+  --color-status-warning: #f59e0b;
+  --color-status-error: #ef4444;
+  --color-status-info: #06b6d4;
+  
+  /* Shadow Variables (adjusted for dark theme) */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-base: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+}
+
+/* =============================================================================
+   HIGH CONTRAST MODE SUPPORT
+   ============================================================================= */
+
+@media (prefers-contrast: high) {
+  :root {
+    --color-border-primary: #000000;
+    --color-border-secondary: #000000;
+    --color-text-secondary: #000000;
+  }
+  
+  .dark {
+    --color-border-primary: #ffffff;
+    --color-border-secondary: #ffffff;
+    --color-text-secondary: #ffffff;
+  }
+}
+
+/* =============================================================================
+   REDUCED MOTION SUPPORT
+   ============================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-duration-fast: 0ms;
+    --transition-duration-normal: 0ms;
+    --transition-duration-slow: 0ms;
+  }
+}
+
+/* =============================================================================
+   COMPONENT-SPECIFIC CUSTOM PROPERTIES
+   ============================================================================= */
+
+/* Button Component Variables */
+:root {
+  --button-height-xs: 1.5rem;
+  --button-height-sm: 2rem;
+  --button-height-md: 2.5rem;
+  --button-height-lg: 3rem;
+  --button-height-xl: 3.5rem;
+  
+  --button-padding-xs: 0.25rem 0.5rem;
+  --button-padding-sm: 0.375rem 0.75rem;
+  --button-padding-md: 0.5rem 1rem;
+  --button-padding-lg: 0.625rem 1.5rem;
+  --button-padding-xl: 0.75rem 2rem;
+}
+
+/* Input Component Variables */
+:root {
+  --input-height-xs: 1.5rem;
+  --input-height-sm: 2rem;
+  --input-height-md: 2.5rem;
+  --input-height-lg: 3rem;
+  --input-height-xl: 3.5rem;
+  
+  --input-padding-xs: 0.25rem 0.5rem;
+  --input-padding-sm: 0.375rem 0.75rem;
+  --input-padding-md: 0.5rem 0.75rem;
+  --input-padding-lg: 0.625rem 1rem;
+  --input-padding-xl: 0.75rem 1.25rem;
+}
+
+/* Card Component Variables */
+:root {
+  --card-background: var(--color-surface-primary);
+  --card-border: 1px solid var(--color-border-primary);
+  --card-border-radius: var(--component-border-radius);
+  --card-shadow: var(--shadow-sm);
+  --card-padding: 1rem;
+}
+
+/* Modal Component Variables */
+:root {
+  --modal-backdrop: rgb(0 0 0 / 0.5);
+  --modal-background: var(--color-surface-primary);
+  --modal-border-radius: 0.5rem;
+  --modal-shadow: var(--shadow-xl);
+  --modal-max-width: 32rem;
+}
+
+/* Badge Component Variables */
+:root {
+  --badge-border-radius: 9999px;
+  --badge-font-weight: 500;
+  --badge-padding-sm: 0.125rem 0.5rem;
+  --badge-padding-md: 0.25rem 0.75rem;
+  --badge-padding-lg: 0.375rem 1rem;
+}
+
+/* Loading Spinner Variables */
+:root {
+  --spinner-size-xs: 0.75rem;
+  --spinner-size-sm: 1rem;
+  --spinner-size-md: 2rem;
+  --spinner-size-lg: 3rem;
+  --spinner-size-xl: 4rem;
+  --spinner-border-width: 2px;
+}
+
+/* Switch Component Variables */
+:root {
+  --switch-width: 2.75rem;
+  --switch-height: 1.5rem;
+  --switch-thumb-size: 1.25rem;
+  --switch-border-radius: 9999px;
+  --switch-transition: transform var(--transition-duration-normal) var(--transition-timing-function);
+}
+
+/* =============================================================================
+   UTILITY CLASSES FOR DESIGN TOKENS
+   ============================================================================= */
+
+/* Theme-aware background utilities */
+.bg-background-primary { background-color: var(--color-background-primary); }
+.bg-background-secondary { background-color: var(--color-background-secondary); }
+.bg-background-tertiary { background-color: var(--color-background-tertiary); }
+
+.bg-surface-primary { background-color: var(--color-surface-primary); }
+.bg-surface-secondary { background-color: var(--color-surface-secondary); }
+.bg-surface-tertiary { background-color: var(--color-surface-tertiary); }
+.bg-surface-elevated { background-color: var(--color-surface-elevated); }
+
+/* Theme-aware text utilities */
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-tertiary { color: var(--color-text-tertiary); }
+.text-inverse { color: var(--color-text-inverse); }
+.text-disabled { color: var(--color-text-disabled); }
+
+/* Theme-aware border utilities */
+.border-primary { border-color: var(--color-border-primary); }
+.border-secondary { border-color: var(--color-border-secondary); }
+.border-tertiary { border-color: var(--color-border-tertiary); }
+.border-focus { border-color: var(--color-border-focus); }
+
+/* Interactive state utilities */
+.interactive-primary {
+  background-color: var(--color-interactive-primary);
+  color: var(--color-text-inverse);
+}
+
+.interactive-primary:hover {
+  background-color: var(--color-interactive-primary-hover);
+}
+
+.interactive-primary:active {
+  background-color: var(--color-interactive-primary-active);
+}
+
+.interactive-secondary {
+  background-color: var(--color-interactive-secondary);
+  color: var(--color-text-primary);
+}
+
+.interactive-secondary:hover {
+  background-color: var(--color-interactive-secondary-hover);
+}
+
+.interactive-secondary:active {
+  background-color: var(--color-interactive-secondary-active);
+}
+
+/* Status utilities */
+.status-success { color: var(--color-status-success); }
+.status-warning { color: var(--color-status-warning); }
+.status-error { color: var(--color-status-error); }
+.status-info { color: var(--color-status-info); }
+
+.bg-status-success { background-color: var(--color-status-success); }
+.bg-status-warning { background-color: var(--color-status-warning); }
+.bg-status-error { background-color: var(--color-status-error); }
+.bg-status-info { background-color: var(--color-status-info); }
+
+/* Focus utilities */
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: var(--component-focus-ring);
+}
+
+/* Transition utilities */
+.transition-fast {
+  transition-duration: var(--transition-duration-fast);
+  transition-timing-function: var(--transition-timing-function);
+}
+
+.transition-normal {
+  transition-duration: var(--transition-duration-normal);
+  transition-timing-function: var(--transition-timing-function);
+}
+
+.transition-slow {
+  transition-duration: var(--transition-duration-slow);
+  transition-timing-function: var(--transition-timing-function);
+}

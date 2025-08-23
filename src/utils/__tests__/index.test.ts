@@ -126,6 +126,9 @@ describe('storage', () => {
 
 describe('theme', () => {
   beforeEach(() => {
+    // Clear theme cache before each test
+    theme.clearCache();
+
     // Mock window.matchMedia
     Object.defineProperty(window, 'matchMedia', {
       writable: true,
@@ -148,6 +151,7 @@ describe('theme', () => {
   });
 
   afterEach(() => {
+    theme.clearCache();
     vi.restoreAllMocks();
   });
 
@@ -269,12 +273,12 @@ describe('debounce', () => {
 describe('generateId', () => {
   it('generates id with default prefix', () => {
     const id = generateId();
-    expect(id).toMatch(/^id-[a-z0-9]{9}$/);
+    expect(id).toMatch(/^id-\d+-[a-z0-9]{9}$/);
   });
 
   it('generates id with custom prefix', () => {
     const id = generateId('custom');
-    expect(id).toMatch(/^custom-[a-z0-9]{9}$/);
+    expect(id).toMatch(/^custom-\d+-[a-z0-9]{9}$/);
   });
 
   it('generates unique ids', () => {
