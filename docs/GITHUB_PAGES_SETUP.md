@@ -47,6 +47,26 @@ Once GitHub Pages is enabled:
 1. **Pages not enabled**: Make sure GitHub Pages is enabled in repository settings
 2. **Workflow permissions**: The workflow has the necessary permissions to deploy to Pages
 3. **Build failures**: Check the Actions tab for detailed error logs
+4. **npm optional dependencies error**: The workflows include a workaround for the known npm/rollup issue
+
+### Known Issues and Fixes
+
+#### Rollup Optional Dependencies Error
+If you see an error like:
+```
+Error: Cannot find module @rollup/rollup-linux-x64-gnu
+```
+
+This is a known npm bug with optional dependencies. The workflows include a fix:
+- Remove npm cache to avoid stale dependencies
+- Explicitly install the required rollup binary
+- Use `--prefer-offline` and `--no-audit` flags
+
+#### Build Failures
+Common causes and solutions:
+- **TypeScript errors**: Fix type issues in the source code
+- **Missing dependencies**: Ensure all dependencies are in package.json
+- **Build script issues**: Verify build scripts work locally first
 
 ### Checking Deployment Status
 
