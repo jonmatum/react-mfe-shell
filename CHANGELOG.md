@@ -5,6 +5,45 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v4.0.0...react-mfe-shell-v5.0.0) (2025-08-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* Documentation file names have changed to follow kebab-case convention
+
+### Features
+
+* add personal signature to footer and documentation ([6f09878](https://github.com/jonmatum/react-mfe-shell/commit/6f09878f49375b1c3e5c80ae019afe27b6d35deb))
+* display package version in demo app ([4e574d9](https://github.com/jonmatum/react-mfe-shell/commit/4e574d91937ce36bcc30e0d58c70874858f93452))
+
+
+### Bug Fixes
+
+* **ci:** resolve npm optional dependencies issue in workflows ([5d48b93](https://github.com/jonmatum/react-mfe-shell/commit/5d48b9392fa64558b07c812a7e7c3fc8fb6ae3eb))
+* **ci:** resolve SWC native binding issues in GitHub Actions ([b569391](https://github.com/jonmatum/react-mfe-shell/commit/b56939153fbc6081a9ada52ac0ab2ec3dadfa6d6))
+
+
+### Documentation
+
+* add GitHub Pages setup instructions ([ee8dd66](https://github.com/jonmatum/react-mfe-shell/commit/ee8dd66077a967f8b96bebb14a2b2669e6ed5dff))
+* add personal signature to all documentation files ([7c298bf](https://github.com/jonmatum/react-mfe-shell/commit/7c298bfb005c8c0d76066036b04c82435356fd1b))
+* add troubleshooting info for npm optional dependencies issue ([b323291](https://github.com/jonmatum/react-mfe-shell/commit/b3232915c8bfbd5954ad77b2476ff2f6e2407292))
+* add troubleshooting info for SWC and Jekyll issues ([f18783b](https://github.com/jonmatum/react-mfe-shell/commit/f18783bc0a07f2ff22a0029a79dcc63db3d8d5d1))
+* complete personal signature rollout across all documentation ([521b889](https://github.com/jonmatum/react-mfe-shell/commit/521b8892bcc901948d7e4e37f710b076aab9193b))
+* standardize documentation structure and remove irrelevant content ([5116b3e](https://github.com/jonmatum/react-mfe-shell/commit/5116b3ee0fa901de16d90de547406fd9fab6e774))
+* update scripts README to reflect current project structure ([8f4ec6c](https://github.com/jonmatum/react-mfe-shell/commit/8f4ec6c6852c529b23c29c12f45da67cf4c887e7))
+
+
+### Code Refactoring
+
+* remove community message and all emojis from project ([1202bd1](https://github.com/jonmatum/react-mfe-shell/commit/1202bd18b6033885b31500558f99fc960b0695c1))
+
+
+### Continuous Integration
+
+* add GitHub Actions workflows for demo deployment ([c5c5644](https://github.com/jonmatum/react-mfe-shell/commit/c5c56440b412aa7064e69d8a2ab83b1691720e08))
+
 ## [4.0.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v3.0.0...react-mfe-shell-v4.0.0) (2025-08-23)
 
 
