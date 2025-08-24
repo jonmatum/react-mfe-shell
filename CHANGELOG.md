@@ -10,12 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### ⚠ BREAKING CHANGES
 
+* Demo now has separate versioning from main library
 * Documentation file names have changed to follow kebab-case convention
 
 ### Features
 
 * add personal signature to footer and documentation ([6f09878](https://github.com/jonmatum/react-mfe-shell/commit/6f09878f49375b1c3e5c80ae019afe27b6d35deb))
 * display package version in demo app ([4e574d9](https://github.com/jonmatum/react-mfe-shell/commit/4e574d91937ce36bcc30e0d58c70874858f93452))
+* implement multi-package versioning with release-please ([8d1445c](https://github.com/jonmatum/react-mfe-shell/commit/8d1445c89998c4a2ac17b8b6403ee5602047f2dc))
 
 
 ### Bug Fixes

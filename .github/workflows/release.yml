@@ -16,8 +16,11 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
-      tag_name: ${{ steps.release.outputs.tag_name }}
+      releases_created: ${{ steps.release.outputs.releases_created }}
+      library_release_created: ${{ steps.release.outputs['--release_created'] }}
+      demo_release_created: ${{ steps.release.outputs['demo--release_created'] }}
+      library_tag_name: ${{ steps.release.outputs['--tag_name'] }}
+      demo_tag_name: ${{ steps.release.outputs['demo--tag_name'] }}
     steps:
       - name: Release Please
         id: release
@@ -27,11 +30,11 @@ jobs:
           config-file: .release-please-config.json
           manifest-file: .release-please-manifest.json
 
-  # Build and publish when a release is created
-  build-and-publish:
+  # Build and publish library when a library release is created
+  build-and-publish-library:
     runs-on: ubuntu-latest
     needs: release-please
-    if: ${{ needs.release-please.outputs.release_created }}
+    if: ${{ needs.release-please.outputs.library_release_created }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -45,28 +48,14 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # Clean install to avoid npm cache issues
+          # Clean install to avoid cached native bindings issues
           rm -rf node_modules package-lock.json
-          # Install without optional dependencies to avoid rollup native binaries issue
-          npm install --no-optional
-          # Install tsup dependencies explicitly
-          npm install tsup esbuild --force
-
-      - name: Install scc for code analysis
-        run: |
-          # Install scc (Source Code Counter) using Go
-          go install github.com/boyter/scc/v3@latest
-          echo "$HOME/go/bin" >> $GITHUB_PATH
-          export PATH="$HOME/go/bin:$PATH"
-          scc --version
+          npm install
+          # Reinstall SWC to ensure correct native bindings
+          npm install --no-save @swc/core @swc/helpers
 
       - name: Run tests
         run: npm run test:run
-
-      - name: Run code analysis
-        run: |
-          export PATH="$HOME/go/bin:$PATH"
-          npm run analyze:json > code-analysis-${{ needs.release-please.outputs.tag_name }}.json
 
       - name: Build library
         run: npm run build:lib
@@ -83,24 +72,18 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build-artifacts-${{ needs.release-please.outputs.tag_name }}
+          name: library-build-artifacts-${{ needs.release-please.outputs.library_tag_name }}
           path: |
             dist/
             package.json
             README.md
             CHANGELOG.md
 
-      - name: Upload code analysis
-        uses: actions/upload-artifact@v4
-        with:
-          name: code-analysis-${{ needs.release-please.outputs.tag_name }}
-          path: code-analysis-${{ needs.release-please.outputs.tag_name }}.json
-
-  # Deploy example to GitHub Pages only on releases
-  deploy-example:
+  # Deploy demo when either library or demo is released
+  deploy-demo:
     runs-on: ubuntu-latest
-    needs: [release-please, build-and-publish]
-    if: ${{ needs.release-please.outputs.release_created }}
+    needs: release-please
+    if: ${{ needs.release-please.outputs.releases_created }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -112,40 +95,38 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Install main dependencies
+      - name: Install dependencies
         run: |
-          # Clean install to avoid npm cache issues
+          # Clean install to avoid cached native bindings issues
           rm -rf node_modules package-lock.json
-          # Install without optional dependencies to avoid rollup native binaries issue
-          npm install --no-optional
-          # Install tsup dependencies explicitly
-          npm install tsup esbuild --force
+          npm install
+          # Reinstall SWC to ensure correct native bindings
+          npm install --no-save @swc/core @swc/helpers
 
       - name: Build library
         run: npm run build:lib
 
-      - name: Install example dependencies
-        run: |
-          cd example
-          npm ci
+      - name: Build demo
+        run: npm run build:demo
 
-      - name: Build example for GitHub Pages
-        run: |
-          cd example
-          npm run build
-          # Add base path for GitHub Pages if needed
-          # sed -i 's|/assets/|./assets/|g' dist/index.html
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./example/dist
+          path: './dist-demo'
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Upload demo artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-build-artifacts-${{ github.sha }}
+          path: |
+            dist-demo/
+            demo/package.json
+            demo/CHANGELOG.md
