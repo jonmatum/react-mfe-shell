@@ -120,14 +120,14 @@ function HeroSection() {
         
         <p className="text-xl text-text-secondary mb-8 max-w-3xl mx-auto">
           A comprehensive micro frontend shell with atomic design principles, 
-          DRY optimization, and world-class developer experience. Now featuring 8 new 
-          form molecule components with built-in validation and accessibility.
+          featuring 20 production-ready components including 8 form molecules 
+          with built-in validation and accessibility.
         </p>
         
         <div className="flex flex-wrap justify-center gap-4 mb-12">
           <div className="flex items-center space-x-2 bg-surface-secondary px-4 py-2 rounded-lg">
             <CpuChipIcon className="w-5 h-5 text-success-600" />
-            <span className="text-text-primary font-medium">424 Tests Passing</span>
+            <span className="text-text-primary font-medium">556 Tests Passing</span>
           </div>
           <div className="flex items-center space-x-2 bg-surface-secondary px-4 py-2 rounded-lg">
             <ShieldCheckIcon className="w-5 h-5 text-success-600" />
@@ -139,7 +139,7 @@ function HeroSection() {
           </div>
           <div className="flex items-center space-x-2 bg-surface-secondary px-4 py-2 rounded-lg">
             <DocumentTextIcon className="w-5 h-5 text-primary-600" />
-            <span className="text-text-primary font-medium">8 Form Molecules</span>
+            <span className="text-text-primary font-medium">20 Components</span>
           </div>
         </div>
         

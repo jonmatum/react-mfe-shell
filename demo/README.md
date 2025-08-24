@@ -27,9 +27,9 @@ Experience the production-ready React MFE Shell design system with comprehensive
 - **Divider**: Section separators (horizontal/vertical)
 
 ### Developer Experience
-- **424 Tests Passing**: 100% reliability with comprehensive coverage
+- **556 Tests Passing**: 100% reliability with comprehensive coverage
 - **100% Type Safe**: Complete TypeScript coverage with strict checking
-- **Tree Shakeable**: Import only what you need (~47KB total, 15KB gzipped)
+- **Tree Shakeable**: Import only what you need (~124KB total, 24KB gzipped)
 - **Zero Dependencies**: No external runtime dependencies
 
 ## Demo Features

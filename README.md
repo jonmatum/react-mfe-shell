@@ -53,7 +53,7 @@ function App() {
 - **FileUpload**: Drag-and-drop with preview and validation
 
 ### Design System
-- **424 Tests**: 100% passing with comprehensive coverage
+- **556 Tests**: 100% passing with comprehensive coverage
 - **WCAG AA Compliant**: Full accessibility support
 - **Theme System**: Light/dark/system modes with persistence
 - **Design Tokens**: Consistent colors, spacing, typography
@@ -226,7 +226,7 @@ The library uses Tailwind CSS with CSS custom properties for theming:
 
 ## Bundle Size
 
-- **Core Library**: ~47KB (15KB gzipped)
+- **Core Library**: ~124KB (24KB gzipped)
 - **Tree Shakeable**: Import only what you use
 - **Zero Dependencies**: No external runtime dependencies
 - **Modern Build**: ESM and CJS formats included
@@ -514,9 +514,9 @@ Creates optimized builds:
 ### Bundle Analysis
 
 Current bundle sizes:
-- **ESM**: ~47KB (gzipped: ~15KB)
-- **CJS**: ~51KB (gzipped: ~16KB)
-- **CSS**: ~35KB (gzipped: ~6.5KB)
+- **ESM**: ~124KB (gzipped: ~24KB)
+- **CJS**: ~132KB (gzipped: ~26KB)
+- **CSS**: ~4.4KB (gzipped: ~1.2KB)
 
 ## Micro Frontend Integration
 
