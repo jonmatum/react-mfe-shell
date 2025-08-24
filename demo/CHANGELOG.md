@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.1](https://github.com/jonmatum/react-mfe-shell/compare/demo-v4.1.0...demo-v4.1.1) (2025-08-24)
+
+
+### Bug Fixes
+
+* resolve lint errors and apply code formatting ([3b45d33](https://github.com/jonmatum/react-mfe-shell/commit/3b45d33f06623e95a5e543fdecf37c6789755d8f))
+
 ## [4.1.0](https://github.com/jonmatum/react-mfe-shell/compare/demo-v4.0.0...demo-v4.1.0) (2025-08-24)
 
 
