@@ -1,6 +1,6 @@
 {
   "name": "@jonmatum/react-mfe-shell-demo",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "private": true,
   "type": "module",
   "description": "Interactive demo application for React MFE Shell component library",
