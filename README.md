@@ -1,53 +1,249 @@
 # React MFE Shell
 
-A production-ready micro frontend (MFE) shell built with React, TypeScript, and modern tooling. This shell provides a comprehensive design system, shared components, and utilities for building scalable micro frontend applications.
+A production-ready micro frontend shell with comprehensive design system, form molecules, and accessibility-first components.
 
-## Overview
-
-The React MFE Shell serves as the foundation for micro frontend architectures, providing:
-
-- **Design Token System**: Comprehensive design tokens with theme support
-- **Component Library**: Atomic design system with reusable components
-- **Theme Management**: Light, dark, and system theme modes with persistence
-- **Accessibility First**: WCAG AA compliance across all components
-- **Responsive Design**: Mobile-first approach with consistent breakpoints
-- **Modern Tooling**: React 18, TypeScript, Vite, Tailwind CSS
-- **Quality Assurance**: 90%+ test coverage with comprehensive testing
-- **Performance**: Tree-shaking, optimized bundles, and fast builds
-
-## Live Demo
-
-**[View Live Demo](https://jonmatum.github.io/react-mfe-shell/)**
-
-The interactive demo showcases all components and features:
-
-- Complete component library with atomic design system
-- Theme switching (light/dark/system modes)
-- Accessibility features and keyboard navigation
-- Responsive design across all screen sizes
-- Real-time component interactions
-
-*Demo is automatically deployed on every push to main branch.*
-
-## Quick Start
-
-### Prerequisites
-
-- Node.js 22.x LTS or higher
-- npm 10.x or higher
-
-### Installation
+## 🚀 Quick Start
 
 ```bash
-# Clone the repository
-git clone https://github.com/jonmatum/react-mfe-shell.git
-cd react-mfe-shell
+npm install @jonmatum/react-mfe-shell
+```
 
-# Install dependencies
-npm install
+```tsx
+import { 
+  SettingsProvider, 
+  Button, 
+  FormField, 
+  Input 
+} from '@jonmatum/react-mfe-shell';
 
-# Start development server
-npm run dev
+function App() {
+  return (
+    <SettingsProvider>
+      <FormField label="Email" required>
+        <Input type="email" placeholder="Enter email" />
+      </FormField>
+      <Button variant="primary">Submit</Button>
+    </SettingsProvider>
+  );
+}
+```
+
+## 📦 What's Included
+
+### Core Components (10)
+- **Button**: All variants, sizes, states, and icons
+- **Input**: Text inputs with validation and icons
+- **Badge**: Status indicators with removable option
+- **Avatar**: User avatars with fallbacks
+- **Card**: Content containers with consistent styling
+- **Modal**: Accessible overlays with focus management
+- **Switch**: Toggle controls with theme integration
+- **Text**: Typography with semantic variants
+- **LoadingSpinner**: Loading states in multiple sizes
+- **Divider**: Section separators (horizontal/vertical)
+
+### Form Molecules (8)
+- **FormField**: Universal wrapper with label/error handling
+- **SearchBox**: Debounced search with clear functionality
+- **Select**: Dropdown with search and multi-select
+- **Checkbox**: Accessible checkboxes with indeterminate state
+- **Radio**: RadioGroup with full accessibility
+- **SwitchField**: Enhanced switch with form integration
+- **Textarea**: Auto-resizing text areas
+- **FileUpload**: Drag-and-drop with preview and validation
+
+### Design System
+- **424 Tests**: 100% passing with comprehensive coverage
+- **WCAG AA Compliant**: Full accessibility support
+- **Theme System**: Light/dark/system modes with persistence
+- **Design Tokens**: Consistent colors, spacing, typography
+- **TypeScript**: Complete type safety and IntelliSense
+
+## 🎯 Key Features
+
+- **Zero Configuration**: Works out of the box
+- **Tree Shakeable**: Import only what you need
+- **Responsive**: Mobile-first design approach
+- **Accessible**: WCAG AA compliance built-in
+- **Themeable**: Light/dark mode with custom themes
+- **Form Ready**: Complete form ecosystem with validation
+- **Production Ready**: Used in real applications
+
+## 📖 Usage Examples
+
+### Basic Form
+```tsx
+import { FormField, Input, Button, Checkbox } from '@jonmatum/react-mfe-shell';
+
+function ContactForm() {
+  const [email, setEmail] = useState('');
+  const [subscribe, setSubscribe] = useState(false);
+
+  return (
+    <form>
+      <FormField 
+        label="Email Address" 
+        description="We'll never share your email"
+        required
+      >
+        <Input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="john@example.com"
+        />
+      </FormField>
+      
+      <Checkbox
+        checked={subscribe}
+        onChange={setSubscribe}
+        label="Subscribe to newsletter"
+      />
+      
+      <Button type="submit" variant="primary">
+        Submit
+      </Button>
+    </form>
+  );
+}
+```
+
+### Advanced Select with Search
+```tsx
+import { FormField, Select } from '@jonmatum/react-mfe-shell';
+
+const countries = [
+  { value: 'us', label: 'United States' },
+  { value: 'ca', label: 'Canada' },
+  { value: 'uk', label: 'United Kingdom' }
+];
+
+function CountrySelector() {
+  const [country, setCountry] = useState('');
+
+  return (
+    <FormField label="Country" required>
+      <Select
+        value={country}
+        onChange={setCountry}
+        options={countries}
+        searchable
+        placeholder="Choose a country..."
+      />
+    </FormField>
+  );
+}
+```
+
+### Theme Management
+```tsx
+import { SettingsProvider, useSettings, Button } from '@jonmatum/react-mfe-shell';
+
+function ThemeToggle() {
+  const { settings, updateSettings } = useSettings();
+  
+  return (
+    <Button
+      variant="ghost"
+      onClick={() => updateSettings({ 
+        theme: settings.theme === 'dark' ? 'light' : 'dark' 
+      })}
+    >
+      Toggle Theme
+    </Button>
+  );
+}
+
+// Wrap your app
+function App() {
+  return (
+    <SettingsProvider>
+      <ThemeToggle />
+    </SettingsProvider>
+  );
+}
+```
+
+## 🔧 API Reference
+
+### Component Props Patterns
+
+All components follow consistent prop patterns:
+
+```tsx
+// Size variants
+size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+
+// Color variants  
+variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'ghost'
+
+// States
+disabled?: boolean
+loading?: boolean
+required?: boolean
+
+// Form components
+label?: string
+description?: string
+error?: string
+```
+
+### Form Validation
+```tsx
+import { validateField, validationPatterns } from '@jonmatum/react-mfe-shell';
+
+// Built-in validation
+const error = validateField(email, {
+  required: true,
+  pattern: validationPatterns.email
+});
+
+// Custom validation
+const error = validateField(password, {
+  required: 'Password is required',
+  minLength: { value: 8, message: 'Must be at least 8 characters' },
+  custom: (value) => value.includes('@') ? 'Cannot contain @' : undefined
+});
+```
+
+## 🎨 Styling & Customization
+
+The library uses Tailwind CSS with CSS custom properties for theming:
+
+```css
+:root {
+  --color-primary-600: 37 99 235;
+  --color-success-600: 22 163 74;
+  --color-warning-600: 217 119 6;
+  --color-danger-600: 220 38 38;
+}
+
+.dark {
+  --color-primary-600: 59 130 246;
+  /* Dark theme overrides */
+}
+```
+
+## 📊 Bundle Size
+
+- **Core Library**: ~47KB (15KB gzipped)
+- **Tree Shakeable**: Import only what you use
+- **Zero Dependencies**: No external runtime dependencies
+- **Modern Build**: ESM and CJS formats included
+
+## 🔗 Links
+
+- **[Live Demo](https://jonmatum.github.io/react-mfe-shell/)**: Interactive component showcase
+- **[NPM Package](https://www.npmjs.com/package/@jonmatum/react-mfe-shell)**: Install and version info
+- **[GitHub](https://github.com/jonmatum/react-mfe-shell)**: Source code and issues
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) for details.
+
+---
+
+**Built with ❤️ for scalable React applications**
 ```
 
 ### Using in Your MFE

@@ -1,136 +1,204 @@
 # Implementation Guide
 
-This guide provides detailed instructions for implementing and extending the React MFE Shell in your micro frontend applications.
+Step-by-step guide for integrating React MFE Shell into your application.
 
-## Getting Started
-
-### Installation
+## Installation
 
 ```bash
 npm install @jonmatum/react-mfe-shell
 ```
 
-### Basic Setup
+## Basic Setup
+
+### 1. Wrap Your App with SettingsProvider
 
 ```tsx
-// main.tsx or index.tsx
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import { SettingsProvider } from '@jonmatum/react-mfe-shell';
-import App from './App';
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <SettingsProvider>
-      <App />
-    </SettingsProvider>
-  </React.StrictMode>
-);
-```
-
-### CSS Integration
-
-Import the CSS file in your main entry point:
-
-```tsx
-// Import the design system styles
 import '@jonmatum/react-mfe-shell/dist/style.css';
+
+function App() {
+  return (
+    <SettingsProvider>
+      <YourApp />
+    </SettingsProvider>
+  );
+}
 ```
 
-Or in your CSS file:
+### 2. Configure Tailwind CSS
+
+Add to your `tailwind.config.js`:
+
+```js
+import { tokens } from '@jonmatum/react-mfe-shell';
+
+export default {
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@jonmatum/react-mfe-shell/dist/**/*.js'
+  ],
+  theme: {
+    extend: {
+      colors: {
+        // Theme-aware colors
+        'surface-primary': 'rgb(var(--color-surface-primary) / <alpha-value>)',
+        'surface-secondary': 'rgb(var(--color-surface-secondary) / <alpha-value>)',
+        'text-primary': 'rgb(var(--color-text-primary) / <alpha-value>)',
+        'text-secondary': 'rgb(var(--color-text-secondary) / <alpha-value>)',
+        'border-primary': 'rgb(var(--color-border-primary) / <alpha-value>)',
+        
+        // Semantic colors
+        primary: tokens.colors.semantic.primary,
+        secondary: tokens.colors.semantic.secondary,
+        success: tokens.colors.semantic.success,
+        warning: tokens.colors.semantic.warning,
+        danger: tokens.colors.semantic.danger,
+      },
+      spacing: tokens.spacing,
+      fontFamily: tokens.typography.fontFamily,
+    },
+  },
+  plugins: [],
+};
+```
+
+### 3. Add CSS Variables
+
+Add to your main CSS file:
 
 ```css
 @import '@jonmatum/react-mfe-shell/dist/style.css';
+
+:root {
+  /* Light theme */
+  --color-surface-primary: 255 255 255;
+  --color-surface-secondary: 249 250 251;
+  --color-text-primary: 17 24 39;
+  --color-text-secondary: 107 114 128;
+  --color-border-primary: 229 231 235;
+}
+
+.dark {
+  /* Dark theme */
+  --color-surface-primary: 17 24 39;
+  --color-surface-secondary: 31 41 55;
+  --color-text-primary: 243 244 246;
+  --color-text-secondary: 156 163 175;
+  --color-border-primary: 75 85 99;
+}
 ```
 
 ## Component Usage
 
-### Using Atomic Components
+### Basic Components
 
 ```tsx
-import { Button, Input, Badge, LoadingSpinner, Switch } from '@jonmatum/react-mfe-shell';
+import { Button, Input, Badge, Card } from '@jonmatum/react-mfe-shell';
 
-function MyForm() {
-  const [loading, setLoading] = useState(false);
-  const [enabled, setEnabled] = useState(false);
-
+function MyComponent() {
   return (
-    <div className="space-y-4">
-      <Input
-        label="Email Address"
-        type="email"
-        placeholder="Enter your email"
-        required
+    <Card className="p-6">
+      <h2 className="text-text-primary mb-4">Welcome</h2>
+      
+      <Input 
+        placeholder="Enter your name"
+        className="mb-4"
       />
       
-      <Switch
-        checked={enabled}
-        onChange={setEnabled}
-        label="Enable notifications"
-      />
-      
-      <div className="flex items-center space-x-2">
-        <Button
-          variant="primary"
-          loading={loading}
-          onClick={() => setLoading(true)}
-        >
-          Submit
-        </Button>
-        
-        <Badge variant="success">
-          Active
-        </Badge>
+      <div className="flex gap-2 mb-4">
+        <Badge variant="success">Active</Badge>
+        <Badge variant="primary">New</Badge>
       </div>
       
-      {loading && <LoadingSpinner size="md" />}
-    </div>
+      <Button variant="primary">
+        Get Started
+      </Button>
+    </Card>
   );
 }
 ```
 
-### Using Molecule Components
+### Form Components
 
 ```tsx
-import { Modal, Card } from '@jonmatum/react-mfe-shell';
+import { 
+  FormField, 
+  Input, 
+  Select, 
+  Checkbox, 
+  Button 
+} from '@jonmatum/react-mfe-shell';
 
-function MyApp() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+function ContactForm() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    country: '',
+    subscribe: false
+  });
+
+  const countries = [
+    { value: 'us', label: 'United States' },
+    { value: 'ca', label: 'Canada' }
+  ];
 
   return (
-    <div>
-      <Card>
-        <Card.Header>
-          <h2>Welcome</h2>
-        </Card.Header>
-        <Card.Body>
-          <p>This is a card component with compound pattern.</p>
-        </Card.Body>
-        <Card.Footer>
-          <Button onClick={() => setIsModalOpen(true)}>
-            Open Modal
-          </Button>
-        </Card.Footer>
-      </Card>
+    <form className="space-y-6">
+      <FormField label="Full Name" required>
+        <Input
+          value={formData.name}
+          onChange={(e) => setFormData(prev => ({ 
+            ...prev, 
+            name: e.target.value 
+          }))}
+        />
+      </FormField>
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Example Modal"
-      >
-        <p>Modal content goes here.</p>
-      </Modal>
-    </div>
+      <FormField label="Email" required>
+        <Input
+          type="email"
+          value={formData.email}
+          onChange={(e) => setFormData(prev => ({ 
+            ...prev, 
+            email: e.target.value 
+          }))}
+        />
+      </FormField>
+
+      <FormField label="Country">
+        <Select
+          value={formData.country}
+          onChange={(value) => setFormData(prev => ({ 
+            ...prev, 
+            country: value 
+          }))}
+          options={countries}
+          searchable
+        />
+      </FormField>
+
+      <Checkbox
+        checked={formData.subscribe}
+        onChange={(checked) => setFormData(prev => ({ 
+          ...prev, 
+          subscribe: checked 
+        }))}
+        label="Subscribe to newsletter"
+      />
+
+      <Button type="submit" variant="primary">
+        Submit
+      </Button>
+    </form>
   );
 }
 ```
 
-## Theme Management
-
-### Using the Settings Context
+### Theme Management
 
 ```tsx
-import { useSettings } from '@jonmatum/react-mfe-shell';
+import { useSettings, Button } from '@jonmatum/react-mfe-shell';
 
 function ThemeToggle() {
   const { settings, updateSettings } = useSettings();
@@ -141,240 +209,197 @@ function ThemeToggle() {
   };
 
   return (
-    <Button onClick={toggleTheme}>
-      Current theme: {settings.theme}
+    <Button variant="ghost" onClick={toggleTheme}>
+      {settings.theme === 'light' ? '🌙' : '☀️'}
     </Button>
   );
 }
 ```
 
-### Advanced Theme Management
+## Advanced Usage
+
+### Custom Validation
 
 ```tsx
-import { setupThemeManagement } from '@jonmatum/react-mfe-shell';
+import { validateField, validationPatterns } from '@jonmatum/react-mfe-shell';
 
-// Set up theme management with callback
-const { setTheme, cleanup } = setupThemeManagement((mode, resolvedTheme) => {
-  console.log(`Theme changed to ${mode} (resolved: ${resolvedTheme})`);
-  
-  // Update your app's theme-dependent logic
-  document.body.className = `theme-${resolvedTheme}`;
-});
+function useFormValidation() {
+  const [errors, setErrors] = useState({});
 
-// Change theme programmatically
-setTheme('system'); // Follow system preference
-setTheme('dark');   // Force dark mode
-setTheme('light');  // Force light mode
+  const validateEmail = (email) => {
+    const error = validateField(email, {
+      required: 'Email is required',
+      pattern: {
+        value: validationPatterns.email,
+        message: 'Please enter a valid email'
+      }
+    });
+    
+    setErrors(prev => ({ ...prev, email: error }));
+    return !error;
+  };
 
-// Cleanup when component unmounts
-useEffect(() => cleanup, []);
-```
-
-## Design Tokens
-
-### Accessing Design Tokens
-
-```tsx
-import { tokens } from '@jonmatum/react-mfe-shell';
-
-// Use tokens in your components
-const MyComponent = () => (
-  <div
-    style={{
-      padding: tokens.spacing[4],
-      backgroundColor: tokens.colors.semantic.primary[500],
-      borderRadius: tokens.borderRadius.md,
-      boxShadow: tokens.shadows.box.md,
-    }}
-  >
-    Styled with design tokens
-  </div>
-);
-```
-
-### Tailwind CSS Integration
-
-If you're using Tailwind CSS, extend your configuration:
-
-```javascript
-// tailwind.config.js
-import { tokens } from '@jonmatum/react-mfe-shell';
-
-export default {
-  theme: {
-    extend: {
-      colors: {
-        ...tokens.colors.base,
-        primary: tokens.colors.semantic.primary,
-        secondary: tokens.colors.semantic.secondary,
+  const validatePassword = (password) => {
+    const error = validateField(password, {
+      required: 'Password is required',
+      minLength: {
+        value: 8,
+        message: 'Password must be at least 8 characters'
       },
-      spacing: tokens.spacing,
-      fontFamily: tokens.typography.fontFamily,
-      fontSize: tokens.typography.fontSize,
-      borderRadius: tokens.borderRadius,
-      boxShadow: tokens.shadows.box,
-    },
-  },
-};
-```
+      custom: (value) => {
+        if (!/[A-Z]/.test(value)) return 'Must contain uppercase letter';
+        if (!/[0-9]/.test(value)) return 'Must contain number';
+        return undefined;
+      }
+    });
+    
+    setErrors(prev => ({ ...prev, password: error }));
+    return !error;
+  };
 
-Then use theme-aware classes:
-
-```tsx
-<div className="bg-surface-primary text-text-primary border border-border-primary">
-  This adapts to the current theme automatically
-</div>
-```
-
-## Creating Custom Components
-
-### Following the Design System
-
-When creating custom components, follow the established patterns:
-
-```tsx
-import React from 'react';
-import { BaseComponentProps } from '@jonmatum/react-mfe-shell';
-import { classNames } from '@jonmatum/react-mfe-shell';
-
-interface CustomComponentProps extends BaseComponentProps {
-  variant?: 'default' | 'highlighted';
-  size?: 'sm' | 'md' | 'lg';
+  return { errors, validateEmail, validatePassword };
 }
+```
 
-const CustomComponent = React.memo<CustomComponentProps>(({
-  variant = 'default',
-  size = 'md',
-  className,
-  children,
-  ...props
-}) => {
+### Modal Workflows
+
+```tsx
+import { Modal, Button, FormField, Input } from '@jonmatum/react-mfe-shell';
+
+function UserProfile() {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [userData, setUserData] = useState({ name: '', email: '' });
+
   return (
-    <div
-      className={classNames(
-        // Base styles
-        'rounded-md border transition-colors',
-        
-        // Size variants
-        {
-          'p-2 text-sm': size === 'sm',
-          'p-4 text-base': size === 'md',
-          'p-6 text-lg': size === 'lg',
-        },
-        
-        // Variant styles
-        {
-          'bg-surface-primary border-border-primary': variant === 'default',
-          'bg-primary-50 border-primary-200': variant === 'highlighted',
-        },
-        
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </div>
+    <>
+      <Button onClick={() => setIsEditModalOpen(true)}>
+        Edit Profile
+      </Button>
+
+      <Modal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        title="Edit Profile"
+        size="md"
+      >
+        <div className="space-y-4">
+          <FormField label="Name">
+            <Input
+              value={userData.name}
+              onChange={(e) => setUserData(prev => ({ 
+                ...prev, 
+                name: e.target.value 
+              }))}
+            />
+          </FormField>
+
+          <FormField label="Email">
+            <Input
+              type="email"
+              value={userData.email}
+              onChange={(e) => setUserData(prev => ({ 
+                ...prev, 
+                email: e.target.value 
+              }))}
+            />
+          </FormField>
+
+          <div className="flex justify-end gap-2 pt-4">
+            <Button 
+              variant="ghost" 
+              onClick={() => setIsEditModalOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button variant="primary">
+              Save Changes
+            </Button>
+          </div>
+        </div>
+      </Modal>
+    </>
   );
-});
-
-CustomComponent.displayName = 'CustomComponent';
-
-export default CustomComponent;
-```
-
-### Adding TypeScript Support
-
-Create proper type definitions:
-
-```tsx
-// types.ts
-export interface CustomComponentProps extends BaseComponentProps {
-  variant?: 'default' | 'highlighted';
-  size?: 'sm' | 'md' | 'lg';
-  onCustomEvent?: (data: string) => void;
 }
-
-// Export types for consumers
-export type { CustomComponentProps };
 ```
 
-## Testing Integration
+## Best Practices
 
-### Testing Components with the Shell
-
+### 1. Component Composition
 ```tsx
-import { render, screen } from '@testing-library/react';
-import { SettingsProvider } from '@jonmatum/react-mfe-shell';
-import MyComponent from './MyComponent';
-
-// Test wrapper with providers
-const TestWrapper = ({ children }: { children: React.ReactNode }) => (
-  <SettingsProvider>
-    {children}
-  </SettingsProvider>
-);
-
-describe('MyComponent', () => {
-  it('renders with theme context', () => {
-    render(
-      <MyComponent />,
-      { wrapper: TestWrapper }
-    );
-    
-    expect(screen.getByRole('button')).toBeInTheDocument();
-  });
-
-  it('responds to theme changes', () => {
-    const { rerender } = render(
-      <SettingsProvider defaultSettings={{ theme: 'light' }}>
-        <MyComponent />
-      </SettingsProvider>
-    );
-    
-    // Test light theme
-    expect(screen.getByTestId('component')).toHaveClass('light-theme');
-    
-    // Change to dark theme
-    rerender(
-      <SettingsProvider defaultSettings={{ theme: 'dark' }}>
-        <MyComponent />
-      </SettingsProvider>
-    );
-    
-    expect(screen.getByTestId('component')).toHaveClass('dark-theme');
-  });
-});
-```
-
-## Performance Optimization
-
-### Tree Shaking
-
-Import only what you need:
-
-```tsx
-// Good - tree-shakeable imports
-import { Button, Input } from '@jonmatum/react-mfe-shell';
-
-// Avoid - imports entire library
-import * as MFEShell from '@jonmatum/react-mfe-shell';
-```
-
-### Lazy Loading
-
-For large applications, consider lazy loading:
-
-```tsx
-import { lazy, Suspense } from 'react';
-import { LoadingSpinner } from '@jonmatum/react-mfe-shell';
-
-const HeavyComponent = lazy(() => import('./HeavyComponent'));
-
-function App() {
+// Good: Compose components for reusability
+function UserCard({ user }) {
   return (
-    <Suspense fallback={<LoadingSpinner size="lg" />}>
-      <HeavyComponent />
-    </Suspense>
+    <Card className="p-4">
+      <div className="flex items-center gap-3">
+        <Avatar src={user.avatar} alt={user.name} />
+        <div>
+          <Text variant="body" weight="semibold">{user.name}</Text>
+          <Text variant="caption" color="secondary">{user.email}</Text>
+        </div>
+        <Badge variant={user.isActive ? 'success' : 'secondary'}>
+          {user.isActive ? 'Active' : 'Inactive'}
+        </Badge>
+      </div>
+    </Card>
+  );
+}
+```
+
+### 2. Form State Management
+```tsx
+// Good: Use consistent form patterns
+function useFormState(initialState) {
+  const [data, setData] = useState(initialState);
+  const [errors, setErrors] = useState({});
+
+  const updateField = (field, value) => {
+    setData(prev => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  const setFieldError = (field, error) => {
+    setErrors(prev => ({ ...prev, [field]: error }));
+  };
+
+  return { data, errors, updateField, setFieldError };
+}
+```
+
+### 3. Accessibility
+```tsx
+// Good: Always include proper labels and ARIA attributes
+function SearchForm() {
+  return (
+    <FormField 
+      label="Search Products" 
+      description="Enter keywords to find products"
+    >
+      <SearchBox
+        placeholder="Search..."
+        aria-label="Search products"
+        // Component handles ARIA attributes automatically
+      />
+    </FormField>
+  );
+}
+```
+
+### 4. Theme Consistency
+```tsx
+// Good: Use theme-aware classes
+function Layout({ children }) {
+  return (
+    <div className="min-h-screen bg-surface-primary">
+      <header className="bg-surface-secondary border-b border-border-primary p-4">
+        <Text variant="h1" className="text-text-primary">My App</Text>
+      </header>
+      <main className="container mx-auto p-4">
+        {children}
+      </main>
+    </div>
   );
 }
 ```
@@ -383,53 +408,16 @@ function App() {
 
 ### Common Issues
 
-1. **Styles not applying**: Make sure you've imported the CSS file
-2. **Theme not working**: Ensure components are wrapped in `SettingsProvider`
-3. **TypeScript errors**: Check that you're using compatible React and TypeScript versions
+1. **Styles not applying**: Ensure you've imported the CSS file
+2. **Theme not working**: Check that SettingsProvider wraps your app
+3. **TypeScript errors**: Make sure you have the latest type definitions
+4. **Build errors**: Verify Tailwind configuration includes the library path
 
-### Debug Mode
+### Performance Tips
 
-Enable debug mode for development:
+1. **Tree shaking**: Import only the components you need
+2. **Bundle analysis**: Use webpack-bundle-analyzer to check bundle size
+3. **Lazy loading**: Use React.lazy for large forms or modals
+4. **Memoization**: Use React.memo for expensive components
 
-```tsx
-<SettingsProvider debug={process.env.NODE_ENV === 'development'}>
-  <App />
-</SettingsProvider>
-```
-
-### Bundle Analysis
-
-Analyze your bundle to ensure optimal imports:
-
-```bash
-# Using webpack-bundle-analyzer
-npm install --save-dev webpack-bundle-analyzer
-npx webpack-bundle-analyzer build/static/js/*.js
-```
-
-## Migration Guide
-
-### From Version 3.x to 4.x
-
-1. **Update imports**: Some component names may have changed
-2. **Check theme API**: Theme management API has been enhanced
-3. **Update tests**: Test utilities may have new APIs
-4. **Review breaking changes**: Check CHANGELOG.md for breaking changes
-
-### From Other Design Systems
-
-1. **Map components**: Create a mapping of your existing components to MFE Shell components
-2. **Update theme tokens**: Migrate your design tokens to the new system
-3. **Test thoroughly**: Ensure visual consistency across your application
-
-## Best Practices
-
-1. **Use semantic tokens**: Prefer semantic color tokens over base colors
-2. **Follow atomic design**: Structure your components following atomic principles
-3. **Test accessibility**: Use screen readers and keyboard navigation
-4. **Optimize performance**: Import only what you need
-5. **Document customizations**: Keep track of any custom components or overrides
-
----
-
-*Pura Vida & Happy Coding!*
+This guide covers the essential implementation patterns for using React MFE Shell effectively in your applications.
