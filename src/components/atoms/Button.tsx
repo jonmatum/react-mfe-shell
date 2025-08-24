@@ -84,8 +84,12 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonProps>(
     const ariaAttributes = createAriaAttributes({
       disabled: disabled || loading,
       loading,
-      label: (props as Record<string, unknown>)['aria-label'] as string | undefined,
-      describedBy: (props as Record<string, unknown>)['aria-describedby'] as string | undefined,
+      label: (props as Record<string, unknown>)['aria-label'] as
+        | string
+        | undefined,
+      describedBy: (props as Record<string, unknown>)['aria-describedby'] as
+        | string
+        | undefined,
     });
 
     // DRY spinner size mapping
