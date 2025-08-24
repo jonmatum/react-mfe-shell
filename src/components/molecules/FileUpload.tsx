@@ -66,48 +66,49 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
     }, []);
 
     // Validate files
-    const validateFiles = useCallback((
-      fileList: File[]
-    ): { valid: File[]; errors: string[] } => {
-      const valid: File[] = [];
-      const errors: string[] = [];
+    const validateFiles = useCallback(
+      (fileList: File[]): { valid: File[]; errors: string[] } => {
+        const valid: File[] = [];
+        const errors: string[] = [];
 
-      // Check total number of files
-      if (fileList.length > maxFiles) {
-        errors.push(`Maximum ${maxFiles} files allowed`);
-        return { valid, errors };
-      }
-
-      fileList.forEach(file => {
-        // Check file size
-        if (file.size > maxSize) {
-          errors.push(
-            `${file.name} is too large. Maximum size is ${formatFileSize(maxSize)}`
-          );
-          return;
+        // Check total number of files
+        if (fileList.length > maxFiles) {
+          errors.push(`Maximum ${maxFiles} files allowed`);
+          return { valid, errors };
         }
 
-        // Check file type if accept is specified
-        if (accept) {
-          const acceptedTypes = accept.split(',').map(type => type.trim());
-          const isValidType = acceptedTypes.some(type => {
-            if (type.startsWith('.')) {
-              return file.name.toLowerCase().endsWith(type.toLowerCase());
-            }
-            return file.type.match(type.replace('*', '.*'));
-          });
-
-          if (!isValidType) {
-            errors.push(`${file.name} is not an accepted file type`);
+        fileList.forEach(file => {
+          // Check file size
+          if (file.size > maxSize) {
+            errors.push(
+              `${file.name} is too large. Maximum size is ${formatFileSize(maxSize)}`
+            );
             return;
           }
-        }
 
-        valid.push(file);
-      });
+          // Check file type if accept is specified
+          if (accept) {
+            const acceptedTypes = accept.split(',').map(type => type.trim());
+            const isValidType = acceptedTypes.some(type => {
+              if (type.startsWith('.')) {
+                return file.name.toLowerCase().endsWith(type.toLowerCase());
+              }
+              return file.type.match(type.replace('*', '.*'));
+            });
 
-      return { valid, errors };
-    }, [maxFiles, maxSize, accept, formatFileSize]);
+            if (!isValidType) {
+              errors.push(`${file.name} is not an accepted file type`);
+              return;
+            }
+          }
+
+          valid.push(file);
+        });
+
+        return { valid, errors };
+      },
+      [maxFiles, maxSize, accept, formatFileSize]
+    );
 
     // Handle file selection
     const handleFiles = useCallback(

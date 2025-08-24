@@ -96,12 +96,14 @@ export const validateField = <T = unknown>(
 };
 
 // Form field hook for consistent state management
-export const useFormField = <T = string>({
-  initialValue = '' as T,
-  validation,
-  validateOnChange = false,
-  validateOnBlur = true,
-}: UseFormFieldOptions<T> = {} as UseFormFieldOptions<T>) => {
+export const useFormField = <T = string>(
+  {
+    initialValue = '' as T,
+    validation,
+    validateOnChange = false,
+    validateOnBlur = true,
+  }: UseFormFieldOptions<T> = {} as UseFormFieldOptions<T>
+) => {
   const [state, setState] = useState<FormFieldState<T>>({
     value: initialValue,
     error: undefined,
