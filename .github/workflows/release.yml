@@ -32,11 +32,73 @@ jobs:
           config-file: .release-please-config.json
           manifest-file: .release-please-manifest.json
 
-  # Build and publish library when a library release is created
-  build-and-publish-library:
+  # Build and test (shared for both library and demo)
+  build:
     runs-on: ubuntu-latest
     needs: release-please
-    if: ${{ needs.release-please.outputs.library_release_created == 'true' }}
+    if: ${{ needs.release-please.outputs.releases_created == 'true' }}
+    outputs:
+      build_successful: ${{ steps.build.outputs.success }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          # Clean install to avoid cached native bindings issues
+          rm -rf node_modules package-lock.json
+          npm install
+          # Reinstall SWC to ensure correct native bindings
+          npm install --no-save @swc/core @swc/helpers
+
+      - name: Run tests with memory optimization
+        run: |
+          # Increase Node.js memory limit for tests
+          export NODE_OPTIONS="--max-old-space-size=4096"
+          npm run test:run
+
+      - name: Run type check
+        run: npm run type-check
+
+      - name: Build library
+        run: npm run build:lib
+
+      - name: Build demo
+        run: npm run build:demo
+
+      - name: Mark build as successful
+        id: build
+        run: echo "success=true" >> $GITHUB_OUTPUT
+
+      - name: Upload library build artifacts
+        if: ${{ needs.release-please.outputs.library_release_created == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: library-build-${{ needs.release-please.outputs.library_tag_name }}
+          path: |
+            dist/
+            package.json
+            README.md
+            CHANGELOG.md
+
+      - name: Upload demo build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-build-${{ github.sha }}
+          path: dist-demo/
+
+  # Publish library to npm
+  publish-library:
+    runs-on: ubuntu-latest
+    needs: [release-please, build]
+    if: ${{ needs.release-please.outputs.library_release_created == 'true' && needs.build.outputs.build_successful == 'true' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -47,69 +109,30 @@ jobs:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install dependencies
-        run: |
-          # Clean install to avoid cached native bindings issues
-          rm -rf node_modules package-lock.json
-          npm install
-          # Reinstall SWC to ensure correct native bindings
-          npm install --no-save @swc/core @swc/helpers
+      - name: Download library build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: library-build-${{ needs.release-please.outputs.library_tag_name }}
 
-      - name: Run tests
-        run: npm run test:run
-
-      - name: Build library
-        run: npm run build:lib
-
-      - name: Run type check
-        run: npm run type-check
-
-      # Publish to npm
       - name: Publish to npm
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: library-build-artifacts-${{ needs.release-please.outputs.library_tag_name }}
-          path: |
-            dist/
-            package.json
-            README.md
-            CHANGELOG.md
-
-  # Deploy demo when any release is created
+  # Deploy demo to GitHub Pages
   deploy-demo:
     runs-on: ubuntu-latest
-    needs: release-please
-    if: ${{ needs.release-please.outputs.releases_created == 'true' }}
+    needs: [release-please, build]
+    if: ${{ needs.release-please.outputs.releases_created == 'true' && needs.build.outputs.build_successful == 'true' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Download demo build artifacts
+        uses: actions/download-artifact@v4
         with:
-          node-version: '22'
-
-      - name: Install dependencies
-        run: |
-          # Clean install to avoid cached native bindings issues
-          rm -rf node_modules package-lock.json
-          npm install
-          # Reinstall SWC to ensure correct native bindings
-          npm install --no-save @swc/core @swc/helpers
-
-      - name: Build library
-        run: npm run build:lib
-
-      - name: Build demo
-        run: npm run build:demo
+          name: demo-build-${{ github.sha }}
+          path: dist-demo
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -122,12 +145,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-      - name: Upload demo artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: demo-build-artifacts-${{ github.sha }}
-          path: |
-            dist-demo/
-            demo/package.json
-            demo/CHANGELOG.md

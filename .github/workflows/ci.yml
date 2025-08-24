@@ -45,14 +45,24 @@ jobs:
       - name: Run type check
         run: npm run type-check
 
-      - name: Run tests
-        run: npm run test:run
+      - name: Run tests with memory optimization
+        run: |
+          # Increase Node.js memory limit for tests
+          export NODE_OPTIONS="--max-old-space-size=4096"
+          npm run test:run
 
       - name: Run tests with coverage
-        run: npm run test:coverage
+        run: |
+          # Increase Node.js memory limit for coverage
+          export NODE_OPTIONS="--max-old-space-size=4096"
+          npm run test:coverage
 
       - name: Build library
         run: npm run build:lib
+
+      - name: Build demo (if demo files changed)
+        if: contains(github.event.head_commit.modified, 'demo/') || contains(github.event.head_commit.modified, 'src/') || contains(github.event.head_commit.modified, 'index.html')
+        run: npm run build:demo
 
       - name: Run code analysis
         run: |
@@ -70,3 +80,10 @@ jobs:
         with:
           name: coverage
           path: coverage/
+
+      - name: Upload demo build (if built)
+        if: contains(github.event.head_commit.modified, 'demo/') || contains(github.event.head_commit.modified, 'src/') || contains(github.event.head_commit.modified, 'index.html')
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-build-${{ github.sha }}
+          path: dist-demo/
