@@ -86,7 +86,7 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
     };
 
     // Handle clear
-    const handleClear = (event: React.MouseEvent) => {
+    const handleClear = (event: React.MouseEvent | React.KeyboardEvent) => {
       event.stopPropagation();
       if (multiple) {
         (onChange as (value: string[]) => void)?.([] as string[]);
@@ -214,7 +214,7 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
                       onKeyDown={e => {
                         if (e.key === 'Enter' || e.key === ' ') {
                           e.preventDefault();
-                          handleClear(e as React.MouseEvent<HTMLDivElement>);
+                          handleClear(e);
                         }
                       }}
                     >
