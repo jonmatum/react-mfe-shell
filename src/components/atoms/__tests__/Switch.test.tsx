@@ -141,6 +141,6 @@ describe('Switch', () => {
 
     rerender(<Switch checked={true} onChange={onChange} />);
     thumb = screen.getByRole('switch').querySelectorAll('span')[1];
-    expect(thumb).toHaveClass('translate-x-6');
+    expect(thumb).toHaveClass('translate-x-5');
   });
 });

@@ -137,6 +137,19 @@ export default {
     'focus:ring-warning-500',
     'focus:ring-danger-500',
     
+    // Switch size classes
+    'h-5',
+    'w-9',
+    'h-6',
+    'w-11',
+    'h-8',
+    'w-14',
+    'h-4',
+    'h-7',
+    'translate-x-4',
+    'translate-x-5',
+    'translate-x-6',
+    
     // LoadingSpinner component classes - ensure these are always generated
     // Size classes
     'h-3',
