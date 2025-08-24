@@ -59,18 +59,18 @@ const Switch = memo<SwitchProps>(
     const sizeClasses = {
       sm: {
         switch: 'h-4 w-7',
-        thumb: 'h-3 w-3',
-        translate: 'translate-x-3',
+        thumb: 'h-2.5 w-2.5',
+        translate: 'translate-x-3.5',
       },
       md: {
         switch: 'h-6 w-11',
-        thumb: 'h-5 w-5',
-        translate: 'translate-x-5',
+        thumb: 'h-4 w-4',
+        translate: 'translate-x-6',
       },
       lg: {
         switch: 'h-8 w-14',
-        thumb: 'h-7 w-7',
-        translate: 'translate-x-6',
+        thumb: 'h-6 w-6',
+        translate: 'translate-x-7',
       },
     };
 
