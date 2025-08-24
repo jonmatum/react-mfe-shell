@@ -33,15 +33,26 @@ import {
   LightBulbIcon,
   CodeBracketIcon,
   BeakerIcon,
+  MagnifyingGlassIcon,
   DocumentTextIcon,
+  CloudArrowUpIcon,
+  CheckCircleIcon,
+  ExclamationTriangleIcon,
+  InformationCircleIcon,
   UserIcon,
   EnvelopeIcon,
+  PhoneIcon,
+  GlobeAltIcon,
+  EyeIcon,
+  EyeSlashIcon,
 } from '@heroicons/react/24/outline';
 import '../src/styles/index.css';
 import { VERSION, REACT_VERSION } from './utils/version';
 
 // Demo App showcasing all MFE Shell capabilities
 function DemoApp() {
+  const [activeTab, setActiveTab] = useState<'components' | 'forms'>('components');
+
   return (
     <SettingsProvider>
       <div className="min-h-screen bg-background-primary transition-colors duration-200">
@@ -49,10 +60,15 @@ function DemoApp() {
         <main className="container mx-auto px-4 py-8 max-w-7xl">
           <div className="space-y-16">
             <HeroSection />
-            <ComponentShowcase />
-            <FormMoleculesShowcase />
-            <ThemeSection />
-            <PerformanceSection />
+            <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+            {activeTab === 'components' && (
+              <>
+                <ComponentShowcase />
+                <ThemeSection />
+                <PerformanceSection />
+              </>
+            )}
+            {activeTab === 'forms' && <FormMoleculesShowcase />}
           </div>
         </main>
         <DemoFooter />
@@ -149,28 +165,168 @@ function HeroSection() {
             size="lg"
             leftIcon={<CodeBracketIcon className="w-5 h-5" />}
             onClick={() => {
-              const componentSection = document.getElementById('component-showcase');
-              componentSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              const tabSection = document.querySelector('[data-tab-navigation]');
+              tabSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }}
           >
-            View Components
+            Explore Components
           </Button>
           <Button
             variant="secondary"
             size="lg"
-            leftIcon={<BeakerIcon className="w-5 h-5" />}
+            leftIcon={<DocumentTextIcon className="w-5 h-5" />}
             onClick={() => {
-              const themeSection = document.getElementById('theme-section');
-              themeSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              const tabSection = document.querySelector('[data-tab-navigation]');
+              tabSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              // Switch to forms tab after scrolling
+              setTimeout(() => {
+                const formsButton = document.querySelector('[data-tab="forms"]') as HTMLButtonElement;
+                formsButton?.click();
+              }, 500);
             }}
           >
-            Try Interactive Demo
+            Try Form Molecules
           </Button>
         </div>
       </div>
     </section>
   );
 }
+
+function TabNavigation({ 
+  activeTab, 
+  onTabChange 
+}: { 
+  activeTab: 'components' | 'forms'; 
+  onTabChange: (tab: 'components' | 'forms') => void; 
+}) {
+  return (
+    <section className="py-8" data-tab-navigation>
+      <div className="max-w-4xl mx-auto">
+        <div className="flex justify-center">
+          <div className="bg-surface-secondary p-1 rounded-lg">
+            <div className="flex space-x-1">
+              <button
+                onClick={() => onTabChange('components')}
+                data-tab="components"
+                className={`px-6 py-3 rounded-md font-medium transition-all duration-200 flex items-center space-x-2 ${
+                  activeTab === 'components'
+                    ? 'bg-primary-600 text-white shadow-md'
+                    : 'text-text-secondary hover:text-text-primary hover:bg-surface-primary'
+                }`}
+              >
+                <CpuChipIcon className="w-5 h-5" />
+                <span>Core Components</span>
+                <Badge 
+                  variant={activeTab === 'components' ? 'secondary' : 'primary'} 
+                  size="sm"
+                  className="ml-2"
+                >
+                  10
+                </Badge>
+              </button>
+              <button
+                onClick={() => onTabChange('forms')}
+                data-tab="forms"
+                className={`px-6 py-3 rounded-md font-medium transition-all duration-200 flex items-center space-x-2 ${
+                  activeTab === 'forms'
+                    ? 'bg-primary-600 text-white shadow-md'
+                    : 'text-text-secondary hover:text-text-primary hover:bg-surface-primary'
+                }`}
+              >
+                <DocumentTextIcon className="w-5 h-5" />
+                <span>Form Molecules</span>
+                <Badge 
+                  variant={activeTab === 'forms' ? 'secondary' : 'success'} 
+                  size="sm"
+                  className="ml-2"
+                >
+                  8 New
+                </Badge>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function HeroSection() {
+  return (
+    <section className="text-center py-16">
+      <div className="max-w-4xl mx-auto">
+        <div className="flex justify-center mb-6">
+          <div className="flex items-center space-x-2 bg-primary-50 dark:bg-primary-900/30 px-4 py-2 rounded-full">
+            <SparklesIcon className="w-5 h-5 text-primary-600" />
+            <span className="text-primary-700 dark:text-primary-300 font-medium">
+              World-Class DRY Implementation + Form Molecules
+            </span>
+          </div>
+        </div>
+        
+        <h1 className="text-5xl font-bold text-text-primary mb-6">
+          Production-Ready
+          <span className="text-primary-600"> Design System</span>
+        </h1>
+        
+        <p className="text-xl text-text-secondary mb-8 max-w-3xl mx-auto">
+          A comprehensive micro frontend shell with atomic design principles, 
+          DRY optimization, and world-class developer experience. Now featuring 8 new 
+          form molecule components with built-in validation and accessibility.
+        </p>
+        
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
+          <div className="flex items-center space-x-2 bg-surface-secondary px-4 py-2 rounded-lg">
+            <CpuChipIcon className="w-5 h-5 text-success-600" />
+            <span className="text-text-primary font-medium">424 Tests Passing</span>
+          </div>
+          <div className="flex items-center space-x-2 bg-surface-secondary px-4 py-2 rounded-lg">
+            <ShieldCheckIcon className="w-5 h-5 text-success-600" />
+            <span className="text-text-primary font-medium">100% Type Safe</span>
+          </div>
+          <div className="flex items-center space-x-2 bg-surface-secondary px-4 py-2 rounded-lg">
+            <LightBulbIcon className="w-5 h-5 text-success-600" />
+            <span className="text-text-primary font-medium">WCAG AA Compliant</span>
+          </div>
+          <div className="flex items-center space-x-2 bg-surface-secondary px-4 py-2 rounded-lg">
+            <DocumentTextIcon className="w-5 h-5 text-primary-600" />
+            <span className="text-text-primary font-medium">8 Form Molecules</span>
+          </div>
+        </div>
+        
+        <div className="flex flex-wrap justify-center gap-4">
+          <Button
+            variant="primary"
+            size="lg"
+            leftIcon={<CodeBracketIcon className="w-5 h-5" />}
+            onClick={() => {
+              const tabSection = document.querySelector('[data-tab-navigation]');
+              tabSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+          >
+            Explore Components
+          </Button>
+          <Button
+            variant="secondary"
+            size="lg"
+            leftIcon={<DocumentTextIcon className="w-5 h-5" />}
+            onClick={() => {
+              const tabSection = document.querySelector('[data-tab-navigation]');
+              tabSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              // Switch to forms tab after scrolling
+              setTimeout(() => {
+                const formsButton = document.querySelector('[data-tab="forms"]') as HTMLButtonElement;
+                formsButton?.click();
+              }, 500);
+            }}
+          >
+            Try Form Molecules
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
 
 function ComponentShowcase() {
   const [removedBadges, setRemovedBadges] = useState<Set<string>>(new Set());
@@ -696,14 +852,22 @@ function FormMoleculesShowcase() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('');
   const [isChecked, setIsChecked] = useState(false);
+  const [selectedTheme, setSelectedTheme] = useState('light');
   const [isEnabled, setIsEnabled] = useState(false);
   const [bio, setBio] = useState('');
 
+  
   const countries = [
     { value: 'us', label: 'United States' },
     { value: 'ca', label: 'Canada' },
     { value: 'uk', label: 'United Kingdom' },
     { value: 'cr', label: 'Costa Rica' },
+  ];
+
+  const themeOptions = [
+    { value: 'light', label: 'Light Theme' },
+    { value: 'dark', label: 'Dark Theme' },
+    { value: 'system', label: 'System' },
   ];
 
   return (
@@ -733,28 +897,65 @@ function FormMoleculesShowcase() {
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <FormField
-                label="Full Name"
-                description="Enter your first and last name"
-                required
-              >
-                <Input
-                  placeholder="John Doe"
-                  leftIcon={<UserIcon className="w-4 h-4" />}
-                />
-              </FormField>
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Basic Usage</h4>
+                <FormField
+                  label="Full Name"
+                  description="Enter your first and last name"
+                  required
+                >
+                  <Input
+                    value={formData.name}
+                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    placeholder="John Doe"
+                    leftIcon={<UserIcon className="w-4 h-4" />}
+                  />
+                </FormField>
+                
+                <FormField
+                  label="Email Address"
+                  description="We'll never share your email"
+                  error={formErrors.email}
+                  required
+                >
+                  <Input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    placeholder="john@example.com"
+                    leftIcon={<EnvelopeIcon className="w-4 h-4" />}
+                  />
+                </FormField>
+              </div>
               
-              <FormField
-                label="Email Address"
-                description="We'll never share your email"
-                required
-              >
-                <Input
-                  type="email"
-                  placeholder="john@example.com"
-                  leftIcon={<EnvelopeIcon className="w-4 h-4" />}
-                />
-              </FormField>
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">With Validation</h4>
+                <FormField
+                  label="Phone Number"
+                  description="Include country code"
+                  error={formData.phone && !/^\+?[\d\s-()]+$/.test(formData.phone) ? 'Invalid phone format' : ''}
+                >
+                  <Input
+                    value={formData.phone}
+                    onChange={(e) => handleInputChange('phone', e.target.value)}
+                    placeholder="+1 (555) 123-4567"
+                    leftIcon={<PhoneIcon className="w-4 h-4" />}
+                  />
+                </FormField>
+                
+                <FormField
+                  label="Website"
+                  description="Your personal or company website"
+                  error={formData.website && !/^https?:\/\/.+/.test(formData.website) ? 'Must start with http:// or https://' : ''}
+                >
+                  <Input
+                    value={formData.website}
+                    onChange={(e) => handleInputChange('website', e.target.value)}
+                    placeholder="https://example.com"
+                    leftIcon={<GlobeAltIcon className="w-4 h-4" />}
+                  />
+                </FormField>
+              </div>
             </div>
           </Card>
 
@@ -766,20 +967,43 @@ function FormMoleculesShowcase() {
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <SearchBox
-                value={searchQuery}
-                onChange={setSearchQuery}
-                placeholder="Search components..."
-                debounceMs={300}
-              />
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Basic Search</h4>
+                <SearchBox
+                  value={formData.searchQuery}
+                  onChange={(value) => handleInputChange('searchQuery', value)}
+                  placeholder="Search components..."
+                  debounceMs={300}
+                />
+                
+                <SearchBox
+                  value={formData.searchQuery}
+                  onChange={(value) => handleInputChange('searchQuery', value)}
+                  placeholder="Search with loading..."
+                  debounceMs={500}
+                  loading={formData.searchQuery.length > 2}
+                  size="lg"
+                />
+              </div>
               
-              <div className="bg-surface-secondary p-4 rounded-lg">
-                <Text variant="caption" className="mb-2">Search Results:</Text>
-                {searchQuery ? (
-                  <Text variant="body">Searching for: "{searchQuery}"</Text>
-                ) : (
-                  <Text variant="body" color="secondary">Start typing to search...</Text>
-                )}
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Advanced Features</h4>
+                <SearchBox
+                  value={formData.searchQuery}
+                  onChange={(value) => handleInputChange('searchQuery', value)}
+                  placeholder="Clearable search..."
+                  clearable
+                  onClear={() => handleInputChange('searchQuery', '')}
+                />
+                
+                <div className="bg-surface-secondary p-4 rounded-lg">
+                  <Text variant="caption" className="mb-2">Search Results:</Text>
+                  {formData.searchQuery ? (
+                    <Text variant="body">Searching for: "{formData.searchQuery}"</Text>
+                  ) : (
+                    <Text variant="body" color="secondary">Start typing to search...</Text>
+                  )}
+                </div>
               </div>
             </div>
           </Card>
@@ -788,64 +1012,241 @@ function FormMoleculesShowcase() {
           <Card className="p-6">
             <h3 className="text-xl font-bold text-text-primary mb-4 flex items-center space-x-2">
               <span>Select</span>
-              <Badge variant="success" size="sm">Searchable</Badge>
-            </h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <FormField label="Country" description="Select your country">
-                <Select
-                  value={selectedCountry}
-                  onChange={setSelectedCountry}
-                  options={countries}
-                  placeholder="Choose a country..."
-                  searchable
-                />
-              </FormField>
-              
-              <div className="bg-surface-secondary p-4 rounded-lg">
-                <Text variant="caption" className="mb-2">Selected:</Text>
-                <Text variant="body">
-                  {selectedCountry ? countries.find(c => c.value === selectedCountry)?.label : 'None selected'}
-                </Text>
-              </div>
-            </div>
-          </Card>
-
-          {/* Checkbox and SwitchField */}
-          <Card className="p-6">
-            <h3 className="text-xl font-bold text-text-primary mb-4 flex items-center space-x-2">
-              <span>Checkbox & SwitchField</span>
-              <Badge variant="primary" size="sm">Accessible</Badge>
+              <Badge variant="success" size="sm">Multi-Select</Badge>
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-4">
-                <Checkbox
-                  checked={isChecked}
-                  onChange={setIsChecked}
-                  label="Subscribe to newsletter"
-                  description="Get updates about new features and releases"
-                />
+                <h4 className="font-medium text-text-primary mb-3">Single Select</h4>
+                <FormField label="Country" description="Select your country">
+                  <Select
+                    value={formData.country}
+                    onChange={(value) => handleInputChange('country', value)}
+                    options={countries}
+                    placeholder="Choose a country..."
+                    searchable
+                    renderOption={(option) => (
+                      <div className="flex items-center space-x-2">
+                        <span>{option.flag}</span>
+                        <span>{option.label}</span>
+                      </div>
+                    )}
+                  />
+                </FormField>
                 
-                <SwitchField
-                  checked={isEnabled}
-                  onChange={setIsEnabled}
-                  label="Push Notifications"
-                  description="Receive notifications for important updates"
-                />
+                <FormField label="Theme Preference" description="Choose your preferred theme">
+                  <Select
+                    value={formData.theme}
+                    onChange={(value) => handleInputChange('theme', value)}
+                    options={themeOptions}
+                    renderOption={(option) => (
+                      <div className="flex items-center space-x-2">
+                        {option.icon}
+                        <span>{option.label}</span>
+                      </div>
+                    )}
+                  />
+                </FormField>
               </div>
               
-              <div className="bg-surface-secondary p-4 rounded-lg">
-                <Text variant="caption" className="mb-2">Current States:</Text>
-                <div className="space-y-1">
-                  <Text variant="body">Newsletter: {isChecked ? 'Subscribed' : 'Not subscribed'}</Text>
-                  <Text variant="body">Notifications: {isEnabled ? 'Enabled' : 'Disabled'}</Text>
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Multi-Select</h4>
+                <FormField label="Skills" description="Select your technical skills">
+                  <Select
+                    value={formData.skills}
+                    onChange={(value) => handleInputChange('skills', value)}
+                    options={skillOptions}
+                    placeholder="Choose skills..."
+                    multiple
+                    searchable
+                    maxHeight="200px"
+                  />
+                </FormField>
+                
+                <div className="bg-surface-secondary p-4 rounded-lg">
+                  <Text variant="caption" className="mb-2">Selected Skills:</Text>
+                  <div className="flex flex-wrap gap-2">
+                    {formData.skills.map((skill) => (
+                      <Badge key={skill} variant="primary" size="sm">
+                        {skillOptions.find(s => s.value === skill)?.label}
+                      </Badge>
+                    ))}
+                    {formData.skills.length === 0 && (
+                      <Text variant="body" color="secondary">No skills selected</Text>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           </Card>
 
-          {/* Textarea */}
+          {/* Checkbox Component */}
+          <Card className="p-6">
+            <h3 className="text-xl font-bold text-text-primary mb-4 flex items-center space-x-2">
+              <span>Checkbox</span>
+              <Badge variant="primary" size="sm">Indeterminate</Badge>
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Basic Checkboxes</h4>
+                <Checkbox
+                  checked={formData.newsletter}
+                  onChange={(checked) => handleInputChange('newsletter', checked)}
+                  label="Subscribe to newsletter"
+                  description="Get updates about new features and releases"
+                />
+                
+                <Checkbox
+                  checked={formData.notifications}
+                  onChange={(checked) => handleInputChange('notifications', checked)}
+                  label="Enable notifications"
+                  description="Receive push notifications for important updates"
+                />
+                
+                <Checkbox
+                  checked={false}
+                  onChange={() => {}}
+                  disabled
+                  label="Disabled checkbox"
+                  description="This option is not available"
+                />
+              </div>
+              
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Agreement Checkboxes</h4>
+                <Checkbox
+                  checked={true}
+                  onChange={() => {}}
+                  label="I agree to the Terms of Service"
+                  description="Required to create an account"
+                  required
+                />
+                
+                <Checkbox
+                  checked={false}
+                  onChange={() => {}}
+                  label="I agree to receive marketing emails"
+                  description="Optional - you can unsubscribe anytime"
+                />
+                
+                <div className="bg-surface-secondary p-4 rounded-lg">
+                  <Text variant="caption" className="mb-2">Checkbox States:</Text>
+                  <div className="space-y-1">
+                    <Text variant="body" className="flex items-center space-x-2">
+                      <CheckCircleIcon className="w-4 h-4 text-success-600" />
+                      <span>Newsletter: {formData.newsletter ? 'Enabled' : 'Disabled'}</span>
+                    </Text>
+                    <Text variant="body" className="flex items-center space-x-2">
+                      <CheckCircleIcon className="w-4 h-4 text-success-600" />
+                      <span>Notifications: {formData.notifications ? 'Enabled' : 'Disabled'}</span>
+                    </Text>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* Radio Component */}
+          <Card className="p-6">
+            <h3 className="text-xl font-bold text-text-primary mb-4 flex items-center space-x-2">
+              <span>Radio</span>
+              <Badge variant="success" size="sm">RadioGroup</Badge>
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Theme Selection</h4>
+                <Radio
+                  value={formData.theme}
+                  onChange={(value) => handleInputChange('theme', value)}
+                  options={[
+                    { value: 'light', label: 'Light Theme', description: 'Clean and bright interface' },
+                    { value: 'dark', label: 'Dark Theme', description: 'Easy on the eyes' },
+                    { value: 'system', label: 'System Theme', description: 'Follow system preference' },
+                  ]}
+                />
+              </div>
+              
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Notification Preferences</h4>
+                <Radio
+                  value="email"
+                  onChange={() => {}}
+                  options={[
+                    { value: 'email', label: 'Email Only', description: 'Receive notifications via email' },
+                    { value: 'push', label: 'Push Notifications', description: 'Browser push notifications' },
+                    { value: 'both', label: 'Email + Push', description: 'Both email and push notifications' },
+                    { value: 'none', label: 'No Notifications', description: 'Disable all notifications' },
+                  ]}
+                />
+              </div>
+            </div>
+          </Card>
+
+          {/* SwitchField Component */}
+          <Card className="p-6">
+            <h3 className="text-xl font-bold text-text-primary mb-4 flex items-center space-x-2">
+              <span>SwitchField</span>
+              <Badge variant="primary" size="sm">Enhanced Switch</Badge>
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Settings Toggles</h4>
+                <SwitchField
+                  checked={formData.notifications}
+                  onChange={(checked) => handleInputChange('notifications', checked)}
+                  label="Push Notifications"
+                  description="Receive notifications for important updates"
+                />
+                
+                <SwitchField
+                  checked={formData.newsletter}
+                  onChange={(checked) => handleInputChange('newsletter', checked)}
+                  label="Newsletter Subscription"
+                  description="Get weekly updates about new features"
+                />
+                
+                <SwitchField
+                  checked={false}
+                  onChange={() => {}}
+                  disabled
+                  label="Beta Features"
+                  description="Access to experimental features (coming soon)"
+                />
+              </div>
+              
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Privacy Settings</h4>
+                <SwitchField
+                  checked={true}
+                  onChange={() => {}}
+                  label="Profile Visibility"
+                  description="Make your profile visible to other users"
+                  color="success"
+                />
+                
+                <SwitchField
+                  checked={false}
+                  onChange={() => {}}
+                  label="Analytics Tracking"
+                  description="Help us improve by sharing usage data"
+                  color="warning"
+                />
+                
+                <div className="bg-surface-secondary p-4 rounded-lg">
+                  <Text variant="caption" className="mb-2">Current Settings:</Text>
+                  <div className="space-y-1">
+                    <Text variant="body">Notifications: {formData.notifications ? 'On' : 'Off'}</Text>
+                    <Text variant="body">Newsletter: {formData.newsletter ? 'Subscribed' : 'Unsubscribed'}</Text>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* Textarea Component */}
           <Card className="p-6">
             <h3 className="text-xl font-bold text-text-primary mb-4 flex items-center space-x-2">
               <span>Textarea</span>
@@ -853,30 +1254,158 @@ function FormMoleculesShowcase() {
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <FormField
-                label="Bio"
-                description="Tell us about yourself"
-              >
-                <Textarea
-                  value={bio}
-                  onChange={(e) => setBio(e.target.value)}
-                  placeholder="I'm a passionate developer who loves creating amazing user experiences..."
-                  rows={4}
-                  maxLength={500}
-                />
-              </FormField>
-              
-              <div className="bg-surface-secondary p-4 rounded-lg">
-                <Text variant="caption" className="mb-2">Character Count:</Text>
-                <Text variant="body">{bio.length}/500 characters</Text>
-                <div className="mt-4">
-                  <Text variant="caption" className="mb-2">Available Components:</Text>
-                  <div className="flex flex-wrap gap-1">
-                    {['FormField', 'SearchBox', 'Select', 'Checkbox', 'Radio', 'SwitchField', 'Textarea', 'FileUpload'].map((comp) => (
-                      <Badge key={comp} variant="secondary" size="sm">{comp}</Badge>
-                    ))}
-                  </div>
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Basic Textarea</h4>
+                <FormField
+                  label="Bio"
+                  description="Tell us about yourself"
+                >
+                  <Textarea
+                    value={formData.bio}
+                    onChange={(e) => handleInputChange('bio', e.target.value)}
+                    placeholder="I'm a passionate developer who loves creating amazing user experiences..."
+                    rows={4}
+                    maxLength={500}
+                  />
+                </FormField>
+                
+                <div className="bg-surface-secondary p-3 rounded-lg">
+                  <Text variant="caption">
+                    Characters: {formData.bio.length}/500
+                  </Text>
                 </div>
+              </div>
+              
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Auto-Resize Textarea</h4>
+                <FormField
+                  label="Feedback"
+                  description="Share your thoughts (auto-resizes)"
+                >
+                  <Textarea
+                    value=""
+                    onChange={() => {}}
+                    placeholder="Start typing and watch the textarea grow automatically..."
+                    autoResize
+                    minRows={3}
+                    maxRows={8}
+                  />
+                </FormField>
+                
+                <FormField
+                  label="Code Snippet"
+                  description="Paste your code here"
+                >
+                  <Textarea
+                    value=""
+                    onChange={() => {}}
+                    placeholder="const example = 'Hello World';"
+                    rows={6}
+                    className="font-mono text-sm"
+                  />
+                </FormField>
+              </div>
+            </div>
+          </Card>
+
+          {/* FileUpload Component */}
+          <Card className="p-6">
+            <h3 className="text-xl font-bold text-text-primary mb-4 flex items-center space-x-2">
+              <span>FileUpload</span>
+              <Badge variant="primary" size="sm">Drag & Drop</Badge>
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Image Upload</h4>
+                <FormField
+                  label="Profile Picture"
+                  description="Upload your profile picture (max 5MB)"
+                >
+                  <FileUpload
+                    accept="image/*"
+                    maxSize={5 * 1024 * 1024} // 5MB
+                    onFilesChange={(files) => handleInputChange('files', files)}
+                    placeholder="Drop your image here or click to browse"
+                    showPreview
+                  />
+                </FormField>
+              </div>
+              
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Document Upload</h4>
+                <FormField
+                  label="Resume/CV"
+                  description="Upload your resume (PDF, DOC, DOCX)"
+                >
+                  <FileUpload
+                    accept=".pdf,.doc,.docx"
+                    maxSize={10 * 1024 * 1024} // 10MB
+                    onFilesChange={(files) => handleInputChange('files', files)}
+                    placeholder="Drop your resume here"
+                    multiple={false}
+                  />
+                </FormField>
+                
+                <div className="bg-surface-secondary p-4 rounded-lg">
+                  <Text variant="caption" className="mb-2">Upload Status:</Text>
+                  {formData.files.length > 0 ? (
+                    <div className="space-y-1">
+                      {formData.files.map((file, index) => (
+                        <Text key={index} variant="body" className="flex items-center space-x-2">
+                          <CheckCircleIcon className="w-4 h-4 text-success-600" />
+                          <span>{file.name} ({(file.size / 1024).toFixed(1)} KB)</span>
+                        </Text>
+                      ))}
+                    </div>
+                  ) : (
+                    <Text variant="body" color="secondary">No files uploaded</Text>
+                  )}
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* Form Submission */}
+          <Card className="p-6">
+            <h3 className="text-xl font-bold text-text-primary mb-4 flex items-center space-x-2">
+              <span>Complete Form Example</span>
+              <Badge variant="success" size="sm">Live Demo</Badge>
+            </h3>
+            
+            <div className="bg-surface-secondary p-6 rounded-lg">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-primary-600 mb-1">8</div>
+                  <div className="text-sm text-text-secondary">Form Components</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-success-600 mb-1">100%</div>
+                  <div className="text-sm text-text-secondary">Accessible</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-warning-600 mb-1">Live</div>
+                  <div className="text-sm text-text-secondary">Validation</div>
+                </div>
+              </div>
+              
+              <div className="flex justify-center">
+                <Button
+                  variant="primary"
+                  size="lg"
+                  onClick={handleSubmit}
+                  loading={isSubmitting}
+                  disabled={isSubmitting}
+                  leftIcon={!isSubmitting ? <CheckCircleIcon className="w-5 h-5" /> : undefined}
+                >
+                  {isSubmitting ? 'Processing Form...' : 'Submit Demo Form'}
+                </Button>
+              </div>
+              
+              <div className="mt-4 text-center">
+                <Text variant="caption" color="secondary">
+                  This demo form showcases all form molecule components working together
+                </Text>
               </div>
             </div>
           </Card>

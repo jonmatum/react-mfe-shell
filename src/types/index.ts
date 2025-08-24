@@ -99,6 +99,7 @@ export type InputSize = (typeof INPUT_SIZES)[number];
 
 export interface InputProps extends BaseComponentProps {
   id?: string;
+  name?: string;
   type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search';
   variant?: InputVariant;
   size?: InputSize;
@@ -114,6 +115,11 @@ export interface InputProps extends BaseComponentProps {
   as?: React.ElementType;
   value?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyPress?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  autoComplete?: string;
+  role?: string;
+  'aria-label'?: string;
 }
 
 // Label component types
@@ -234,3 +240,6 @@ export interface ModalProps extends BaseComponentProps {
 
 // Re-export design token types
 export * from './tokens';
+
+// Re-export form types
+export * from './form';
