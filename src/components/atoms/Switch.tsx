@@ -100,9 +100,9 @@ const Switch = memo<SwitchProps>(
         )}
         {...props}
       >
-        <span className="sr-only">{label || 'Toggle switch'}</span>
+        <span className='sr-only'>{label || 'Toggle switch'}</span>
         <span
-          aria-hidden="true"
+          aria-hidden='true'
           className={classNames(
             // Base thumb styles
             'pointer-events-none inline-block rounded-full bg-white shadow transform ring-0 transition duration-200 ease-in-out',
@@ -118,13 +118,13 @@ const Switch = memo<SwitchProps>(
     // Hidden input for form compatibility
     const hiddenInput = name ? (
       <input
-        type="checkbox"
+        type='checkbox'
         id={switchId}
         name={name}
         checked={checked}
         onChange={() => {}} // Controlled by HeadlessSwitch
         disabled={disabled}
-        className="sr-only"
+        className='sr-only'
         aria-describedby={finalAriaDescribedBy}
         tabIndex={-1}
       />
@@ -146,7 +146,7 @@ const Switch = memo<SwitchProps>(
         <div
           className={classNames('flex items-center justify-between', className)}
         >
-          <div className="flex flex-col">
+          <div className='flex flex-col'>
             {label && (
               <HeadlessSwitch.Label
                 className={classNames(
@@ -169,7 +169,7 @@ const Switch = memo<SwitchProps>(
             )}
           </div>
 
-          <div className="flex items-center">
+          <div className='flex items-center'>
             {hiddenInput}
             {switchElement}
           </div>

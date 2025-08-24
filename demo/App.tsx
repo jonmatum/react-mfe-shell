@@ -12,7 +12,6 @@ import {
   Text,
   LoadingSpinner,
   Label,
-  Icon,
   useSettings,
 } from '../src';
 import { 

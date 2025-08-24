@@ -4,7 +4,14 @@ import { classNames } from '../../utils';
 
 interface LoadingSpinnerProps extends BaseComponentProps {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  color?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'white' | 'current';
+  color?:
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'warning'
+    | 'danger'
+    | 'white'
+    | 'current';
   text?: string;
   'aria-label'?: string;
 }
