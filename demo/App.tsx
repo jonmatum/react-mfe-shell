@@ -76,7 +76,7 @@ function DemoHeader() {
               {settings.theme === 'dark' ? 'Light' : 'Dark'}
             </Button>
             
-            <Badge variant="primary">v2.1.0</Badge>
+            <Badge variant="primary">Demo v{__DEMO_VERSION__}</Badge>
           </div>
         </div>
       </div>
