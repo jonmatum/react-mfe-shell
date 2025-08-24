@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.0.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v5.0.0...react-mfe-shell-v6.0.0) (2025-08-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* Button and Badge components now use semantic variants instead of basic color props
+
+### Features
+
+* add modern favicon system matching application design ([400fbab](https://github.com/jonmatum/react-mfe-shell/commit/400fbab68180af22ffd279003ade65a73d30eda3))
+* enhance design system with semantic variants and dynamic version management ([9294f93](https://github.com/jonmatum/react-mfe-shell/commit/9294f93e340ca75a4ebc00e342560c1517c6d844))
+
+
+### Bug Fixes
+
+* eliminate all remaining ESLint warnings ([927dff8](https://github.com/jonmatum/react-mfe-shell/commit/927dff87930710b05a1e8de7cba09f2c731353ae))
+* resolve ESLint errors and improve type safety ([b7a9ded](https://github.com/jonmatum/react-mfe-shell/commit/b7a9dedc27f5da240faba40494b8dcc8a9d3c0a6))
+* resolve release-please configuration issues ([3776f87](https://github.com/jonmatum/react-mfe-shell/commit/3776f87c6eff05629d55a0dfa33b1269565567a7))
+* resolve TypeScript build errors in Button component ([6e5a8f7](https://github.com/jonmatum/react-mfe-shell/commit/6e5a8f7aa8987943f9336a100dbb8f83464f0d13))
+
+
+### Styles
+
+* improve type annotation formatting in Button component ([0e3ed1c](https://github.com/jonmatum/react-mfe-shell/commit/0e3ed1cdc53fa6620efa9ff1359ab2fa1c3cd43f))
+
 ## [5.0.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v4.0.0...react-mfe-shell-v5.0.0) (2025-08-24)
 
 
