@@ -52,6 +52,8 @@ npm run dev
 
 ### Using in Your MFE
 
+**[View on npm](https://www.npmjs.com/package/@jonmatum/react-mfe-shell)**
+
 ```bash
 npm install @jonmatum/react-mfe-shell
 ```
