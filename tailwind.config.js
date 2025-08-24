@@ -136,6 +136,38 @@ export default {
     'focus:ring-success-500',
     'focus:ring-warning-500',
     'focus:ring-danger-500',
+    
+    // LoadingSpinner component classes - ensure these are always generated
+    // Size classes
+    'h-3',
+    'w-3',
+    'h-4',
+    'w-4',
+    'h-8',
+    'w-8',
+    'h-12',
+    'w-12',
+    'h-16',
+    'w-16',
+    
+    // Border and color classes with design tokens
+    'border-surface-secondary',
+    'border-t-primary-600',
+    'border-t-text-secondary',
+    'border-t-success-600',
+    'border-t-warning-600',
+    'border-t-danger-600',
+    'border-white/30',
+    'border-t-white',
+    'border-current/30',
+    'border-t-current',
+    
+    // Text classes
+    'text-xs',
+    'text-sm',
+    'text-base',
+    'text-lg',
+    'text-text-secondary',
   ],
   plugins: [],
 };

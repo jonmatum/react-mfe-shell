@@ -4,7 +4,7 @@ import { classNames } from '../../utils';
 
 interface LoadingSpinnerProps extends BaseComponentProps {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  color?: 'primary' | 'secondary' | 'white' | 'current';
+  color?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'white' | 'current';
   text?: string;
   'aria-label'?: string;
 }
@@ -36,8 +36,11 @@ const LoadingSpinner = memo<LoadingSpinnerProps>(
     };
 
     const colorClasses = {
-      primary: 'border-gray-300 border-t-blue-600',
-      secondary: 'border-gray-200 border-t-gray-600',
+      primary: 'border-surface-secondary border-t-primary-600',
+      secondary: 'border-surface-secondary border-t-text-secondary',
+      success: 'border-surface-secondary border-t-success-600',
+      warning: 'border-surface-secondary border-t-warning-600',
+      danger: 'border-surface-secondary border-t-danger-600',
       white: 'border-white/30 border-t-white',
       current: 'border-current/30 border-t-current',
     };
@@ -72,7 +75,7 @@ const LoadingSpinner = memo<LoadingSpinnerProps>(
         {text && (
           <p
             className={classNames(
-              'mt-2 text-gray-600 dark:text-gray-400',
+              'mt-2 text-text-secondary',
               textSizeClasses[size]
             )}
           >

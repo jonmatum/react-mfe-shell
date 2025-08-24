@@ -466,6 +466,10 @@ function ComponentShowcase() {
                     <LoadingSpinner color="warning" />
                     <Text variant="caption" className="mt-2">Warning</Text>
                   </div>
+                  <div className="text-center">
+                    <LoadingSpinner color="danger" />
+                    <Text variant="caption" className="mt-2">Danger</Text>
+                  </div>
                 </div>
               </div>
             </div>
