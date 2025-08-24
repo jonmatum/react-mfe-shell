@@ -6,8 +6,8 @@ Complete documentation for React MFE Shell - a production-ready micro frontend c
 
 ### Getting Started
 - **[Implementation Guide](implementation-guide.md)** - Step-by-step setup and integration
-- **[API Reference](API_REFERENCE.md)** - Complete component and utility documentation
-- **[Form Components](FORM_COMPONENTS.md)** - Comprehensive form molecule guide
+- **[API Reference](api-reference.md)** - Complete component and utility documentation
+- **[Form Components](form-components.md)** - Comprehensive form molecule guide
 
 ### Design System
 - **[Design Tokens](design-tokens.md)** - Colors, spacing, typography, and theme system
