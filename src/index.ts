@@ -31,6 +31,7 @@ export {
 // =============================================================================
 
 export * from './types';
+export * from './types/polymorphic';
 
 // =============================================================================
 // UTILITIES
@@ -50,10 +51,15 @@ export { SettingsProvider, useSettings } from './contexts/SettingsContext';
 
 // Atoms
 export { default as Button } from './components/atoms/Button';
+export { default as Input } from './components/atoms/Input';
+export { default as Label } from './components/atoms/Label';
+export { default as Icon } from './components/atoms/Icon';
+export { default as Badge } from './components/atoms/Badge';
+export { default as Avatar } from './components/atoms/Avatar';
+export { default as Divider } from './components/atoms/Divider';
+export { default as Text } from './components/atoms/Text';
 export { default as LoadingSpinner } from './components/atoms/LoadingSpinner';
 export { default as Switch } from './components/atoms/Switch';
-export { default as Input } from './components/atoms/Input';
-export { default as Badge } from './components/atoms/Badge';
 
 // Molecules
 export { default as Modal } from './components/molecules/Modal';

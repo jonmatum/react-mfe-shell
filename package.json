@@ -64,6 +64,12 @@
     "analyze:complexity": "node scripts/code-analysis.js --complexity",
     "analyze:json": "node scripts/code-analysis.js --json",
     "analyze:bash": "./scripts/code-analysis.sh",
+    "design-system": "node scripts/design-system-cli.cjs",
+    "ds:analyze": "node scripts/design-system-cli.cjs analyze",
+    "ds:generate": "node scripts/design-system-cli.cjs generate",
+    "ds:optimize": "node scripts/design-system-cli.cjs optimize",
+    "ds:scaffold": "node scripts/design-system-cli.cjs scaffold",
+    "ds:audit": "node scripts/design-system-cli.cjs audit",
     "wiki:sync": "./scripts/sync-wiki.sh",
     "prepublishOnly": "npm run build"
   },

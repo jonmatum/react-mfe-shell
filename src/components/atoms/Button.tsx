@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { forwardRef, useCallback } from 'react';
 import {
   ButtonProps,
   ButtonGroupProps,
@@ -6,155 +6,175 @@ import {
   BUTTON_SIZES,
 } from '../../types';
 import { classNames } from '../../utils';
+import {
+  createSemanticColorVariant,
+  createSizeClasses,
+  createAriaAttributes,
+  createSemanticFocusRing,
+  BASE_INTERACTIVE_CLASSES,
+  SURFACE_VARIANTS,
+  INTERACTIVE_STATES,
+} from '../../utils/componentUtils';
 import LoadingSpinner from './LoadingSpinner';
 
-/**
- * A flexible button component with multiple variants, sizes, and states
- *
- * @example
- * ```tsx
- * <Button variant="primary" size="lg" onClick={handleClick}>
- *   Click me
- * </Button>
- *
- * <Button variant="danger" loading leftIcon={<TrashIcon />}>
- *   Delete
- * </Button>
- * ```
- */
-const Button = memo<ButtonProps>(
-  ({
-    children,
-    className,
-    variant = 'primary',
-    size = 'md',
-    disabled = false,
-    loading = false,
-    leftIcon,
-    rightIcon,
-    onClick,
-    type = 'button',
-    fullWidth = false,
-    ...props
-  }) => {
-    const baseClasses =
-      'inline-flex items-center justify-center font-medium rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+// Button component implementation
+const ButtonComponent = forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      children,
+      className,
+      variant = 'primary',
+      size = 'md',
+      disabled = false,
+      loading = false,
+      leftIcon,
+      rightIcon,
+      fullWidth = false,
+      as: Component = 'button',
+      ...props
+    },
+    ref
+  ) => {
+    const baseClasses = `${BASE_INTERACTIVE_CLASSES} rounded-md font-medium ${INTERACTIVE_STATES.disabled}`;
 
+    // DRY variant classes using utility functions
     const variantClasses = {
-      primary:
-        'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 active:bg-blue-800',
-      secondary:
-        'bg-gray-200 text-gray-900 hover:bg-gray-300 focus:ring-gray-500 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600',
-      ghost:
-        'text-gray-700 hover:bg-gray-100 focus:ring-gray-500 dark:text-gray-300 dark:hover:bg-gray-800',
-      danger:
-        'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 active:bg-red-800',
-      success:
-        'bg-green-600 text-white hover:bg-green-700 focus:ring-green-500 active:bg-green-800',
-      warning:
-        'bg-yellow-600 text-white hover:bg-yellow-700 focus:ring-yellow-500 active:bg-yellow-800',
+      primary: createSemanticColorVariant('primary', 'solid'),
+      secondary: `${SURFACE_VARIANTS.secondary} ${INTERACTIVE_STATES.hover} ${createSemanticFocusRing('primary')}`,
+      ghost: `text-text-primary ${INTERACTIVE_STATES.hover} ${createSemanticFocusRing('primary')}`,
+      danger: createSemanticColorVariant('danger', 'solid'),
+      success: createSemanticColorVariant('success', 'solid'),
+      warning: createSemanticColorVariant('warning', 'solid'),
     };
 
-    const sizeClasses = {
-      xs: 'px-2 py-1 text-xs',
-      sm: 'px-3 py-1.5 text-sm',
-      md: 'px-4 py-2 text-sm',
-      lg: 'px-6 py-3 text-base',
-      xl: 'px-8 py-4 text-lg',
-    };
+    // DRY size classes using utility function
+    const sizeClasses = createSizeClasses(size, {
+      customPadding: {
+        xs: 'px-2.5 py-1.5',
+        sm: 'px-3 py-2',
+        md: 'px-4 py-2.5',
+        lg: 'px-6 py-3',
+        xl: 'px-8 py-4',
+      },
+      customText: {
+        xs: 'text-xs',
+        sm: 'text-sm',
+        md: 'text-sm',
+        lg: 'text-base',
+        xl: 'text-lg',
+      },
+    });
 
-    const isDisabled = disabled || loading;
+    const widthClasses = fullWidth ? 'w-full' : '';
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      if (!isDisabled && onClick) {
-        onClick(event);
+    const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+      if (loading || disabled) {
+        event.preventDefault();
+        return;
       }
+      props.onClick?.(event);
+    }, [loading, disabled, props.onClick]);
+
+    // DRY ARIA attributes generation
+    const ariaAttributes = createAriaAttributes({
+      disabled: disabled || loading,
+      loading,
+      label: (props as any)['aria-label'],
+      describedBy: (props as any)['aria-describedby'],
+    });
+
+    // DRY spinner size mapping
+    const getSpinnerSize = (buttonSize: string): 'sm' | 'md' | 'lg' => {
+      const sizeMap: Record<string, 'sm' | 'md' | 'lg'> = {
+        xs: 'sm',
+        sm: 'sm',
+        md: 'md',
+        lg: 'md',
+        xl: 'lg',
+      };
+      return sizeMap[buttonSize] || 'md';
+    };
+
+    const buttonProps = {
+      ref,
+      className: classNames(
+        baseClasses,
+        variantClasses[variant],
+        sizeClasses,
+        widthClasses,
+        className
+      ),
+      disabled: disabled || loading,
+      onClick: handleClick,
+      ...ariaAttributes,
+      ...props,
     };
 
     return (
-      <button
-        type={type}
-        className={classNames(
-          baseClasses,
-          variantClasses[variant],
-          sizeClasses[size],
-          fullWidth && 'w-full',
-          className
-        )}
-        disabled={isDisabled}
-        onClick={handleClick}
-        aria-busy={loading}
-        {...props}
-      >
+      <Component {...buttonProps}>
         {loading && (
-          <LoadingSpinner
-            size={size === 'xs' || size === 'sm' ? 'sm' : 'md'}
-            className='mr-2'
+          <LoadingSpinner 
+            size={getSpinnerSize(size)} 
+            className="text-current" 
           />
         )}
         {!loading && leftIcon && (
-          <span className='mr-2 flex-shrink-0'>{leftIcon}</span>
+          <span className="flex-shrink-0" aria-hidden="true">
+            {leftIcon}
+          </span>
         )}
-        {children}
+        <span className={loading ? 'opacity-0' : ''}>
+          {children}
+        </span>
         {!loading && rightIcon && (
-          <span className='ml-2 flex-shrink-0'>{rightIcon}</span>
+          <span className="flex-shrink-0" aria-hidden="true">
+            {rightIcon}
+          </span>
         )}
-      </button>
+      </Component>
     );
   }
 );
 
-/**
- * Button Group component for grouping related buttons
- *
- * @example
- * ```tsx
- * <Button.Group attached>
- *   <Button variant="secondary">Left</Button>
- *   <Button variant="secondary">Middle</Button>
- *   <Button variant="primary">Right</Button>
- * </Button.Group>
- * ```
- */
-const ButtonGroup = memo<ButtonGroupProps>(
-  ({
-    children,
-    className,
-    orientation = 'horizontal',
-    spacing = 'sm',
-    attached = false,
-    ...props
-  }) => {
-    const baseClasses = 'inline-flex';
+ButtonComponent.displayName = 'Button';
 
+// Button Group component for compound pattern
+const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
+  (
+    {
+      children,
+      className,
+      orientation = 'horizontal',
+      spacing = 'none',
+      ...props
+    },
+    ref
+  ) => {
+    const baseClasses = 'inline-flex';
+    
+    // DRY orientation and spacing classes
     const orientationClasses = {
-      horizontal: attached ? 'flex-row' : 'flex-row',
-      vertical: attached ? 'flex-col' : 'flex-col',
+      horizontal: 'flex-row',
+      vertical: 'flex-col',
     };
 
     const spacingClasses = {
-      none: '',
-      sm: orientation === 'horizontal' ? 'space-x-2' : 'space-y-2',
-      md: orientation === 'horizontal' ? 'space-x-4' : 'space-y-4',
-      lg: orientation === 'horizontal' ? 'space-x-6' : 'space-y-6',
+      none: orientation === 'horizontal' ? 'space-x-0' : 'space-y-0',
+      sm: orientation === 'horizontal' ? 'space-x-1' : 'space-y-1',
+      md: orientation === 'horizontal' ? 'space-x-2' : 'space-y-2',
+      lg: orientation === 'horizontal' ? 'space-x-4' : 'space-y-4',
     };
-
-    const attachedClasses = attached
-      ? orientation === 'horizontal'
-        ? '[&>*:not(:first-child)]:rounded-l-none [&>*:not(:last-child)]:rounded-r-none [&>*:not(:first-child)]:-ml-px'
-        : '[&>*:not(:first-child)]:rounded-t-none [&>*:not(:last-child)]:rounded-b-none [&>*:not(:first-child)]:-mt-px'
-      : '';
 
     return (
       <div
+        ref={ref}
         className={classNames(
           baseClasses,
           orientationClasses[orientation],
-          !attached && spacingClasses[spacing],
-          attached && attachedClasses,
+          spacingClasses[spacing],
           className
         )}
-        role='group'
+        role="group"
         {...props}
       >
         {children}
@@ -163,22 +183,18 @@ const ButtonGroup = memo<ButtonGroupProps>(
   }
 );
 
-Button.displayName = 'Button';
 ButtonGroup.displayName = 'ButtonGroup';
 
-// Define the compound component type
-interface ButtonComponent extends React.NamedExoticComponent<ButtonProps> {
+// Export the main Button component with compound pattern
+const Button = ButtonComponent as typeof ButtonComponent & {
   Group: typeof ButtonGroup;
   variants: typeof BUTTON_VARIANTS;
   sizes: typeof BUTTON_SIZES;
-}
+};
 
 // Compound component pattern
-const ButtonWithCompounds = Button as ButtonComponent;
-ButtonWithCompounds.Group = ButtonGroup;
+Button.Group = ButtonGroup;
+Button.variants = BUTTON_VARIANTS;
+Button.sizes = BUTTON_SIZES;
 
-// Export constants for external use
-ButtonWithCompounds.variants = BUTTON_VARIANTS;
-ButtonWithCompounds.sizes = BUTTON_SIZES;
-
-export default ButtonWithCompounds;
+export default Button;

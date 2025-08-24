@@ -204,6 +204,50 @@
   --badge-padding-sm: 0.125rem 0.5rem;
   --badge-padding-md: 0.25rem 0.75rem;
   --badge-padding-lg: 0.375rem 1rem;
+  
+  /* Badge variant colors - Light theme */
+  --badge-primary-bg: rgb(239 246 255); /* primary-50 */
+  --badge-primary-text: rgb(29 78 216); /* primary-700 */
+  --badge-primary-border: rgb(191 219 254); /* primary-200 */
+  --badge-primary-hover: rgb(219 234 254); /* primary-100 */
+  
+  --badge-success-bg: rgb(240 253 244); /* success-50 */
+  --badge-success-text: rgb(21 128 61); /* success-700 */
+  --badge-success-border: rgb(187 247 208); /* success-200 */
+  --badge-success-hover: rgb(220 252 231); /* success-100 */
+  
+  --badge-warning-bg: rgb(255 251 235); /* warning-50 */
+  --badge-warning-text: rgb(180 83 9); /* warning-700 */
+  --badge-warning-border: rgb(254 215 170); /* warning-200 */
+  --badge-warning-hover: rgb(254 243 199); /* warning-100 */
+  
+  --badge-error-bg: rgb(254 242 242); /* error-50 */
+  --badge-error-text: rgb(185 28 28); /* error-700 */
+  --badge-error-border: rgb(254 202 202); /* error-200 */
+  --badge-error-hover: rgb(254 226 226); /* error-100 */
+}
+
+.dark {
+  /* Badge variant colors - Dark theme */
+  --badge-primary-bg: rgb(30 58 138 / 0.3); /* primary-900/30 */
+  --badge-primary-text: rgb(147 197 253); /* primary-300 */
+  --badge-primary-border: rgb(29 78 216 / 0.5); /* primary-700/50 */
+  --badge-primary-hover: rgb(30 58 138 / 0.5); /* primary-800/50 */
+  
+  --badge-success-bg: rgb(20 83 45 / 0.3); /* success-900/30 */
+  --badge-success-text: rgb(134 239 172); /* success-300 */
+  --badge-success-border: rgb(21 128 61 / 0.5); /* success-700/50 */
+  --badge-success-hover: rgb(22 101 52 / 0.5); /* success-800/50 */
+  
+  --badge-warning-bg: rgb(146 64 14 / 0.3); /* warning-900/30 */
+  --badge-warning-text: rgb(252 211 77); /* warning-300 */
+  --badge-warning-border: rgb(180 83 9 / 0.5); /* warning-700/50 */
+  --badge-warning-hover: rgb(154 52 18 / 0.5); /* warning-800/50 */
+  
+  --badge-error-bg: rgb(153 27 27 / 0.3); /* error-900/30 */
+  --badge-error-text: rgb(252 165 165); /* error-300 */
+  --badge-error-border: rgb(185 28 28 / 0.5); /* error-700/50 */
+  --badge-error-hover: rgb(153 27 27 / 0.5); /* error-800/50 */
 }
 
 /* Loading Spinner Variables */

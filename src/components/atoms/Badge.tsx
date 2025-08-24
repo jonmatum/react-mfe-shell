@@ -1,160 +1,153 @@
-import React, { memo } from 'react';
-import { BaseComponentProps } from '../../types';
+import { forwardRef, useCallback } from 'react';
+import {
+  BadgeProps,
+  BADGE_VARIANTS,
+  BADGE_SIZES,
+} from '../../types';
 import { classNames } from '../../utils';
+import {
+  createSemanticColorVariant,
+  createAriaLabel,
+  createSemanticFocusRing,
+  BASE_INTERACTIVE_CLASSES,
+} from '../../utils/componentUtils';
 
-export type BadgeVariant =
-  | 'default'
-  | 'primary'
-  | 'secondary'
-  | 'success'
-  | 'warning'
-  | 'danger';
-export type BadgeSize = 'sm' | 'md' | 'lg';
+const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
+  (
+    {
+      children,
+      className,
+      variant = 'default',
+      size = 'md',
+      dot = false,
+      removable = false,
+      onRemove,
+      as: Component = 'span',
+      ...props
+    },
+    ref
+  ) => {
+    const baseClasses = 'inline-flex items-center font-medium rounded-full transition-colors duration-200';
 
-export interface BadgeProps extends BaseComponentProps {
-  variant?: BadgeVariant;
-  size?: BadgeSize;
-  dot?: boolean;
-  removable?: boolean;
-  onRemove?: () => void;
-}
-
-/**
- * A flexible badge component for status indicators, labels, and tags
- *
- * @example
- * ```tsx
- * <Badge variant="success">Active</Badge>
- * <Badge variant="warning" dot>Pending</Badge>
- * <Badge variant="danger" removable onRemove={handleRemove}>Error</Badge>
- * ```
- */
-const Badge = memo<BadgeProps>(
-  ({
-    children,
-    className,
-    variant = 'default',
-    size = 'md',
-    dot = false,
-    removable = false,
-    onRemove,
-    ...props
-  }) => {
-    const baseClasses = 'inline-flex items-center font-medium rounded-full';
-
+    // DRY variant classes using utility functions
     const variantClasses = {
-      default: 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-100',
-      primary: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100',
-      secondary:
-        'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300',
-      success:
-        'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100',
-      warning:
-        'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100',
-      danger: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100',
+      default: 'bg-surface-secondary text-text-primary border border-border-primary',
+      primary: createSemanticColorVariant('primary', 'soft'),
+      secondary: 'bg-surface-tertiary text-text-secondary border border-border-secondary',
+      success: createSemanticColorVariant('success', 'soft'),
+      warning: createSemanticColorVariant('warning', 'soft'),
+      danger: createSemanticColorVariant('danger', 'soft'),
     };
 
-    const sizeClasses = {
-      sm: 'px-2 py-0.5 text-xs',
-      md: 'px-2.5 py-0.5 text-sm',
-      lg: 'px-3 py-1 text-sm',
+    // DRY size classes - simplified implementation
+    const getSizeClasses = (size: string, isDot: boolean) => {
+      if (isDot) {
+        const dotSizes = {
+          sm: 'w-2 h-2',
+          md: 'w-2.5 h-2.5',
+          lg: 'w-3 h-3',
+        };
+        return dotSizes[size as keyof typeof dotSizes] || dotSizes.md;
+      }
+      
+      const badgeSizes = {
+        sm: 'px-2 py-0.5 text-xs gap-1',
+        md: 'px-2.5 py-0.5 text-sm gap-1',
+        lg: 'px-3 py-1 text-sm gap-1.5',
+      };
+      return badgeSizes[size as keyof typeof badgeSizes] || badgeSizes.md;
     };
 
-    const dotClasses = {
-      sm: 'h-1.5 w-1.5',
-      md: 'h-2 w-2',
-      lg: 'h-2.5 w-2.5',
+    const sizeClasses = getSizeClasses(size, dot);
+
+    // Memoized remove handler
+    const handleRemove = useCallback((event: React.MouseEvent) => {
+      event.stopPropagation();
+      onRemove?.();
+    }, [onRemove]);
+
+    // DRY remove button classes generator
+    const getRemoveButtonClasses = (variant: BadgeProps['variant']) => {
+      const baseRemoveClasses = `ml-1 ${BASE_INTERACTIVE_CLASSES} rounded-full focus:ring-offset-transparent`;
+      
+      const variantRemoveClasses = {
+        default: 'hover:bg-surface-tertiary focus:ring-border-focus',
+        primary: `hover:bg-primary-100 ${createSemanticFocusRing('primary')} dark:hover:bg-primary-800/50`,
+        secondary: 'hover:bg-surface-primary focus:ring-border-focus',
+        success: `hover:bg-success-100 ${createSemanticFocusRing('success')} dark:hover:bg-success-800/50`,
+        warning: `hover:bg-warning-100 ${createSemanticFocusRing('warning')} dark:hover:bg-warning-800/50`,
+        danger: `hover:bg-error-100 ${createSemanticFocusRing('danger')} dark:hover:bg-error-800/50`,
+      };
+
+      return classNames(baseRemoveClasses, variantRemoveClasses[variant || 'default']);
     };
 
-    const dotColorClasses = {
-      default: 'bg-gray-400',
-      primary: 'bg-blue-400',
-      secondary: 'bg-gray-400',
-      success: 'bg-green-400',
-      warning: 'bg-yellow-400',
-      danger: 'bg-red-400',
+    // DRY icon size mapping
+    const getIconSize = (size: string) => {
+      const sizeMap = { sm: 'w-3 h-3', md: 'w-3.5 h-3.5', lg: 'w-4 h-4' };
+      return sizeMap[size as keyof typeof sizeMap] || sizeMap.md;
     };
 
+    // DRY component props generation
+    const getComponentProps = () => ({
+      ref,
+      className: classNames(
+        dot ? 'rounded-full' : baseClasses,
+        variantClasses[variant],
+        sizeClasses,
+        className
+      ),
+      role: 'status',
+      'aria-label': createAriaLabel(children, { fallback: 'Status indicator' }),
+      ...props,
+    });
+
+    // Early return for dot variant
+    if (dot) {
+      return <Component {...getComponentProps()} />;
+    }
+
+    // Main badge component
     return (
-      <span
-        className={classNames(
-          baseClasses,
-          variantClasses[variant],
-          sizeClasses[size],
-          className
-        )}
-        {...props}
-      >
-        {/* Dot indicator */}
-        {dot && (
-          <span
-            className={classNames(
-              'rounded-full mr-1.5',
-              dotClasses[size],
-              dotColorClasses[variant]
-            )}
-          />
-        )}
-
-        {/* Content */}
+      <Component {...getComponentProps()}>
         {children}
-
-        {/* Remove button */}
-        {removable && onRemove && (
+        {removable && (
           <button
-            type='button'
+            type="button"
+            onClick={handleRemove}
             className={classNames(
-              'ml-1 inline-flex items-center justify-center rounded-full hover:bg-black hover:bg-opacity-10 focus:outline-none focus:bg-black focus:bg-opacity-10 transition-colors',
-              size === 'sm' ? 'h-3 w-3' : size === 'md' ? 'h-4 w-4' : 'h-5 w-5'
+              getRemoveButtonClasses(variant),
+              getIconSize(size)
             )}
-            onClick={onRemove}
-            aria-label='Remove badge'
+            aria-label={createAriaLabel(children, { prefix: 'Remove', fallback: 'badge' })}
+            tabIndex={0}
           >
             <svg
-              className={classNames(
-                'fill-current',
-                size === 'sm'
-                  ? 'h-2 w-2'
-                  : size === 'md'
-                    ? 'h-3 w-3'
-                    : 'h-4 w-4'
-              )}
-              viewBox='0 0 20 20'
+              className="w-full h-full"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
             >
               <path
-                fillRule='evenodd'
-                d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z'
-                clipRule='evenodd'
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
               />
             </svg>
           </button>
         )}
-      </span>
+      </Component>
     );
   }
 );
 
 Badge.displayName = 'Badge';
 
-// Export constants for external use (defined after component to avoid fast-refresh warnings)
-const BADGE_VARIANTS = [
-  'default',
-  'primary',
-  'secondary',
-  'success',
-  'warning',
-  'danger',
-] as const;
-const BADGE_SIZES = ['sm', 'md', 'lg'] as const;
+// Static properties
+(Badge as any).variants = BADGE_VARIANTS;
+(Badge as any).sizes = BADGE_SIZES;
 
-// Define the component type with constants
-interface BadgeComponent extends React.NamedExoticComponent<BadgeProps> {
-  variants: typeof BADGE_VARIANTS;
-  sizes: typeof BADGE_SIZES;
-}
-
-const BadgeWithConstants = Badge as BadgeComponent;
-BadgeWithConstants.variants = BADGE_VARIANTS;
-BadgeWithConstants.sizes = BADGE_SIZES;
-
-export default BadgeWithConstants;
+export default Badge;
