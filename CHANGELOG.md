@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.0.1](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v7.0.0...react-mfe-shell-v7.0.1) (2025-08-24)
+
+
+### Bug Fixes
+
+* **lint:** resolve all ESLint errors and warnings ([04da16a](https://github.com/jonmatum/react-mfe-shell/commit/04da16ac8394c49ab189fbd975d8b58f95ea8d97))
+
+
+### Styles
+
+* improve code formatting and indentation ([9587d0f](https://github.com/jonmatum/react-mfe-shell/commit/9587d0fad2c57d41051452157d8ba94b8d61122a))
+
 ## [7.0.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v6.2.0...react-mfe-shell-v7.0.0) (2025-08-24)
 
 
