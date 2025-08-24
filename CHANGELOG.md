@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.0.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v6.2.0...react-mfe-shell-v7.0.0) (2025-08-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* None - documentation restructuring only
+* None - all additions are backward compatible
+
+### Features
+
+* add comprehensive form molecules ecosystem with demo showcase ([528ead6](https://github.com/jonmatum/react-mfe-shell/commit/528ead6f9a695b2c12d7e0c028545004ed6ebb47))
+
+
+### Bug Fixes
+
+* **docs:** update file references to use lowercase naming convention ([b8073c3](https://github.com/jonmatum/react-mfe-shell/commit/b8073c306a116f01111e4a20aa033625726e71da))
+
+
+### Documentation
+
+* optimize documentation for Amazon Q and remove outdated content ([1b392a1](https://github.com/jonmatum/react-mfe-shell/commit/1b392a1daeb548015e6e7c25a8eb5030b6b97f57))
+* standardize file names to lowercase with dashes ([2d780f3](https://github.com/jonmatum/react-mfe-shell/commit/2d780f3cbb0d3751fea7b2ee1cc0a025665b3e5e))
+
+
+### Styles
+
+* **docs:** remove all emojis for professional consistency ([c2dcb4c](https://github.com/jonmatum/react-mfe-shell/commit/c2dcb4ca4114dcdfc1d01c027722b8cb4e01105f))
+
 ## [6.2.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v6.1.1...react-mfe-shell-v6.2.0) (2025-08-24)
 
 

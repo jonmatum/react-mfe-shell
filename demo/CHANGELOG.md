@@ -1,5 +1,16 @@
 # Changelog
 
+## [5.0.0](https://github.com/jonmatum/react-mfe-shell/compare/demo-v4.1.1...demo-v5.0.0) (2025-08-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* None - all additions are backward compatible
+
+### Features
+
+* add comprehensive form molecules ecosystem with demo showcase ([528ead6](https://github.com/jonmatum/react-mfe-shell/commit/528ead6f9a695b2c12d7e0c028545004ed6ebb47))
+
 ## [4.1.1](https://github.com/jonmatum/react-mfe-shell/compare/demo-v4.1.0...demo-v4.1.1) (2025-08-24)
 
 
