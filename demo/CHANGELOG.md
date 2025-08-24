@@ -1,5 +1,22 @@
 # Changelog
 
+## [4.0.0](https://github.com/jonmatum/react-mfe-shell/compare/demo-v3.0.0...demo-v4.0.0) (2025-08-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* Button and Badge components now use semantic variants instead of basic color props
+
+### Features
+
+* enhance design system with semantic variants and dynamic version management ([9294f93](https://github.com/jonmatum/react-mfe-shell/commit/9294f93e340ca75a4ebc00e342560c1517c6d844))
+
+
+### Bug Fixes
+
+* eliminate all remaining ESLint warnings ([927dff8](https://github.com/jonmatum/react-mfe-shell/commit/927dff87930710b05a1e8de7cba09f2c731353ae))
+* resolve ESLint errors and improve type safety ([b7a9ded](https://github.com/jonmatum/react-mfe-shell/commit/b7a9dedc27f5da240faba40494b8dcc8a9d3c0a6))
+
 ## [3.0.0](https://github.com/jonmatum/react-mfe-shell/compare/demo-v2.1.0...demo-v3.0.0) (2025-08-24)
 
 
