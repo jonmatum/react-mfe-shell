@@ -6,7 +6,7 @@ import Label from '../atoms/Label';
 
 /**
  * Radio component group with accessibility features using HeadlessUI
- * 
+ *
  * @example
  * ```tsx
  * <Radio
@@ -112,7 +112,7 @@ const Radio = forwardRef<HTMLDivElement, RadioProps>(
             required={required}
             disabled={disabled}
             size={size}
-            className="mb-3"
+            className='mb-3'
           >
             {label}
           </Label>
@@ -130,12 +130,14 @@ const Radio = forwardRef<HTMLDivElement, RadioProps>(
             [
               description ? `${fieldId}-description` : null,
               error ? `${fieldId}-error` : null,
-            ].filter(Boolean).join(' ') || undefined
+            ]
+              .filter(Boolean)
+              .join(' ') || undefined
           }
           aria-invalid={error ? 'true' : 'false'}
           aria-required={required ? 'true' : undefined}
         >
-          {options.map((option) => (
+          {options.map(option => (
             <RadioGroup.Option
               key={option.value}
               value={option.value}
@@ -148,8 +150,13 @@ const Radio = forwardRef<HTMLDivElement, RadioProps>(
               }
             >
               {({ checked, disabled: optionDisabled }) => (
-                <div className={classNames('flex items-start', sizeClasses[size].itemSpacing)}>
-                  <div className="flex items-center">
+                <div
+                  className={classNames(
+                    'flex items-start',
+                    sizeClasses[size].itemSpacing
+                  )}
+                >
+                  <div className='flex items-center'>
                     <div
                       className={classNames(
                         'rounded-full border-2 transition-colors duration-200 flex items-center justify-center',
@@ -173,9 +180,9 @@ const Radio = forwardRef<HTMLDivElement, RadioProps>(
                     </div>
                   </div>
 
-                  <div className="flex-1 min-w-0">
+                  <div className='flex-1 min-w-0'>
                     <RadioGroup.Label
-                      as="div"
+                      as='div'
                       className={classNames(
                         'font-medium text-text-primary cursor-pointer',
                         sizeClasses[size].text,
@@ -185,15 +192,15 @@ const Radio = forwardRef<HTMLDivElement, RadioProps>(
                       {option.label}
                       {required && (
                         <span
-                          className="ml-1 text-danger-500"
-                          aria-label="required"
-                          title="This field is required"
+                          className='ml-1 text-danger-500'
+                          aria-label='required'
+                          title='This field is required'
                         >
                           *
                         </span>
                       )}
                     </RadioGroup.Label>
-                    
+
                     {option.description && (
                       <RadioGroup.Description
                         className={classNames(
@@ -212,13 +219,7 @@ const Radio = forwardRef<HTMLDivElement, RadioProps>(
         </RadioGroup>
 
         {/* Hidden input for form compatibility */}
-        {name && (
-          <input
-            type="hidden"
-            name={name}
-            value={value || ''}
-          />
-        )}
+        {name && <input type='hidden' name={name} value={value || ''} />}
 
         {description && !error && (
           <p
@@ -239,22 +240,22 @@ const Radio = forwardRef<HTMLDivElement, RadioProps>(
               'mt-3 text-danger-600 flex items-center gap-1',
               size === 'sm' ? 'text-xs' : 'text-sm'
             )}
-            role="alert"
-            aria-live="polite"
+            role='alert'
+            aria-live='polite'
           >
             <svg
               className={classNames(
                 'flex-shrink-0',
                 size === 'sm' ? 'w-3 h-3' : 'w-4 h-4'
               )}
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              aria-hidden="true"
+              fill='currentColor'
+              viewBox='0 0 20 20'
+              aria-hidden='true'
             >
               <path
-                fillRule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                clipRule="evenodd"
+                fillRule='evenodd'
+                d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z'
+                clipRule='evenodd'
               />
             </svg>
             {error}

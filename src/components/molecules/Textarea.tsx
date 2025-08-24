@@ -5,7 +5,7 @@ import Label from '../atoms/Label';
 
 /**
  * Textarea component with auto-resize functionality and accessibility features
- * 
+ *
  * @example
  * ```tsx
  * <Textarea
@@ -45,7 +45,8 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ) => {
     const fieldId = id || generateId('textarea');
     const internalRef = useRef<HTMLTextAreaElement>(null);
-    const textareaRef = (ref as React.RefObject<HTMLTextAreaElement>) || internalRef;
+    const textareaRef =
+      (ref as React.RefObject<HTMLTextAreaElement>) || internalRef;
 
     // Auto-resize functionality
     const adjustHeight = useCallback(() => {
@@ -54,18 +55,22 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 
       // Reset height to auto to get the correct scrollHeight
       textarea.style.height = 'auto';
-      
+
       // Calculate the number of rows based on content
       const lineHeight = parseInt(getComputedStyle(textarea).lineHeight);
-      const padding = parseInt(getComputedStyle(textarea).paddingTop) + 
-                     parseInt(getComputedStyle(textarea).paddingBottom);
-      
+      const padding =
+        parseInt(getComputedStyle(textarea).paddingTop) +
+        parseInt(getComputedStyle(textarea).paddingBottom);
+
       const contentHeight = textarea.scrollHeight - padding;
       const calculatedRows = Math.ceil(contentHeight / lineHeight);
-      
+
       // Constrain between minRows and maxRows
-      const constrainedRows = Math.max(minRows, Math.min(maxRows, calculatedRows));
-      
+      const constrainedRows = Math.max(
+        minRows,
+        Math.min(maxRows, calculatedRows)
+      );
+
       // Set the height based on rows
       textarea.style.height = `${constrainedRows * lineHeight + padding}px`;
     }, [autoResize, minRows, maxRows, textareaRef]);
@@ -83,7 +88,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       const newValue = event.target.value;
       onChange?.(newValue);
-      
+
       // Adjust height after state update
       setTimeout(adjustHeight, 0);
     };
@@ -101,7 +106,8 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       both: 'resize',
     };
 
-    const baseClasses = 'block w-full rounded-md border transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+    const baseClasses =
+      'block w-full rounded-md border transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
 
     const variantClasses = error
       ? 'border-danger-500 bg-surface-primary text-text-primary placeholder-text-secondary focus:border-danger-500 focus:ring-danger-500'
@@ -122,7 +128,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             required={required}
             disabled={disabled}
             size={size}
-            className="mb-1.5"
+            className='mb-1.5'
           >
             {label}
           </Label>
@@ -149,7 +155,9 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             [
               description ? `${fieldId}-description` : null,
               error ? `${fieldId}-error` : null,
-            ].filter(Boolean).join(' ') || undefined
+            ]
+              .filter(Boolean)
+              .join(' ') || undefined
           }
           aria-invalid={error ? 'true' : 'false'}
           aria-required={required ? 'true' : undefined}
@@ -175,22 +183,22 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
               'mt-1.5 text-danger-600 flex items-center gap-1',
               size === 'sm' ? 'text-xs' : 'text-sm'
             )}
-            role="alert"
-            aria-live="polite"
+            role='alert'
+            aria-live='polite'
           >
             <svg
               className={classNames(
                 'flex-shrink-0',
                 size === 'sm' ? 'w-3 h-3' : 'w-4 h-4'
               )}
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              aria-hidden="true"
+              fill='currentColor'
+              viewBox='0 0 20 20'
+              aria-hidden='true'
             >
               <path
-                fillRule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                clipRule="evenodd"
+                fillRule='evenodd'
+                d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z'
+                clipRule='evenodd'
               />
             </svg>
             {error}

@@ -8,7 +8,7 @@ import LoadingSpinner from '../atoms/LoadingSpinner';
 
 /**
  * SearchBox component with search icon, clear functionality, and optional debouncing
- * 
+ *
  * @example
  * ```tsx
  * <SearchBox
@@ -47,7 +47,9 @@ const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(
   ) => {
     const fieldId = id || generateId('search-box');
     const [internalValue, setInternalValue] = useState(value);
-    const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
+    const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(
+      null
+    );
 
     // Sync internal value with external value
     useEffect(() => {
@@ -79,7 +81,7 @@ const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(
         const newValue = event.target.value;
         setInternalValue(newValue);
         onChange?.(newValue);
-        
+
         if (onSearch) {
           handleDebouncedSearch(newValue);
         }
@@ -92,7 +94,7 @@ const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(
       setInternalValue('');
       onChange?.('');
       onClear?.();
-      
+
       if (onSearch) {
         onSearch('');
       }
@@ -138,24 +140,24 @@ const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(
 
     // Build right icon based on state
     const rightIcon = (
-      <div className="flex items-center gap-1">
+      <div className='flex items-center gap-1'>
         {loading && (
           <LoadingSpinner
             size={size === 'sm' ? 'xs' : size === 'lg' ? 'sm' : 'xs'}
-            color="primary"
+            color='primary'
           />
         )}
         {showClear && (
           <Button
-            variant="ghost"
-            size="xs"
+            variant='ghost'
+            size='xs'
             onClick={handleClear}
             disabled={disabled}
             className={classNames(
               'p-0 hover:bg-transparent focus:ring-1 focus:ring-primary-500',
               sizeClasses[size]
             )}
-            aria-label="Clear search"
+            aria-label='Clear search'
           >
             <XMarkIcon className={iconSizeClasses[size]} />
           </Button>
@@ -169,7 +171,7 @@ const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(
           ref={ref}
           id={fieldId}
           name={name}
-          type="search"
+          type='search'
           value={internalValue}
           onChange={handleChange}
           onKeyPress={handleKeyPress}
@@ -182,8 +184,8 @@ const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(
           size={size}
           leftIcon={<MagnifyingGlassIcon className={iconSizeClasses[size]} />}
           rightIcon={rightIcon}
-          autoComplete="off"
-          role="searchbox"
+          autoComplete='off'
+          role='searchbox'
           aria-label={label || 'Search'}
           {...props}
         />

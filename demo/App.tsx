@@ -18,10 +18,8 @@ import {
   SearchBox,
   Select,
   Checkbox,
-  Radio,
   SwitchField,
   Textarea,
-  FileUpload,
 } from '../src';
 import { 
   SunIcon, 

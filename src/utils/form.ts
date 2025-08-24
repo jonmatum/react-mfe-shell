@@ -1,38 +1,46 @@
 import { useId, useState, useCallback } from 'react';
 
 // Form validation types
-export interface ValidationRule {
+export interface ValidationRule<T = unknown> {
   required?: boolean | string;
   minLength?: number | { value: number; message: string };
   maxLength?: number | { value: number; message: string };
   pattern?: RegExp | { value: RegExp; message: string };
-  custom?: (value: any) => string | undefined;
+  custom?: (value: T) => string | undefined;
 }
 
-export interface FormFieldState {
-  value: any;
+export interface FormFieldState<T = unknown> {
+  value: T;
   error?: string;
   touched: boolean;
   dirty: boolean;
 }
 
-export interface UseFormFieldOptions {
-  initialValue?: any;
-  validation?: ValidationRule;
+export interface UseFormFieldOptions<T = unknown> {
+  initialValue?: T;
+  validation?: ValidationRule<T>;
   validateOnChange?: boolean;
   validateOnBlur?: boolean;
 }
 
 // Validation utility functions
-export const validateField = (value: any, rules?: ValidationRule): string | undefined => {
+export const validateField = <T = unknown>(
+  value: T,
+  rules?: ValidationRule<T>
+): string | undefined => {
   if (!rules) return undefined;
 
   // Required validation
   if (rules.required) {
-    const isEmpty = value === undefined || value === null || value === '' || 
-                   (Array.isArray(value) && value.length === 0);
+    const isEmpty =
+      value === undefined ||
+      value === null ||
+      value === '' ||
+      (Array.isArray(value) && value.length === 0);
     if (isEmpty) {
-      return typeof rules.required === 'string' ? rules.required : 'This field is required';
+      return typeof rules.required === 'string'
+        ? rules.required
+        : 'This field is required';
     }
   }
 
@@ -43,24 +51,38 @@ export const validateField = (value: any, rules?: ValidationRule): string | unde
   if (typeof value === 'string') {
     // Min length validation
     if (rules.minLength) {
-      const minLength = typeof rules.minLength === 'number' ? rules.minLength : rules.minLength.value;
-      const message = typeof rules.minLength === 'object' ? rules.minLength.message : 
-                     `Must be at least ${minLength} characters`;
+      const minLength =
+        typeof rules.minLength === 'number'
+          ? rules.minLength
+          : rules.minLength.value;
+      const message =
+        typeof rules.minLength === 'object'
+          ? rules.minLength.message
+          : `Must be at least ${minLength} characters`;
       if (value.length < minLength) return message;
     }
 
     // Max length validation
     if (rules.maxLength) {
-      const maxLength = typeof rules.maxLength === 'number' ? rules.maxLength : rules.maxLength.value;
-      const message = typeof rules.maxLength === 'object' ? rules.maxLength.message : 
-                     `Must be no more than ${maxLength} characters`;
+      const maxLength =
+        typeof rules.maxLength === 'number'
+          ? rules.maxLength
+          : rules.maxLength.value;
+      const message =
+        typeof rules.maxLength === 'object'
+          ? rules.maxLength.message
+          : `Must be no more than ${maxLength} characters`;
       if (value.length > maxLength) return message;
     }
 
     // Pattern validation
     if (rules.pattern) {
-      const pattern = rules.pattern instanceof RegExp ? rules.pattern : rules.pattern.value;
-      const message = rules.pattern instanceof RegExp ? 'Invalid format' : rules.pattern.message;
+      const pattern =
+        rules.pattern instanceof RegExp ? rules.pattern : rules.pattern.value;
+      const message =
+        rules.pattern instanceof RegExp
+          ? 'Invalid format'
+          : rules.pattern.message;
       if (!pattern.test(value)) return message;
     }
   }
@@ -74,34 +96,40 @@ export const validateField = (value: any, rules?: ValidationRule): string | unde
 };
 
 // Form field hook for consistent state management
-export const useFormField = ({
-  initialValue = '',
+export const useFormField = <T = string>({
+  initialValue = '' as T,
   validation,
   validateOnChange = false,
   validateOnBlur = true,
-}: UseFormFieldOptions = {}) => {
-  const [state, setState] = useState<FormFieldState>({
+}: UseFormFieldOptions<T> = {} as UseFormFieldOptions<T>) => {
+  const [state, setState] = useState<FormFieldState<T>>({
     value: initialValue,
     error: undefined,
     touched: false,
     dirty: false,
   });
 
-  const validate = useCallback((value: any) => {
-    return validateField(value, validation);
-  }, [validation]);
+  const validate = useCallback(
+    (value: T) => {
+      return validateField(value, validation);
+    },
+    [validation]
+  );
 
-  const setValue = useCallback((newValue: any) => {
-    setState(prev => {
-      const error = validateOnChange ? validate(newValue) : prev.error;
-      return {
-        ...prev,
-        value: newValue,
-        dirty: newValue !== initialValue,
-        error,
-      };
-    });
-  }, [initialValue, validate, validateOnChange]);
+  const setValue = useCallback(
+    (newValue: T) => {
+      setState(prev => {
+        const error = validateOnChange ? validate(newValue) : prev.error;
+        return {
+          ...prev,
+          value: newValue,
+          dirty: newValue !== initialValue,
+          error,
+        };
+      });
+    },
+    [initialValue, validate, validateOnChange]
+  );
 
   const setTouched = useCallback(() => {
     setState(prev => {
@@ -152,7 +180,7 @@ export const validationPatterns = {
     message: 'Please enter a valid email address',
   },
   phone: {
-    value: /^[\+]?[1-9][\d]{0,15}$/,
+    value: /^[+]?[1-9][\d]{0,15}$/,
     message: 'Please enter a valid phone number',
   },
   url: {
@@ -176,7 +204,7 @@ export const useFormFieldId = (prefix = 'field') => {
 
 // Form field error state utilities
 export const getFieldErrorProps = (error?: string, fieldId?: string) => ({
-  'aria-invalid': error ? 'true' as const : 'false' as const,
+  'aria-invalid': error ? ('true' as const) : ('false' as const),
   'aria-describedby': error && fieldId ? `${fieldId}-error` : undefined,
 });
 
@@ -193,8 +221,9 @@ export const getFormFieldAccessibility = (
 
   return {
     id: fieldId,
-    'aria-invalid': error ? 'true' as const : 'false' as const,
-    'aria-describedby': describedBy.length > 0 ? describedBy.join(' ') : undefined,
-    'aria-required': required ? 'true' as const : undefined,
+    'aria-invalid': error ? ('true' as const) : ('false' as const),
+    'aria-describedby':
+      describedBy.length > 0 ? describedBy.join(' ') : undefined,
+    'aria-required': required ? ('true' as const) : undefined,
   };
 };

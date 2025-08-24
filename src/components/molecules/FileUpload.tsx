@@ -1,5 +1,10 @@
 import React, { forwardRef, useCallback, useRef, useState } from 'react';
-import { CloudArrowUpIcon, DocumentIcon, XMarkIcon, PhotoIcon } from '@heroicons/react/24/outline';
+import {
+  CloudArrowUpIcon,
+  DocumentIcon,
+  XMarkIcon,
+  PhotoIcon,
+} from '@heroicons/react/24/outline';
 import { FileUploadProps } from '../../types';
 import { classNames, generateId } from '../../utils';
 import Label from '../atoms/Label';
@@ -7,7 +12,7 @@ import Button from '../atoms/Button';
 
 /**
  * FileUpload component with drag-and-drop, preview, and validation features
- * 
+ *
  * @example
  * ```tsx
  * <FileUpload
@@ -52,16 +57,18 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
     const [isDragOver, setIsDragOver] = useState(false);
 
     // Format file size
-    const formatFileSize = (bytes: number): string => {
+    const formatFileSize = useCallback((bytes: number): string => {
       if (bytes === 0) return '0 Bytes';
       const k = 1024;
       const sizes = ['Bytes', 'KB', 'MB', 'GB'];
       const i = Math.floor(Math.log(bytes) / Math.log(k));
       return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-    };
+    }, []);
 
     // Validate files
-    const validateFiles = (fileList: File[]): { valid: File[]; errors: string[] } => {
+    const validateFiles = useCallback((
+      fileList: File[]
+    ): { valid: File[]; errors: string[] } => {
       const valid: File[] = [];
       const errors: string[] = [];
 
@@ -71,10 +78,12 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
         return { valid, errors };
       }
 
-      fileList.forEach((file) => {
+      fileList.forEach(file => {
         // Check file size
         if (file.size > maxSize) {
-          errors.push(`${file.name} is too large. Maximum size is ${formatFileSize(maxSize)}`);
+          errors.push(
+            `${file.name} is too large. Maximum size is ${formatFileSize(maxSize)}`
+          );
           return;
         }
 
@@ -98,24 +107,27 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
       });
 
       return { valid, errors };
-    };
+    }, [maxFiles, maxSize, accept, formatFileSize]);
 
     // Handle file selection
-    const handleFiles = useCallback((fileList: FileList | null) => {
-      if (!fileList) return;
+    const handleFiles = useCallback(
+      (fileList: FileList | null) => {
+        if (!fileList) return;
 
-      const newFiles = Array.from(fileList);
-      const { valid, errors } = validateFiles(newFiles);
+        const newFiles = Array.from(fileList);
+        const { valid, errors } = validateFiles(newFiles);
 
-      if (errors.length > 0) {
-        onError?.(errors.join(', '));
-        return;
-      }
+        if (errors.length > 0) {
+          onError?.(errors.join(', '));
+          return;
+        }
 
-      const updatedFiles = multiple ? [...files, ...valid] : valid;
-      setFiles(updatedFiles);
-      onFilesChange?.(updatedFiles);
-    }, [files, multiple, maxSize, maxFiles, accept, onFilesChange, onError]);
+        const updatedFiles = multiple ? [...files, ...valid] : valid;
+        setFiles(updatedFiles);
+        onFilesChange?.(updatedFiles);
+      },
+      [files, multiple, onFilesChange, onError, validateFiles]
+    );
 
     // Handle input change
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,13 +135,16 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
     };
 
     // Handle drag events
-    const handleDragOver = useCallback((event: React.DragEvent) => {
-      event.preventDefault();
-      event.stopPropagation();
-      if (!disabled) {
-        setIsDragOver(true);
-      }
-    }, [disabled]);
+    const handleDragOver = useCallback(
+      (event: React.DragEvent) => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!disabled) {
+          setIsDragOver(true);
+        }
+      },
+      [disabled]
+    );
 
     const handleDragLeave = useCallback((event: React.DragEvent) => {
       event.preventDefault();
@@ -137,16 +152,19 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
       setIsDragOver(false);
     }, []);
 
-    const handleDrop = useCallback((event: React.DragEvent) => {
-      event.preventDefault();
-      event.stopPropagation();
-      setIsDragOver(false);
+    const handleDrop = useCallback(
+      (event: React.DragEvent) => {
+        event.preventDefault();
+        event.stopPropagation();
+        setIsDragOver(false);
 
-      if (disabled) return;
+        if (disabled) return;
 
-      const droppedFiles = event.dataTransfer.files;
-      handleFiles(droppedFiles);
-    }, [disabled, handleFiles]);
+        const droppedFiles = event.dataTransfer.files;
+        handleFiles(droppedFiles);
+      },
+      [disabled, handleFiles]
+    );
 
     // Remove file
     const removeFile = (index: number) => {
@@ -165,9 +183,9 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
     // Get file icon
     const getFileIcon = (file: File) => {
       if (file.type.startsWith('image/')) {
-        return <PhotoIcon className="w-8 h-8 text-primary-500" />;
+        return <PhotoIcon className='w-8 h-8 text-primary-500' />;
       }
-      return <DocumentIcon className="w-8 h-8 text-text-secondary" />;
+      return <DocumentIcon className='w-8 h-8 text-text-secondary' />;
     };
 
     // Get preview URL for images
@@ -184,8 +202,9 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
       lg: 'p-8',
     };
 
-    const baseClasses = 'relative border-2 border-dashed rounded-lg transition-colors duration-200';
-    
+    const baseClasses =
+      'relative border-2 border-dashed rounded-lg transition-colors duration-200';
+
     const stateClasses = isDragOver
       ? 'border-primary-500 bg-primary-50'
       : error
@@ -204,13 +223,13 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
             required={required}
             disabled={disabled}
             size={size}
-            className="mb-3"
+            className='mb-3'
           >
             {label}
           </Label>
         )}
 
-        <div className="space-y-4">
+        <div className='space-y-4'>
           {/* Upload Area */}
           <div
             className={classNames(
@@ -228,32 +247,36 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
               ref={inputRef}
               id={fieldId}
               name={name}
-              type="file"
+              type='file'
               accept={accept}
               multiple={multiple}
               onChange={handleInputChange}
               disabled={disabled}
-              className="sr-only"
+              className='sr-only'
               aria-describedby={
                 [
                   description ? `${fieldId}-description` : null,
                   error ? `${fieldId}-error` : null,
-                ].filter(Boolean).join(' ') || undefined
+                ]
+                  .filter(Boolean)
+                  .join(' ') || undefined
               }
               aria-invalid={error ? 'true' : 'false'}
               aria-required={required ? 'true' : undefined}
               {...props}
             />
 
-            <div className="text-center">
+            <div className='text-center'>
               {children || (
                 <>
-                  <CloudArrowUpIcon className="mx-auto h-12 w-12 text-text-secondary" />
-                  <div className="mt-4">
-                    <p className="text-sm font-medium text-text-primary">
-                      {dragAndDrop ? 'Drop files here or click to browse' : 'Click to browse files'}
+                  <CloudArrowUpIcon className='mx-auto h-12 w-12 text-text-secondary' />
+                  <div className='mt-4'>
+                    <p className='text-sm font-medium text-text-primary'>
+                      {dragAndDrop
+                        ? 'Drop files here or click to browse'
+                        : 'Click to browse files'}
                     </p>
-                    <p className="text-xs text-text-secondary mt-1">
+                    <p className='text-xs text-text-secondary mt-1'>
                       {accept && `Accepted formats: ${accept}`}
                       {maxSize && ` • Max size: ${formatFileSize(maxSize)}`}
                       {multiple && ` • Max files: ${maxFiles}`}
@@ -266,26 +289,26 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
 
           {/* File List */}
           {files.length > 0 && (
-            <div className="space-y-2">
-              <h4 className="text-sm font-medium text-text-primary">
+            <div className='space-y-2'>
+              <h4 className='text-sm font-medium text-text-primary'>
                 Selected Files ({files.length})
               </h4>
-              <div className="space-y-2">
+              <div className='space-y-2'>
                 {files.map((file, index) => {
                   const previewUrl = preview ? getPreviewUrl(file) : null;
-                  
+
                   return (
                     <div
                       key={`${file.name}-${index}`}
-                      className="flex items-center gap-3 p-3 bg-surface-secondary rounded-lg"
+                      className='flex items-center gap-3 p-3 bg-surface-secondary rounded-lg'
                     >
                       {/* File Icon/Preview */}
-                      <div className="flex-shrink-0">
+                      <div className='flex-shrink-0'>
                         {previewUrl ? (
                           <img
                             src={previewUrl}
                             alt={file.name}
-                            className="w-10 h-10 object-cover rounded"
+                            className='w-10 h-10 object-cover rounded'
                             onLoad={() => URL.revokeObjectURL(previewUrl)}
                           />
                         ) : (
@@ -294,28 +317,28 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
                       </div>
 
                       {/* File Info */}
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-text-primary truncate">
+                      <div className='flex-1 min-w-0'>
+                        <p className='text-sm font-medium text-text-primary truncate'>
                           {file.name}
                         </p>
-                        <p className="text-xs text-text-secondary">
+                        <p className='text-xs text-text-secondary'>
                           {formatFileSize(file.size)}
                         </p>
                       </div>
 
                       {/* Remove Button */}
                       <Button
-                        variant="ghost"
-                        size="xs"
-                        onClick={(e) => {
+                        variant='ghost'
+                        size='xs'
+                        onClick={e => {
                           e.stopPropagation();
                           removeFile(index);
                         }}
                         disabled={disabled}
-                        className="p-1 hover:bg-danger-100 hover:text-danger-600"
+                        className='p-1 hover:bg-danger-100 hover:text-danger-600'
                         aria-label={`Remove ${file.name}`}
                       >
-                        <XMarkIcon className="w-4 h-4" />
+                        <XMarkIcon className='w-4 h-4' />
                       </Button>
                     </div>
                   );
@@ -344,22 +367,22 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
               'mt-3 text-danger-600 flex items-center gap-1',
               size === 'sm' ? 'text-xs' : 'text-sm'
             )}
-            role="alert"
-            aria-live="polite"
+            role='alert'
+            aria-live='polite'
           >
             <svg
               className={classNames(
                 'flex-shrink-0',
                 size === 'sm' ? 'w-3 h-3' : 'w-4 h-4'
               )}
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              aria-hidden="true"
+              fill='currentColor'
+              viewBox='0 0 20 20'
+              aria-hidden='true'
             >
               <path
-                fillRule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                clipRule="evenodd"
+                fillRule='evenodd'
+                d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z'
+                clipRule='evenodd'
               />
             </svg>
             {error}

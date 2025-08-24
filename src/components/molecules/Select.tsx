@@ -1,6 +1,10 @@
 import React, { forwardRef, Fragment, useState, useMemo } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
-import { ChevronUpDownIcon, CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import {
+  ChevronUpDownIcon,
+  CheckIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline';
 import { SelectProps, SelectOption } from '../../types';
 import { classNames, generateId } from '../../utils';
 import Label from '../atoms/Label';
@@ -8,7 +12,7 @@ import LoadingSpinner from '../atoms/LoadingSpinner';
 
 /**
  * Select component with search, multi-select, and accessibility features using HeadlessUI
- * 
+ *
  * @example
  * ```tsx
  * <Select
@@ -54,17 +58,18 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
     // Filter options based on search query
     const filteredOptions = useMemo(() => {
       if (!searchable || !searchQuery) return options;
-      
-      return options.filter(option =>
-        option.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        option.description?.toLowerCase().includes(searchQuery.toLowerCase())
+
+      return options.filter(
+        option =>
+          option.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          option.description?.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }, [options, searchQuery, searchable]);
 
     // Get selected option(s)
     const selectedOption = useMemo(() => {
       if (multiple) {
-        return Array.isArray(value) 
+        return Array.isArray(value)
           ? options.filter(option => value.includes(option.value))
           : [];
       }
@@ -84,9 +89,9 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
     const handleClear = (event: React.MouseEvent) => {
       event.stopPropagation();
       if (multiple) {
-        (onChange as any)?.([] as any);
+        (onChange as (value: string[]) => void)?.([] as string[]);
       } else {
-        (onChange as any)?.('');
+        (onChange as (value: string) => void)?.('');
       }
     };
 
@@ -109,8 +114,9 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
       lg: 'w-6 h-6',
     };
 
-    const baseClasses = 'relative w-full cursor-default rounded-md border bg-surface-primary text-left transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
-    
+    const baseClasses =
+      'relative w-full cursor-default rounded-md border bg-surface-primary text-left transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+
     const variantClasses = error
       ? 'border-danger-500 focus:border-danger-500 focus:ring-danger-500'
       : 'border-border-primary focus:border-primary-500 focus:ring-primary-500';
@@ -123,22 +129,24 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
     const renderSelectedValue = () => {
       if (multiple && Array.isArray(selectedOption)) {
         if (selectedOption.length === 0) {
-          return <span className="text-text-secondary">{placeholder}</span>;
+          return <span className='text-text-secondary'>{placeholder}</span>;
         }
         if (selectedOption.length === 1) {
-          return renderValue ? renderValue(selectedOption[0]) : selectedOption[0].label;
+          return renderValue
+            ? renderValue(selectedOption[0])
+            : selectedOption[0].label;
         }
         return `${selectedOption.length} selected`;
       }
-      
+
       if (!selectedOption || Array.isArray(selectedOption)) {
-        return <span className="text-text-secondary">{placeholder}</span>;
+        return <span className='text-text-secondary'>{placeholder}</span>;
       }
-      
+
       return renderValue ? renderValue(selectedOption) : selectedOption.label;
     };
 
-    const hasValue = multiple 
+    const hasValue = multiple
       ? Array.isArray(selectedOption) && selectedOption.length > 0
       : selectedOption;
 
@@ -150,7 +158,7 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
             required={required}
             disabled={disabled}
             size={size}
-            className="mb-1.5"
+            className='mb-1.5'
           >
             {label}
           </Label>
@@ -162,7 +170,7 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
           disabled={disabled}
           multiple={multiple}
         >
-          <div className="relative">
+          <div className='relative'>
             <Listbox.Button
               ref={ref}
               id={fieldId}
@@ -176,35 +184,37 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
                 [
                   description ? `${fieldId}-description` : null,
                   error ? `${fieldId}-error` : null,
-                ].filter(Boolean).join(' ') || undefined
+                ]
+                  .filter(Boolean)
+                  .join(' ') || undefined
               }
               aria-invalid={error ? 'true' : 'false'}
               aria-required={required ? 'true' : undefined}
               {...props}
             >
-              <span className="flex items-center justify-between w-full">
-                <span className="block truncate text-text-primary">
+              <span className='flex items-center justify-between w-full'>
+                <span className='block truncate text-text-primary'>
                   {renderSelectedValue()}
                 </span>
-                
-                <span className="flex items-center gap-1">
+
+                <span className='flex items-center gap-1'>
                   {loading && (
                     <LoadingSpinner
                       size={size === 'sm' ? 'xs' : size === 'lg' ? 'sm' : 'xs'}
-                      color="primary"
+                      color='primary'
                     />
                   )}
                   {clearable && hasValue && !disabled && (
                     <div
                       onClick={handleClear}
-                      className="p-0.5 hover:bg-surface-secondary rounded cursor-pointer"
-                      aria-label="Clear selection"
-                      role="button"
+                      className='p-0.5 hover:bg-surface-secondary rounded cursor-pointer'
+                      aria-label='Clear selection'
+                      role='button'
                       tabIndex={0}
-                      onKeyDown={(e) => {
+                      onKeyDown={e => {
                         if (e.key === 'Enter' || e.key === ' ') {
                           e.preventDefault();
-                          handleClear(e as any);
+                          handleClear(e as React.MouseEvent<HTMLDivElement>);
                         }
                       }}
                     >
@@ -212,8 +222,11 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
                     </div>
                   )}
                   <ChevronUpDownIcon
-                    className={classNames('text-text-secondary', iconSizeClasses[size])}
-                    aria-hidden="true"
+                    className={classNames(
+                      'text-text-secondary',
+                      iconSizeClasses[size]
+                    )}
+                    aria-hidden='true'
                   />
                 </span>
               </span>
@@ -221,30 +234,30 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
 
             <Transition
               as={Fragment}
-              leave="transition ease-in duration-100"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
+              leave='transition ease-in duration-100'
+              leaveFrom='opacity-100'
+              leaveTo='opacity-0'
             >
-              <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-surface-primary py-1 shadow-lg ring-1 ring-border-primary focus:outline-none">
+              <Listbox.Options className='absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-surface-primary py-1 shadow-lg ring-1 ring-border-primary focus:outline-none'>
                 {searchable && (
-                  <div className="px-3 py-2 border-b border-border-primary">
+                  <div className='px-3 py-2 border-b border-border-primary'>
                     <input
-                      type="text"
-                      className="w-full px-3 py-1.5 text-sm border border-border-primary rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-                      placeholder="Search options..."
+                      type='text'
+                      className='w-full px-3 py-1.5 text-sm border border-border-primary rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500'
+                      placeholder='Search options...'
                       value={searchQuery}
                       onChange={handleSearchChange}
-                      onClick={(e) => e.stopPropagation()}
+                      onClick={e => e.stopPropagation()}
                     />
                   </div>
                 )}
 
                 {filteredOptions.length === 0 ? (
-                  <div className="px-3 py-2 text-sm text-text-secondary">
+                  <div className='px-3 py-2 text-sm text-text-secondary'>
                     {searchQuery ? 'No options found' : 'No options available'}
                   </div>
                 ) : (
-                  filteredOptions.map((option) => (
+                  filteredOptions.map(option => (
                     <Listbox.Option
                       key={option.value}
                       value={option}
@@ -252,30 +265,34 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
                       className={({ active }) =>
                         classNames(
                           'relative cursor-default select-none py-2 pl-3 pr-9',
-                          active ? 'bg-primary-50 text-primary-900' : 'text-text-primary',
+                          active
+                            ? 'bg-primary-50 text-primary-900'
+                            : 'text-text-primary',
                           option.disabled && 'opacity-50 cursor-not-allowed'
                         )
                       }
                     >
                       {({ selected, active }) => (
                         <>
-                          <div className="flex items-center">
+                          <div className='flex items-center'>
                             {option.icon && (
-                              <span className="mr-3 flex-shrink-0">
+                              <span className='mr-3 flex-shrink-0'>
                                 {option.icon}
                               </span>
                             )}
-                            <div className="flex-1">
+                            <div className='flex-1'>
                               <span
                                 className={classNames(
                                   'block truncate',
                                   selected ? 'font-medium' : 'font-normal'
                                 )}
                               >
-                                {renderOption ? renderOption(option) : option.label}
+                                {renderOption
+                                  ? renderOption(option)
+                                  : option.label}
                               </span>
                               {option.description && (
-                                <span className="text-xs text-text-secondary">
+                                <span className='text-xs text-text-secondary'>
                                   {option.description}
                                 </span>
                               )}
@@ -289,7 +306,10 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
                                 active ? 'text-primary-600' : 'text-primary-600'
                               )}
                             >
-                              <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                              <CheckIcon
+                                className='h-5 w-5'
+                                aria-hidden='true'
+                              />
                             </span>
                           )}
                         </>
@@ -305,9 +325,13 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
         {/* Hidden input for form compatibility */}
         {name && (
           <input
-            type="hidden"
+            type='hidden'
             name={name}
-            value={multiple && Array.isArray(value) ? value.map(String).join(',') : String(value || '')}
+            value={
+              multiple && Array.isArray(value)
+                ? value.map(String).join(',')
+                : String(value || '')
+            }
           />
         )}
 
@@ -330,22 +354,22 @@ const Select = forwardRef<HTMLButtonElement, SelectProps>(
               'mt-1.5 text-danger-600 flex items-center gap-1',
               size === 'sm' ? 'text-xs' : 'text-sm'
             )}
-            role="alert"
-            aria-live="polite"
+            role='alert'
+            aria-live='polite'
           >
             <svg
               className={classNames(
                 'flex-shrink-0',
                 size === 'sm' ? 'w-3 h-3' : 'w-4 h-4'
               )}
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              aria-hidden="true"
+              fill='currentColor'
+              viewBox='0 0 20 20'
+              aria-hidden='true'
             >
               <path
-                fillRule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                clipRule="evenodd"
+                fillRule='evenodd'
+                d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z'
+                clipRule='evenodd'
               />
             </svg>
             {error}

@@ -6,7 +6,7 @@ import Label from '../atoms/Label';
 
 /**
  * Checkbox component with indeterminate state support and accessibility features
- * 
+ *
  * @example
  * ```tsx
  * <Checkbox
@@ -102,11 +102,13 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       },
     };
 
-    const baseClasses = 'rounded border-2 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
-    
-    const stateClasses = (checked || indeterminate)
-      ? colorClasses[color].checked
-      : colorClasses[color].unchecked;
+    const baseClasses =
+      'rounded border-2 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+
+    const stateClasses =
+      checked || indeterminate
+        ? colorClasses[color].checked
+        : colorClasses[color].unchecked;
 
     const disabledClasses = disabled
       ? 'opacity-50 cursor-not-allowed'
@@ -124,11 +126,11 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
               sizeClasses[size].icon,
               colorClasses[color].icon
             )}
-            aria-hidden="true"
+            aria-hidden='true'
           />
         );
       }
-      
+
       if (checked) {
         return (
           <CheckIcon
@@ -136,40 +138,44 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
               sizeClasses[size].icon,
               colorClasses[color].icon
             )}
-            aria-hidden="true"
+            aria-hidden='true'
           />
         );
       }
-      
+
       return null;
     };
 
     return (
       <div className={className}>
-        <div className={classNames('flex items-start', sizeClasses[size].spacing)}>
-          <div className="flex items-center">
-            <div className="relative">
+        <div
+          className={classNames('flex items-start', sizeClasses[size].spacing)}
+        >
+          <div className='flex items-center'>
+            <div className='relative'>
               <input
                 ref={inputRef}
                 id={fieldId}
                 name={name}
-                type="checkbox"
+                type='checkbox'
                 checked={checked}
                 onChange={handleChange}
                 disabled={disabled}
                 value={value}
-                className="sr-only"
+                className='sr-only'
                 aria-describedby={
                   [
                     description ? `${fieldId}-description` : null,
                     error ? `${fieldId}-error` : null,
-                  ].filter(Boolean).join(' ') || undefined
+                  ]
+                    .filter(Boolean)
+                    .join(' ') || undefined
                 }
                 aria-invalid={error ? 'true' : 'false'}
                 aria-required={required ? 'true' : undefined}
                 {...props}
               />
-              
+
               <div
                 className={classNames(
                   baseClasses,
@@ -180,10 +186,10 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
                   'flex items-center justify-center'
                 )}
                 onClick={() => !disabled && onChange?.(!checked)}
-                role="checkbox"
+                role='checkbox'
                 aria-checked={indeterminate ? 'mixed' : checked}
                 tabIndex={disabled ? -1 : 0}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if ((e.key === ' ' || e.key === 'Enter') && !disabled) {
                     e.preventDefault();
                     onChange?.(!checked);
@@ -196,7 +202,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           </div>
 
           {(label || description) && (
-            <div className="flex-1 min-w-0">
+            <div className='flex-1 min-w-0'>
               {label && (
                 <Label
                   htmlFor={fieldId}
@@ -212,7 +218,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
                   {label}
                 </Label>
               )}
-              
+
               {description && !error && (
                 <p
                   id={`${fieldId}-description`}
@@ -235,22 +241,22 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
               'mt-1.5 text-danger-600 flex items-center gap-1',
               size === 'sm' ? 'text-xs' : 'text-sm'
             )}
-            role="alert"
-            aria-live="polite"
+            role='alert'
+            aria-live='polite'
           >
             <svg
               className={classNames(
                 'flex-shrink-0',
                 size === 'sm' ? 'w-3 h-3' : 'w-4 h-4'
               )}
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              aria-hidden="true"
+              fill='currentColor'
+              viewBox='0 0 20 20'
+              aria-hidden='true'
             >
               <path
-                fillRule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-                clipRule="evenodd"
+                fillRule='evenodd'
+                d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z'
+                clipRule='evenodd'
               />
             </svg>
             {error}

@@ -6,8 +6,8 @@ import Input from '../../atoms/Input';
 describe('FormField', () => {
   it('renders with label and input', () => {
     render(
-      <FormField label="Email Address">
-        <Input type="email" />
+      <FormField label='Email Address'>
+        <Input type='email' />
       </FormField>
     );
 
@@ -16,8 +16,8 @@ describe('FormField', () => {
 
   it('renders with required indicator', () => {
     render(
-      <FormField label="Email Address" required>
-        <Input type="email" />
+      <FormField label='Email Address' required>
+        <Input type='email' />
       </FormField>
     );
 
@@ -27,8 +27,8 @@ describe('FormField', () => {
   it('renders description when provided', () => {
     const description = "We'll never share your email";
     render(
-      <FormField label="Email Address" description={description}>
-        <Input type="email" />
+      <FormField label='Email Address' description={description}>
+        <Input type='email' />
       </FormField>
     );
 
@@ -38,8 +38,8 @@ describe('FormField', () => {
   it('renders error message when provided', () => {
     const error = 'Email is required';
     render(
-      <FormField label="Email Address" error={error}>
-        <Input type="email" />
+      <FormField label='Email Address' error={error}>
+        <Input type='email' />
       </FormField>
     );
 
@@ -50,10 +50,10 @@ describe('FormField', () => {
   it('does not render description when error is present', () => {
     const description = "We'll never share your email";
     const error = 'Email is required';
-    
+
     render(
-      <FormField label="Email Address" description={description} error={error}>
-        <Input type="email" />
+      <FormField label='Email Address' description={description} error={error}>
+        <Input type='email' />
       </FormField>
     );
 
@@ -64,8 +64,8 @@ describe('FormField', () => {
   it('passes accessibility attributes to child input', () => {
     const error = 'Email is required';
     render(
-      <FormField label="Email Address" error={error} required>
-        <Input type="email" />
+      <FormField label='Email Address' error={error} required>
+        <Input type='email' />
       </FormField>
     );
 
@@ -77,8 +77,8 @@ describe('FormField', () => {
 
   it('applies size classes correctly', () => {
     const { container } = render(
-      <FormField label="Email Address" size="lg">
-        <Input type="email" />
+      <FormField label='Email Address' size='lg'>
+        <Input type='email' />
       </FormField>
     );
 
@@ -87,8 +87,8 @@ describe('FormField', () => {
 
   it('handles disabled state', () => {
     render(
-      <FormField label="Email Address" disabled>
-        <Input type="email" />
+      <FormField label='Email Address' disabled>
+        <Input type='email' />
       </FormField>
     );
 
@@ -98,8 +98,8 @@ describe('FormField', () => {
 
   it('generates unique IDs when not provided', () => {
     render(
-      <FormField label="Email Address">
-        <Input type="email" />
+      <FormField label='Email Address'>
+        <Input type='email' />
       </FormField>
     );
 
@@ -110,8 +110,8 @@ describe('FormField', () => {
 
   it('uses provided ID', () => {
     render(
-      <FormField label="Email Address" id="custom-field">
-        <Input type="email" />
+      <FormField label='Email Address' id='custom-field'>
+        <Input type='email' />
       </FormField>
     );
 
@@ -121,8 +121,12 @@ describe('FormField', () => {
 
   it('preserves existing child props', () => {
     render(
-      <FormField label="Email Address">
-        <Input type="email" placeholder="Enter email" data-testid="test-input" />
+      <FormField label='Email Address'>
+        <Input
+          type='email'
+          placeholder='Enter email'
+          data-testid='test-input'
+        />
       </FormField>
     );
 
