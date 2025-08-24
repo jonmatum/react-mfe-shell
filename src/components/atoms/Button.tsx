@@ -67,11 +67,7 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const widthClasses = fullWidth ? 'w-full' : '';
 
-    const {
-      onClick,
-      'aria-label': ariaLabel,
-      'aria-describedby': ariaDescribedBy,
-    } = props;
+    const { onClick } = props;
 
     const handleClick = useCallback(
       (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -88,8 +84,8 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonProps>(
     const ariaAttributes = createAriaAttributes({
       disabled: disabled || loading,
       loading,
-      label: ariaLabel as string | undefined,
-      describedBy: ariaDescribedBy as string | undefined,
+      label: (props as Record<string, unknown>)['aria-label'] as string | undefined,
+      describedBy: (props as Record<string, unknown>)['aria-describedby'] as string | undefined,
     });
 
     // DRY spinner size mapping
