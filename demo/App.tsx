@@ -456,7 +456,7 @@ function DemoFooter() {
             <HeartIcon className="h-4 w-4 text-red-500" />
             <span>for the micro frontend community</span>
           </div>
-          <div className="flex justify-center space-x-6 text-sm">
+          <div className="flex justify-center space-x-6 text-sm mb-4">
             <a 
               href="https://github.com/jonmatum/react-mfe-shell" 
               className="text-blue-600 dark:text-blue-400 hover:underline"
@@ -481,6 +481,9 @@ function DemoFooter() {
             >
               NPM Package
             </a>
+          </div>
+          <div className="text-sm text-gray-500 dark:text-gray-400 italic">
+            Pura Vida & Happy Coding!
           </div>
         </div>
       </div>
