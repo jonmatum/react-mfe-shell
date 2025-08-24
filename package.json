@@ -1,6 +1,6 @@
 {
   "name": "@jonmatum/react-mfe-shell",
-  "version": "8.0.0",
+  "version": "8.1.0",
   "type": "module",
   "description": "Production-ready React micro frontend shell with atomic design system, shared components, and utilities for building scalable MFE applications",
   "keywords": [

@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.1.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v8.0.0...react-mfe-shell-v8.1.0) (2025-08-24)
+
+
+### Features
+
+* **demo:** add Radio and FileUpload components showcase ([cd806da](https://github.com/jonmatum/react-mfe-shell/commit/cd806da2d282b8a3b05faaf634c912c6df8b41e1))
+
+
+### Bug Fixes
+
+* **build:** resolve npm publish and TypeScript compilation issues ([386a980](https://github.com/jonmatum/react-mfe-shell/commit/386a980494cd206d428e40d8688518e832332d17))
+
+
+### Styles
+
+* fix ESLint warning and apply code formatting ([f6d6d5d](https://github.com/jonmatum/react-mfe-shell/commit/f6d6d5d92d5a7950d7197f275934f9b26d179bce))
+
 ## [8.0.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v7.0.2...react-mfe-shell-v8.0.0) (2025-08-24)
 
 
