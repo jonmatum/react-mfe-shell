@@ -27,6 +27,10 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./styles": {
+      "import": "./dist/styles.css",
+      "require": "./dist/styles.css"
+    },
     "./types": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.d.ts",
@@ -43,7 +47,7 @@
     "dev:demo": "vite",
     "dev:lib": "tsup --watch",
     "build": "npm run clean && npm run build:lib",
-    "build:lib": "tsup",
+    "build:lib": "tsup && cp src/styles.css dist/styles.css",
     "build:demo": "vite build",
     "build:all": "npm run build:lib && npm run build:demo",
     "preview": "npm run build:demo && vite preview",
