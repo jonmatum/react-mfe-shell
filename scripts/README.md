@@ -1,98 +1,142 @@
-# Code Analysis Scripts - Quick Reference
+# Scripts Directory
 
-## Quick Commands
+This directory contains utility scripts for the React MFE Shell project.
+
+## Available Scripts
+
+### Wiki Sync Script
+
+**File**: `sync-wiki.sh`
+
+Manually sync documentation to GitHub Wiki.
 
 ```bash
-# Basic analysis
-npm run analyze
-
-# Detailed breakdown
-npm run analyze:detailed
-
-# Complexity focus
-npm run analyze:complexity
-
-# Export JSON data
-npm run analyze:json > stats.json
+# Run the wiki sync script
+./scripts/sync-wiki.sh
 ```
 
-## What Each Metric Means
+**What it does**:
+- Clones the GitHub Wiki repository
+- Copies documentation files with proper naming
+- Creates index and sidebar navigation
+- Commits and pushes changes to wiki
 
-| Metric | Good Range | What It Tells You |
-|--------|------------|-------------------|
-| **Comment Ratio** | 10-20% | How well documented your code is |
-| **Blank Line Ratio** | 15-25% | Code readability and formatting |
-| **Complexity per Line** | < 0.1 | How complex/maintainable your code is |
-| **Average Lines per File** | < 300 | File organization quality |
+**Requirements**:
+- Git access to the wiki repository
+- Proper git configuration (user.name and user.email)
 
-## Quality Indicators
+### Node.js Setup Script
 
-### Excellent Code
-- Comment ratio: 10-20%
-- Complexity per line: < 0.1
-- Average file size: < 100 lines
-- Good language distribution
+**File**: `setup-node.sh`
 
-### Good Code
-- Comment ratio: 5-10% or 20-30%
-- Complexity per line: 0.1-0.2
-- Average file size: 100-300 lines
-- Reasonable organization
+Sets up the correct Node.js version for the project.
 
-### Needs Attention
-- Comment ratio: < 5%
-- Complexity per line: > 0.2
-- Average file size: > 300 lines
-- Poor organization
-
-## Script Options
-
-| Option | Description | Example |
-|--------|-------------|---------|
-| `--detailed` | File-by-file breakdown | `npm run analyze:detailed` |
-| `--complexity` | Focus on complex code | `npm run analyze:complexity` |
-| `--json` | Export raw data | `npm run analyze:json` |
-| `--help` | Show help message | `node scripts/code-analysis.js --help` |
-
-## Understanding Your Project
-
-### Project Size Categories
-- **Small** (< 1K lines): Easy to maintain
-- **Medium** (1K-10K lines): Well manageable  
-- **Large** (10K-100K lines): Needs good organization
-- **Very Large** (> 100K lines): Consider modularization
-
-### Language Distribution Insights
-- **High documentation** (lots of Markdown): Good project health
-- **Balanced code/tests**: Good testing practices
-- **Too much configuration**: Might be over-engineered
-
-## Customization
-
-Edit the scripts to:
-- Change quality thresholds
-- Exclude specific directories
-- Focus on certain languages
-- Add custom metrics
-
-## Example Interpretation
-
-```
-Comment Ratio: 3.3% (Low - Add more documentation)
-Complexity per Line: 0.03 (Excellent - Very maintainable)
-Size: Medium (4827 lines - Well manageable)
+```bash
+# Run the setup script
+./scripts/setup-node.sh
 ```
 
-**Translation**: Your code is very well-structured and maintainable, but needs more comments and documentation for better team collaboration.
+**What it does**:
+- Checks for Node.js 22.x LTS
+- Installs via nvm if available
+- Provides installation instructions if needed
 
-## Common Issues
+## Script Usage
 
-| Issue | Solution |
-|-------|----------|
-| "scc not found" | `brew install scc` (macOS) |
-| Permission denied | `chmod +x scripts/*.sh` |
-| Node.js errors | Update to Node.js 14+ |
+### Making Scripts Executable
 
-## More Info
+```bash
+# Make all scripts executable
+chmod +x scripts/*.sh
 
-See [docs/CODE_ANALYSIS.md](../docs/CODE_ANALYSIS.md) for complete documentation.
+# Or make individual scripts executable
+chmod +x scripts/sync-wiki.sh
+chmod +x scripts/setup-node.sh
+```
+
+### Running Scripts
+
+```bash
+# From project root
+./scripts/script-name.sh
+
+# Or navigate to scripts directory
+cd scripts
+./script-name.sh
+```
+
+## Development Scripts (via npm)
+
+These are defined in `package.json` and run via npm:
+
+```bash
+# Development
+npm run dev              # Start development server
+npm run dev:demo         # Start demo only
+
+# Building
+npm run build           # Build library for production
+npm run build:lib       # Build library only
+npm run build:demo      # Build demo only
+
+# Quality Assurance
+npm run test            # Run tests in watch mode
+npm run test:run        # Run tests once
+npm run test:coverage   # Run tests with coverage
+npm run lint            # Run ESLint
+npm run lint:fix        # Fix ESLint issues
+npm run type-check      # TypeScript type checking
+
+# Formatting
+npm run format          # Format with Prettier
+npm run format:check    # Check formatting
+```
+
+## Adding New Scripts
+
+When adding new scripts:
+
+1. **Create the script file** in the `scripts/` directory
+2. **Make it executable**: `chmod +x scripts/new-script.sh`
+3. **Add documentation** to this README
+4. **Test the script** thoroughly
+5. **Consider adding npm script** in `package.json` if appropriate
+
+### Script Template
+
+```bash
+#!/bin/bash
+
+# Script Name - Brief Description
+# Usage: ./scripts/script-name.sh [options]
+
+set -e  # Exit on error
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+echo -e "${BLUE}Starting script...${NC}"
+
+# Your script logic here
+
+echo -e "${GREEN}Script completed successfully!${NC}"
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Permission denied**: Run `chmod +x scripts/script-name.sh`
+2. **Command not found**: Make sure you're in the project root
+3. **Git errors**: Check your git configuration and repository access
+
+### Getting Help
+
+- Check script comments for usage instructions
+- Run scripts with `-h` or `--help` if supported
+- Review this README for general guidance
+- Check the main project README for overall setup instructions
