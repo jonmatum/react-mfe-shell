@@ -2,7 +2,7 @@
 
 Complete documentation for React MFE Shell - a production-ready micro frontend component library.
 
-## 📚 Documentation Index
+## Documentation Index
 
 ### Getting Started
 - **[Implementation Guide](implementation-guide.md)** - Step-by-step setup and integration
@@ -12,7 +12,7 @@ Complete documentation for React MFE Shell - a production-ready micro frontend c
 ### Design System
 - **[Design Tokens](design-tokens.md)** - Colors, spacing, typography, and theme system
 
-## 🚀 Quick Links
+## Quick Links
 
 ### For Developers
 - **Installation**: `npm install @jonmatum/react-mfe-shell`
@@ -27,7 +27,7 @@ This library provides:
 - **Theme System** with light/dark/system modes
 - **Form Ecosystem** with validation and error handling
 
-## 📦 Component Overview
+## Component Overview
 
 ### Core Components (10)
 | Component | Purpose | Key Features |
@@ -55,7 +55,7 @@ This library provides:
 | Textarea | Multi-line text | Auto-resize, character counting |
 | FileUpload | File selection | Drag-and-drop, preview, validation |
 
-## 🎯 Key Features
+## Key Features
 
 - **Zero Configuration**: Works out of the box
 - **Tree Shakeable**: Import only what you need  
@@ -65,7 +65,7 @@ This library provides:
 - **Form Ready**: Complete form ecosystem with validation
 - **Production Ready**: Used in real applications
 
-## 🔧 Quick Start
+## Quick Start
 
 ```tsx
 import { 
@@ -87,7 +87,7 @@ function App() {
 }
 ```
 
-## 📖 Documentation Structure
+## Documentation Structure
 
 ### Implementation Guide
 Complete setup instructions with:

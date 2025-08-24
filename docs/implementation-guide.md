@@ -210,7 +210,7 @@ function ThemeToggle() {
 
   return (
     <Button variant="ghost" onClick={toggleTheme}>
-      {settings.theme === 'light' ? '🌙' : '☀️'}
+      Toggle Theme
     </Button>
   );
 }

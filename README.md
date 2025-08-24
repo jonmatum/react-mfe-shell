@@ -2,7 +2,7 @@
 
 A production-ready micro frontend shell with comprehensive design system, form molecules, and accessibility-first components.
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 npm install @jonmatum/react-mfe-shell
@@ -28,7 +28,7 @@ function App() {
 }
 ```
 
-## 📦 What's Included
+## What's Included
 
 ### Core Components (10)
 - **Button**: All variants, sizes, states, and icons
@@ -59,7 +59,7 @@ function App() {
 - **Design Tokens**: Consistent colors, spacing, typography
 - **TypeScript**: Complete type safety and IntelliSense
 
-## 🎯 Key Features
+## Key Features
 
 - **Zero Configuration**: Works out of the box
 - **Tree Shakeable**: Import only what you need
@@ -69,7 +69,7 @@ function App() {
 - **Form Ready**: Complete form ecosystem with validation
 - **Production Ready**: Used in real applications
 
-## 📖 Usage Examples
+## Usage Examples
 
 ### Basic Form
 ```tsx
@@ -164,7 +164,7 @@ function App() {
 }
 ```
 
-## 🔧 API Reference
+## API Reference
 
 ### Component Props Patterns
 
@@ -206,7 +206,7 @@ const error = validateField(password, {
 });
 ```
 
-## 🎨 Styling & Customization
+## Styling & Customization
 
 The library uses Tailwind CSS with CSS custom properties for theming:
 
@@ -224,26 +224,26 @@ The library uses Tailwind CSS with CSS custom properties for theming:
 }
 ```
 
-## 📊 Bundle Size
+## Bundle Size
 
 - **Core Library**: ~47KB (15KB gzipped)
 - **Tree Shakeable**: Import only what you use
 - **Zero Dependencies**: No external runtime dependencies
 - **Modern Build**: ESM and CJS formats included
 
-## 🔗 Links
+## Links
 
 - **[Live Demo](https://jonmatum.github.io/react-mfe-shell/)**: Interactive component showcase
 - **[NPM Package](https://www.npmjs.com/package/@jonmatum/react-mfe-shell)**: Install and version info
 - **[GitHub](https://github.com/jonmatum/react-mfe-shell)**: Source code and issues
 
-## 📄 License
+## License
 
 MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-**Built with ❤️ for scalable React applications**
+**Built with care for scalable React applications**
 ```
 
 ### Using in Your MFE
