@@ -27,7 +27,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
 
       - name: Sync documentation files
         run: |
@@ -37,61 +37,76 @@ jobs:
           # Copy main README as Home page
           cp README.md wiki/Home.md
           
-          # Copy all documentation files
-          cp docs/CODE_ANALYSIS.md wiki/Code-Analysis.md
-          cp docs/IMPLEMENTATION_GUIDE.md wiki/Implementation-Guide.md
-          cp docs/TEMPLATE_USAGE.md wiki/Template-Usage.md
-          cp docs/QUICK_START_EXAMPLE.md wiki/Quick-Start-Example.md
+          # Copy all documentation files with new names
+          cp docs/design-tokens.md wiki/Design-Tokens.md
+          cp docs/implementation-guide.md wiki/Implementation-Guide.md
+          cp docs/github-pages-setup.md wiki/GitHub-Pages-Setup.md
           
           # Create a comprehensive index page
           cat > wiki/Documentation-Index.md << 'EOF'
           # Documentation Index
           
-          Welcome to the React MFE Shell documentation! This wiki contains comprehensive guides and references for using and extending the shell.
+          Welcome to the React MFE Shell documentation! This wiki contains comprehensive guides and references for using and extending the design system.
           
           ## Main Documentation
           
           - **[Home](Home)** - Project overview and quick start
-          - **[Template Usage](Template-Usage)** - How to use this template
           - **[Implementation Guide](Implementation-Guide)** - Detailed implementation instructions
-          - **[Quick Start Example](Quick-Start-Example)** - Get started quickly
-          
-          ## Tools & Analysis
-          
-          - **[Code Analysis](Code-Analysis)** - Comprehensive code quality analysis tools
+          - **[Design Tokens](Design-Tokens)** - Comprehensive design token documentation
+          - **[GitHub Pages Setup](GitHub-Pages-Setup)** - Demo deployment guide
           
           ## Quick Links
           
           ### Getting Started
           ```bash
-          # Clone and setup
-          git clone https://github.com/jonmatum/react-mfe-template.git my-project
-          cd my-project
+          # Install in your project
+          npm install @jonmatum/react-mfe-shell
+          
+          # Or clone for development
+          git clone https://github.com/jonmatum/react-mfe-shell.git
+          cd react-mfe-shell
           npm install
           npm run dev
           ```
           
-          ### Code Analysis
-          ```bash
-          # Analyze your code
-          npm run analyze
-          npm run analyze:detailed
-          npm run analyze:complexity
+          ### Design System Usage
+          ```tsx
+          import { 
+            SettingsProvider, 
+            Button, 
+            Input, 
+            Badge,
+            tokens 
+          } from '@jonmatum/react-mfe-shell';
+          
+          function App() {
+            return (
+              <SettingsProvider>
+                <Button variant="primary">Hello World</Button>
+              </SettingsProvider>
+            );
+          }
           ```
           
           ### Development Commands
           ```bash
-          npm run dev              # Start development
-          npm run build           # Build for production
-          npm run test            # Run tests
-          npm run lint            # Lint code
+          npm run dev              # Start development server
+          npm run build:lib        # Build library
+          npm run build:demo       # Build demo
+          npm run test:run         # Run tests
+          npm run lint             # Lint code
           ```
+          
+          ## Live Demo
+          
+          🚀 **[View Interactive Demo](https://jonmatum.github.io/react-mfe-shell/)**
           
           ## Additional Resources
           
           - [GitHub Repository](https://github.com/jonmatum/react-mfe-shell)
           - [Issues & Bug Reports](https://github.com/jonmatum/react-mfe-shell/issues)
           - [Contributing Guidelines](https://github.com/jonmatum/react-mfe-shell/blob/main/CONTRIBUTING.md)
+          - [npm Package](https://www.npmjs.com/package/@jonmatum/react-mfe-shell)
           
           ---
           
@@ -105,23 +120,23 @@ jobs:
           
           **Getting Started**
           - [Home](Home)
-          - [Template Usage](Template-Usage)
-          - [Quick Start](Quick-Start-Example)
-          
-          **Implementation**
           - [Implementation Guide](Implementation-Guide)
-          - [Code Analysis](Code-Analysis)
+          
+          **Design System**
+          - [Design Tokens](Design-Tokens)
+          - [Live Demo](https://jonmatum.github.io/react-mfe-shell/)
+          
+          **Deployment**
+          - [GitHub Pages Setup](GitHub-Pages-Setup)
           
           **Reference**
           - [Documentation Index](Documentation-Index)
           
           ---
           
-          **Quick Commands**
+          **Quick Install**
           ```bash
-          npm run analyze
-          npm run dev
-          npm run build
+          npm install @jonmatum/react-mfe-shell
           ```
           EOF
 

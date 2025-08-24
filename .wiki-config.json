@@ -1,6 +1,6 @@
 {
   "wiki": {
-    "repository": "https://github.com/jonmatum/react-mfe-template.wiki.git",
+    "repository": "https://github.com/jonmatum/react-mfe-shell.wiki.git",
     "branch": "master",
     "sync": {
       "enabled": true,
@@ -10,16 +10,15 @@
     },
     "file_mappings": {
       "README.md": "Home.md",
-      "docs/CODE_ANALYSIS.md": "Code-Analysis.md",
-      "docs/IMPLEMENTATION_GUIDE.md": "Implementation-Guide.md",
-      "docs/TEMPLATE_USAGE.md": "Template-Usage.md",
-      "docs/QUICK_START_EXAMPLE.md": "Quick-Start-Example.md"
+      "docs/design-tokens.md": "Design-Tokens.md",
+      "docs/implementation-guide.md": "Implementation-Guide.md",
+      "docs/github-pages-setup.md": "GitHub-Pages-Setup.md"
     },
     "generated_files": {
       "Documentation-Index.md": {
         "type": "index",
         "title": "Documentation Index",
-        "description": "Comprehensive guide index for the React MFE Template"
+        "description": "Comprehensive guide index for the React MFE Shell"
       },
       "_Sidebar.md": {
         "type": "sidebar",
@@ -28,15 +27,20 @@
             "title": "Getting Started",
             "links": [
               {"name": "Home", "file": "Home"},
-              {"name": "Template Usage", "file": "Template-Usage"},
-              {"name": "Quick Start", "file": "Quick-Start-Example"}
+              {"name": "Implementation Guide", "file": "Implementation-Guide"}
             ]
           },
           {
-            "title": "Implementation",
+            "title": "Design System",
             "links": [
-              {"name": "Implementation Guide", "file": "Implementation-Guide"},
-              {"name": "Code Analysis", "file": "Code-Analysis"}
+              {"name": "Design Tokens", "file": "Design-Tokens"},
+              {"name": "Live Demo", "url": "https://jonmatum.github.io/react-mfe-shell/"}
+            ]
+          },
+          {
+            "title": "Deployment",
+            "links": [
+              {"name": "GitHub Pages Setup", "file": "GitHub-Pages-Setup"}
             ]
           },
           {
