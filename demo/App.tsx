@@ -373,21 +373,21 @@ function ComponentShowcase() {
               <div className="space-y-4">
                 <h4 className="font-medium text-text-primary mb-3">Sizes</h4>
                 <div className="flex items-center gap-4">
-                  <Avatar size="xs" src="https://github.com/jonmatum.png" alt="Jon Matum" />
-                  <Avatar size="sm" src="https://github.com/jonmatum.png" alt="Jon Matum" />
-                  <Avatar size="md" src="https://github.com/jonmatum.png" alt="Jon Matum" />
-                  <Avatar size="lg" src="https://github.com/jonmatum.png" alt="Jon Matum" />
-                  <Avatar size="xl" src="https://github.com/jonmatum.png" alt="Jon Matum" />
+                  <Avatar size="xs" src="https://github.com/jonmatum.png" alt="Jonatan Mata" />
+                  <Avatar size="sm" src="https://github.com/jonmatum.png" alt="Jonatan Mata" />
+                  <Avatar size="md" src="https://github.com/jonmatum.png" alt="Jonatan Mata" />
+                  <Avatar size="lg" src="https://github.com/jonmatum.png" alt="Jonatan Mata" />
+                  <Avatar size="xl" src="https://github.com/jonmatum.png" alt="Jonatan Mata" />
                 </div>
               </div>
               
               <div className="space-y-4">
                 <h4 className="font-medium text-text-primary mb-3">Fallbacks</h4>
                 <div className="flex items-center gap-4">
-                  <Avatar size="md" alt="Jon Matum" />
+                  <Avatar size="md" alt="Jonatan Mata" />
+                  <Avatar size="md" alt="Full-Stack Engineer" />
                   <Avatar size="md" alt="React Developer" />
-                  <Avatar size="md" alt="MFE Architect" />
-                  <Avatar size="md" src="https://github.com/jonmatum.png" alt="Jon Matum (GitHub)" />
+                  <Avatar size="md" src="https://github.com/jonmatum.png" alt="Jonatan Mata (GitHub)" />
                 </div>
               </div>
             </div>
