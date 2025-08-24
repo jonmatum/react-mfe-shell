@@ -506,19 +506,7 @@ function DemoFooter() {
                   <span className="group-hover:underline">Documentation</span>
                 </a>
               </div>
-              <div>
-                <a 
-                  href="https://jonmatum.github.io/react-mfe-shell/" 
-                  className="inline-flex items-center space-x-2 text-text-secondary hover:text-primary-600 transition-colors duration-200 group"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <svg className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                  <span className="group-hover:underline">Live Demo</span>
-                </a>
-              </div>
+
             </div>
           </div>
 
