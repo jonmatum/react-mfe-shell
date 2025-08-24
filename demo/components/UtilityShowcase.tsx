@@ -111,7 +111,7 @@ System is in excellent condition!`
     }
   ];
 
-  const runCLICommand = (command: any) => {
+  const runCLICommand = (command: { name: string; description: string; command: string }) => {
     setIsRunning(true);
     setCLIOutput('');
     

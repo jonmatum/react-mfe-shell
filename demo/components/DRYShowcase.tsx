@@ -109,7 +109,7 @@ const DRYShowcase: React.FC = () => {
                   {metric.title}
                 </div>
                 <Badge 
-                  variant={metric.color as any} 
+                  variant={metric.color as 'primary' | 'secondary' | 'success' | 'warning' | 'danger'} 
                   size="sm"
                   className="mb-2"
                 >

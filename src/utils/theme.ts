@@ -322,11 +322,13 @@ export function getThemeColor(
 
   // Simple path resolution (e.g., 'text.primary' -> colors.text.primary)
   const pathParts = colorPath.split('.');
-  let value: any = colors;
+  let value: Record<string, unknown> | string = colors;
 
   for (const part of pathParts) {
     if (value && typeof value === 'object' && part in value) {
-      value = value[part];
+      value = (value as Record<string, unknown>)[part] as
+        | Record<string, unknown>
+        | string;
     } else {
       return ''; // Return empty string if path is invalid
     }

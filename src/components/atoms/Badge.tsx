@@ -155,7 +155,17 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
 Badge.displayName = 'Badge';
 
 // Static properties
-(Badge as typeof Badge & { variants: typeof BADGE_VARIANTS; sizes: typeof BADGE_SIZES }).variants = BADGE_VARIANTS;
-(Badge as typeof Badge & { variants: typeof BADGE_VARIANTS; sizes: typeof BADGE_SIZES }).sizes = BADGE_SIZES;
+(
+  Badge as typeof Badge & {
+    variants: typeof BADGE_VARIANTS;
+    sizes: typeof BADGE_SIZES;
+  }
+).variants = BADGE_VARIANTS;
+(
+  Badge as typeof Badge & {
+    variants: typeof BADGE_VARIANTS;
+    sizes: typeof BADGE_SIZES;
+  }
+).sizes = BADGE_SIZES;
 
 export default Badge;

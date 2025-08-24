@@ -67,8 +67,12 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const widthClasses = fullWidth ? 'w-full' : '';
 
-    const { onClick, 'aria-label': ariaLabel, 'aria-describedby': ariaDescribedBy } = props;
-    
+    const {
+      onClick,
+      'aria-label': ariaLabel,
+      'aria-describedby': ariaDescribedBy,
+    } = props;
+
     const handleClick = useCallback(
       (event: React.MouseEvent<HTMLButtonElement>) => {
         if (loading || disabled) {

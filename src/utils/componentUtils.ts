@@ -253,24 +253,29 @@ export const createValidationClasses = (
  * Create compound component with proper TypeScript support
  */
 export const createCompoundComponent = <
-  TMain extends React.ComponentType<any>,
-  TCompounds extends Record<string, React.ComponentType<any>>,
+  TMain extends React.ComponentType<Record<string, unknown>>,
+  TCompounds extends Record<
+    string,
+    React.ComponentType<Record<string, unknown>>
+  >,
 >(
   MainComponent: TMain,
   compounds: TCompounds,
-  staticProps?: Record<string, any>
+  staticProps?: Record<string, unknown>
 ): TMain & TCompounds & typeof staticProps => {
-  const CompoundComponent = MainComponent as any;
+  const CompoundComponent = MainComponent as TMain &
+    TCompounds &
+    typeof staticProps;
 
   // Attach compound components
   Object.entries(compounds).forEach(([key, component]) => {
-    CompoundComponent[key] = component;
+    (CompoundComponent as Record<string, unknown>)[key] = component;
   });
 
   // Attach static properties
   if (staticProps) {
     Object.entries(staticProps).forEach(([key, value]) => {
-      CompoundComponent[key] = value;
+      (CompoundComponent as Record<string, unknown>)[key] = value;
     });
   }
 

@@ -186,7 +186,17 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 Input.displayName = 'Input';
 
 // Static properties
-(Input as typeof Input & { variants: typeof INPUT_VARIANTS; sizes: typeof INPUT_SIZES }).variants = INPUT_VARIANTS;
-(Input as typeof Input & { variants: typeof INPUT_VARIANTS; sizes: typeof INPUT_SIZES }).sizes = INPUT_SIZES;
+(
+  Input as typeof Input & {
+    variants: typeof INPUT_VARIANTS;
+    sizes: typeof INPUT_SIZES;
+  }
+).variants = INPUT_VARIANTS;
+(
+  Input as typeof Input & {
+    variants: typeof INPUT_VARIANTS;
+    sizes: typeof INPUT_SIZES;
+  }
+).sizes = INPUT_SIZES;
 
 export default Input;
