@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.0.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v7.0.2...react-mfe-shell-v8.0.0) (2025-08-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* Removed test-demo.yml workflow - functionality now in ci.yml
+
+### Bug Fixes
+
+* optimize CI/CD workflows and resolve test memory issues ([6e55119](https://github.com/jonmatum/react-mfe-shell/commit/6e551192a17920e03ffab2f98ceb57c30db27bc9))
+* resolve test isolation issues in vitest configuration ([867eb9f](https://github.com/jonmatum/react-mfe-shell/commit/867eb9fba12316281e4f31102a029d341e977077))
+
 ## [7.0.2](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v7.0.1...react-mfe-shell-v7.0.2) (2025-08-24)
 
 
