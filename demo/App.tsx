@@ -6,6 +6,13 @@ import {
   Card,
   Input,
   Switch,
+  Modal,
+  Avatar,
+  Divider,
+  Text,
+  LoadingSpinner,
+  Label,
+  Icon,
   useSettings,
 } from '../src';
 import { 
@@ -143,6 +150,10 @@ function HeroSection() {
 
 function ComponentShowcase() {
   const [removedBadges, setRemovedBadges] = useState<Set<string>>(new Set());
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [switchValue, setSwitchValue] = useState(false);
 
   const handleRemoveBadge = (badgeId: string) => {
     setRemovedBadges(prev => new Set([...prev, badgeId]));
@@ -205,6 +216,31 @@ function ComponentShowcase() {
                   <Button fullWidth>Full Width</Button>
                 </div>
               </div>
+              
+              <div>
+                <h4 className="font-medium text-text-primary mb-3">With Icons</h4>
+                <div className="flex flex-wrap gap-3">
+                  <Button 
+                    variant="primary" 
+                    leftIcon={<RocketLaunchIcon className="w-4 h-4" />}
+                  >
+                    Launch
+                  </Button>
+                  <Button 
+                    variant="success" 
+                    rightIcon={<SparklesIcon className="w-4 h-4" />}
+                  >
+                    Magic
+                  </Button>
+                  <Button 
+                    variant="secondary" 
+                    leftIcon={<CpuChipIcon className="w-4 h-4" />}
+                    rightIcon={<ShieldCheckIcon className="w-4 h-4" />}
+                  >
+                    Secure
+                  </Button>
+                </div>
+              </div>
             </div>
           </Card>
 
@@ -265,8 +301,9 @@ function ComponentShowcase() {
               <Badge variant="success" size="sm">Validation Ready</Badge>
             </h3>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Basic States</h4>
                 <Input
                   label="Default Input"
                   placeholder="Enter text..."
@@ -284,6 +321,7 @@ function ComponentShowcase() {
               </div>
               
               <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Special States</h4>
                 <Input
                   label="Disabled"
                   placeholder="Disabled input"
@@ -300,8 +338,326 @@ function ComponentShowcase() {
                   required
                 />
               </div>
+              
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">With Icons</h4>
+                <Input
+                  label="Search"
+                  placeholder="Search..."
+                  leftIcon={<BeakerIcon className="w-4 h-4" />}
+                />
+                <Input
+                  label="Email"
+                  type="email"
+                  placeholder="Enter email..."
+                  rightIcon={<SparklesIcon className="w-4 h-4" />}
+                />
+                <Input
+                  label="Both Icons"
+                  placeholder="Username..."
+                  leftIcon={<CpuChipIcon className="w-4 h-4" />}
+                  rightIcon={<ShieldCheckIcon className="w-4 h-4" />}
+                />
+              </div>
             </div>
           </Card>
+
+          {/* Avatar Component */}
+          <Card className="p-6">
+            <h3 className="text-xl font-bold text-text-primary mb-4 flex items-center space-x-2">
+              <span>Avatar</span>
+              <Badge variant="primary" size="sm">New</Badge>
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Sizes</h4>
+                <div className="flex items-center gap-4">
+                  <Avatar size="xs" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" alt="User" />
+                  <Avatar size="sm" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="User" />
+                  <Avatar size="md" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=48&h=48&fit=crop&crop=face" alt="User" />
+                  <Avatar size="lg" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&fit=crop&crop=face" alt="User" />
+                  <Avatar size="xl" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" alt="User" />
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Fallbacks</h4>
+                <div className="flex items-center gap-4">
+                  <Avatar size="md" alt="John Doe" />
+                  <Avatar size="md" alt="Jane Smith" />
+                  <Avatar size="md" alt="Bob Johnson" />
+                  <Avatar size="md" src="invalid-url" alt="Fallback Test" />
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* Text Component */}
+          <Card className="p-6">
+            <h3 className="text-xl font-bold text-text-primary mb-4 flex items-center space-x-2">
+              <span>Text</span>
+              <Badge variant="primary" size="sm">Typography</Badge>
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Variants</h4>
+                <div className="space-y-2">
+                  <Text variant="h1">Heading 1</Text>
+                  <Text variant="h2">Heading 2</Text>
+                  <Text variant="h3">Heading 3</Text>
+                  <Text variant="body">Body text with proper line height and spacing</Text>
+                  <Text variant="caption">Caption text for smaller details</Text>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Colors & Weights</h4>
+                <div className="space-y-2">
+                  <Text color="primary" weight="bold">Primary Bold Text</Text>
+                  <Text color="secondary" weight="medium">Secondary Medium Text</Text>
+                  <Text color="success" weight="semibold">Success Semibold Text</Text>
+                  <Text color="warning">Warning Text</Text>
+                  <Text color="danger" weight="light">Danger Light Text</Text>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* LoadingSpinner Component */}
+          <Card className="p-6">
+            <h3 className="text-xl font-bold text-text-primary mb-4 flex items-center space-x-2">
+              <span>Loading Spinner</span>
+              <Badge variant="primary" size="sm">Interactive</Badge>
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Sizes</h4>
+                <div className="flex items-center gap-6">
+                  <div className="text-center">
+                    <LoadingSpinner size="sm" />
+                    <Text variant="caption" className="mt-2">Small</Text>
+                  </div>
+                  <div className="text-center">
+                    <LoadingSpinner size="md" />
+                    <Text variant="caption" className="mt-2">Medium</Text>
+                  </div>
+                  <div className="text-center">
+                    <LoadingSpinner size="lg" />
+                    <Text variant="caption" className="mt-2">Large</Text>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Colors</h4>
+                <div className="flex items-center gap-6">
+                  <div className="text-center">
+                    <LoadingSpinner color="primary" />
+                    <Text variant="caption" className="mt-2">Primary</Text>
+                  </div>
+                  <div className="text-center">
+                    <LoadingSpinner color="success" />
+                    <Text variant="caption" className="mt-2">Success</Text>
+                  </div>
+                  <div className="text-center">
+                    <LoadingSpinner color="warning" />
+                    <Text variant="caption" className="mt-2">Warning</Text>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* Modal Component */}
+          <Card className="p-6">
+            <h3 className="text-xl font-bold text-text-primary mb-4 flex items-center space-x-2">
+              <span>Modal</span>
+              <Badge variant="primary" size="sm">Accessible</Badge>
+            </h3>
+            
+            <div className="space-y-4">
+              <Text variant="body" color="secondary">
+                Fully accessible modal with focus management, keyboard navigation, and backdrop click handling.
+              </Text>
+              
+              <div className="flex gap-4">
+                <Button variant="primary" onClick={() => setIsModalOpen(true)}>
+                  Open Modal
+                </Button>
+                <Button 
+                  variant="secondary" 
+                  onClick={() => setIsLoading(!isLoading)}
+                  loading={isLoading}
+                >
+                  Toggle Loading
+                </Button>
+              </div>
+            </div>
+          </Card>
+
+          {/* Switch Component */}
+          <Card className="p-6">
+            <h3 className="text-xl font-bold text-text-primary mb-4 flex items-center space-x-2">
+              <span>Switch</span>
+              <Badge variant="success" size="sm">Headless UI</Badge>
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Sizes & Colors</h4>
+                <div className="space-y-3">
+                  <Switch
+                    checked={switchValue}
+                    onChange={setSwitchValue}
+                    size="sm"
+                    color="primary"
+                    label="Small Primary Switch"
+                  />
+                  <Switch
+                    checked={switchValue}
+                    onChange={setSwitchValue}
+                    size="md"
+                    color="success"
+                    label="Medium Success Switch"
+                  />
+                  <Switch
+                    checked={switchValue}
+                    onChange={setSwitchValue}
+                    size="lg"
+                    color="warning"
+                    label="Large Warning Switch"
+                  />
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">With Description</h4>
+                <div className="space-y-3">
+                  <Switch
+                    checked={switchValue}
+                    onChange={setSwitchValue}
+                    label="Enable Notifications"
+                    description="Receive email notifications for important updates"
+                  />
+                  <Switch
+                    checked={false}
+                    onChange={() => {}}
+                    disabled
+                    label="Disabled Switch"
+                    description="This switch is disabled"
+                  />
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* Divider Component */}
+          <Card className="p-6">
+            <h3 className="text-xl font-bold text-text-primary mb-4 flex items-center space-x-2">
+              <span>Divider</span>
+              <Badge variant="primary" size="sm">Layout</Badge>
+            </h3>
+            
+            <div className="space-y-6">
+              <div>
+                <Text variant="body" className="mb-4">Horizontal Dividers</Text>
+                <Text variant="caption">Section 1</Text>
+                <Divider className="my-4" />
+                <Text variant="caption">Section 2</Text>
+                <Divider variant="dashed" className="my-4" />
+                <Text variant="caption">Section 3</Text>
+              </div>
+              
+              <div className="flex items-center gap-4">
+                <Text variant="body">Vertical Dividers</Text>
+                <Divider orientation="vertical" className="h-8" />
+                <Text variant="caption">Item 1</Text>
+                <Divider orientation="vertical" className="h-8" />
+                <Text variant="caption">Item 2</Text>
+              </div>
+            </div>
+          </Card>
+
+          {/* Label Component */}
+          <Card className="p-6">
+            <h3 className="text-xl font-bold text-text-primary mb-4 flex items-center space-x-2">
+              <span>Label</span>
+              <Badge variant="primary" size="sm">Forms</Badge>
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">Basic Labels</h4>
+                <div className="space-y-3">
+                  <Label htmlFor="demo-input-1">Default Label</Label>
+                  <Input id="demo-input-1" placeholder="Associated input" />
+                  
+                  <Label htmlFor="demo-input-2" required>Required Label</Label>
+                  <Input id="demo-input-2" placeholder="Required field" />
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <h4 className="font-medium text-text-primary mb-3">With Description</h4>
+                <div className="space-y-3">
+                  <Label 
+                    htmlFor="demo-input-3"
+                    description="This field accepts any text input"
+                  >
+                    Label with Description
+                  </Label>
+                  <Input id="demo-input-3" placeholder="Enter text..." />
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* Modal Implementation */}
+          <Modal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            title="Demo Modal"
+          >
+            <div className="space-y-4">
+              <Text variant="body">
+                This is a fully accessible modal built with Headless UI. It includes:
+              </Text>
+              <ul className="list-disc list-inside space-y-1 text-text-secondary">
+                <li>Focus management and keyboard navigation</li>
+                <li>Backdrop click to close</li>
+                <li>Escape key to close</li>
+                <li>Proper ARIA attributes</li>
+                <li>Smooth animations</li>
+              </ul>
+              
+              <Divider className="my-4" />
+              
+              <div className="space-y-3">
+                <Label htmlFor="modal-input">Try the input inside modal:</Label>
+                <Input
+                  id="modal-input"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  placeholder="Type something..."
+                />
+                {inputValue && (
+                  <Badge variant="success">You typed: {inputValue}</Badge>
+                )}
+              </div>
+              
+              <div className="flex justify-end gap-3 pt-4">
+                <Button variant="secondary" onClick={() => setIsModalOpen(false)}>
+                  Cancel
+                </Button>
+                <Button variant="primary" onClick={() => setIsModalOpen(false)}>
+                  Confirm
+                </Button>
+              </div>
+            </div>
+          </Modal>
         </div>
       </div>
     </section>
