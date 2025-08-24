@@ -2,6 +2,9 @@
   "release-type": "node",
   "packages": {
     ".": {
+      "release-type": "node",
+      "component": "react-mfe-shell",
+      "package-name": "@jonmatum/react-mfe-shell",
       "changelog-sections": [
         {"type": "feat", "section": "Features"},
         {"type": "fix", "section": "Bug Fixes"},
@@ -13,32 +16,19 @@
         {"type": "test", "section": "Tests"},
         {"type": "build", "section": "Build System"},
         {"type": "ci", "section": "Continuous Integration"}
-      ],
-      "component": "react-mfe-shell"
+      ]
     },
     "demo": {
+      "release-type": "node",
+      "component": "demo",
+      "package-name": "@jonmatum/react-mfe-shell-demo",
       "changelog-sections": [
         {"type": "feat", "section": "Features"},
         {"type": "fix", "section": "Bug Fixes"},
         {"type": "docs", "section": "Documentation"},
         {"type": "style", "section": "Styles"},
         {"type": "refactor", "section": "Code Refactoring"}
-      ],
-      "component": "demo",
-      "release-type": "node",
-      "package-name": "@jonmatum/react-mfe-shell-demo"
+      ]
     }
-  },
-  "changelog-sections": [
-    {"type": "feat", "section": "Features"},
-    {"type": "fix", "section": "Bug Fixes"},
-    {"type": "perf", "section": "Performance Improvements"},
-    {"type": "revert", "section": "Reverts"},
-    {"type": "docs", "section": "Documentation"},
-    {"type": "style", "section": "Styles"},
-    {"type": "refactor", "section": "Code Refactoring"},
-    {"type": "test", "section": "Tests"},
-    {"type": "build", "section": "Build System"},
-    {"type": "ci", "section": "Continuous Integration"}
-  ]
+  }
 }
