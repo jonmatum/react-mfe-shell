@@ -17,11 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       releases_created: ${{ steps.release.outputs.releases_created }}
-      library_release_created: ${{ steps.release.outputs['--release_created'] }}
+      library_release_created: ${{ steps.release.outputs.release_created }}
       demo_release_created: ${{ steps.release.outputs['demo--release_created'] }}
-      library_tag_name: ${{ steps.release.outputs['--tag_name'] }}
+      library_tag_name: ${{ steps.release.outputs.tag_name }}
       demo_tag_name: ${{ steps.release.outputs['demo--tag_name'] }}
-      library_version: ${{ steps.release.outputs['--version'] }}
+      library_version: ${{ steps.release.outputs.version }}
       demo_version: ${{ steps.release.outputs['demo--version'] }}
     steps:
       - name: Release Please
