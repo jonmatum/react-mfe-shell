@@ -67,20 +67,25 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const widthClasses = fullWidth ? 'w-full' : '';
 
-    const handleClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-      if (loading || disabled) {
-        event.preventDefault();
-        return;
-      }
-      props.onClick?.(event);
-    }, [loading, disabled, props.onClick]);
+    const { onClick, 'aria-label': ariaLabel, 'aria-describedby': ariaDescribedBy } = props;
+    
+    const handleClick = useCallback(
+      (event: React.MouseEvent<HTMLButtonElement>) => {
+        if (loading || disabled) {
+          event.preventDefault();
+          return;
+        }
+        onClick?.(event);
+      },
+      [loading, disabled, onClick]
+    );
 
     // DRY ARIA attributes generation
     const ariaAttributes = createAriaAttributes({
       disabled: disabled || loading,
       loading,
-      label: (props as any)['aria-label'],
-      describedBy: (props as any)['aria-describedby'],
+      label: ariaLabel as string | undefined,
+      describedBy: ariaDescribedBy as string | undefined,
     });
 
     // DRY spinner size mapping
@@ -113,21 +118,19 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <Component {...buttonProps}>
         {loading && (
-          <LoadingSpinner 
-            size={getSpinnerSize(size)} 
-            className="text-current" 
+          <LoadingSpinner
+            size={getSpinnerSize(size)}
+            className='text-current'
           />
         )}
         {!loading && leftIcon && (
-          <span className="flex-shrink-0" aria-hidden="true">
+          <span className='flex-shrink-0' aria-hidden='true'>
             {leftIcon}
           </span>
         )}
-        <span className={loading ? 'opacity-0' : ''}>
-          {children}
-        </span>
+        <span className={loading ? 'opacity-0' : ''}>{children}</span>
         {!loading && rightIcon && (
-          <span className="flex-shrink-0" aria-hidden="true">
+          <span className='flex-shrink-0' aria-hidden='true'>
             {rightIcon}
           </span>
         )}
@@ -151,7 +154,7 @@ const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
     ref
   ) => {
     const baseClasses = 'inline-flex';
-    
+
     // DRY orientation and spacing classes
     const orientationClasses = {
       horizontal: 'flex-row',
@@ -174,7 +177,7 @@ const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
           spacingClasses[spacing],
           className
         )}
-        role="group"
+        role='group'
         {...props}
       >
         {children}

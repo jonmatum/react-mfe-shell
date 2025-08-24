@@ -137,13 +137,13 @@ const BadgeDemo: React.FC = () => {
           
           <div className="flex items-center gap-3">
             <span className="text-text-secondary">Tags:</span>
-            <Badge variant="primary" removable onRemove={() => console.log('React removed')}>
+            <Badge variant="primary" removable onRemove={() => console.warn('React removed')}>
               React
             </Badge>
-            <Badge variant="secondary" removable onRemove={() => console.log('TypeScript removed')}>
+            <Badge variant="secondary" removable onRemove={() => console.warn('TypeScript removed')}>
               TypeScript
             </Badge>
-            <Badge variant="success" removable onRemove={() => console.log('Tailwind removed')}>
+            <Badge variant="success" removable onRemove={() => console.warn('Tailwind removed')}>
               Tailwind
             </Badge>
           </div>

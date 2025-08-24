@@ -1,8 +1,5 @@
 import { forwardRef } from 'react';
-import {
-  LabelProps,
-  LABEL_SIZES,
-} from '../../types';
+import { LabelProps, LABEL_SIZES } from '../../types';
 import { classNames } from '../../utils';
 
 const Label = forwardRef<HTMLLabelElement, LabelProps>(
@@ -46,9 +43,9 @@ const Label = forwardRef<HTMLLabelElement, LabelProps>(
         {children}
         {required && (
           <span
-            className="ml-1 text-danger-500"
-            aria-label="required"
-            title="This field is required"
+            className='ml-1 text-danger-500'
+            aria-label='required'
+            title='This field is required'
           >
             *
           </span>
@@ -61,6 +58,6 @@ const Label = forwardRef<HTMLLabelElement, LabelProps>(
 Label.displayName = 'Label';
 
 // Add static properties
-(Label as any).sizes = LABEL_SIZES;
+(Label as typeof Label & { sizes: typeof LABEL_SIZES }).sizes = LABEL_SIZES;
 
 export default Label;

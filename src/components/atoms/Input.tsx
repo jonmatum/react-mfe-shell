@@ -1,9 +1,5 @@
 import { forwardRef, useId } from 'react';
-import {
-  InputProps,
-  INPUT_VARIANTS,
-  INPUT_SIZES,
-} from '../../types';
+import { InputProps, INPUT_VARIANTS, INPUT_SIZES } from '../../types';
 import { classNames } from '../../utils';
 import Label from './Label';
 
@@ -33,13 +29,17 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const descriptionId = description ? `${inputId}-description` : undefined;
     const errorId = error ? `${inputId}-error` : undefined;
 
-    const baseClasses = 'block w-full rounded-md border transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+    const baseClasses =
+      'block w-full rounded-md border transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
 
     // Fixed variant classes to match test expectations
     const variantClasses = {
-      default: 'border-border-primary bg-surface-primary text-text-primary placeholder-text-secondary focus:border-primary-500 focus:ring-primary-500',
-      error: 'border-danger-500 bg-surface-primary text-text-primary placeholder-text-secondary focus:border-danger-500 focus:ring-danger-500',
-      success: 'border-success-500 bg-surface-primary text-text-primary placeholder-text-secondary focus:border-success-500 focus:ring-success-500',
+      default:
+        'border-border-primary bg-surface-primary text-text-primary placeholder-text-secondary focus:border-primary-500 focus:ring-primary-500',
+      error:
+        'border-danger-500 bg-surface-primary text-text-primary placeholder-text-secondary focus:border-danger-500 focus:ring-danger-500',
+      success:
+        'border-success-500 bg-surface-primary text-text-primary placeholder-text-secondary focus:border-success-500 focus:ring-success-500',
     };
 
     const sizeClasses = {
@@ -65,8 +65,20 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const effectiveVariant = getEffectiveVariant();
 
     const iconPadding = {
-      left: leftIcon ? (size === 'sm' ? 'pl-10' : size === 'lg' ? 'pl-12' : 'pl-11') : '',
-      right: rightIcon ? (size === 'sm' ? 'pr-10' : size === 'lg' ? 'pr-12' : 'pr-11') : '',
+      left: leftIcon
+        ? size === 'sm'
+          ? 'pl-10'
+          : size === 'lg'
+            ? 'pl-12'
+            : 'pl-11'
+        : '',
+      right: rightIcon
+        ? size === 'sm'
+          ? 'pr-10'
+          : size === 'lg'
+            ? 'pr-12'
+            : 'pr-11'
+        : '',
     };
 
     const iconSizeClasses = {
@@ -81,7 +93,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     };
 
     return (
-      <div className={classNames("space-y-1", className)}>
+      <div className={classNames('space-y-1', className)}>
         {label && (
           <Label
             htmlFor={inputId}
@@ -92,22 +104,26 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             {label}
           </Label>
         )}
-        
-        <div className="relative">
+
+        <div className='relative'>
           {leftIcon && (
-            <div className={classNames(
-              'absolute inset-y-0 left-0 flex items-center pointer-events-none',
-              iconPositionClasses.left
-            )}>
-              <span className={classNames(
-                'text-text-secondary',
-                iconSizeClasses[size]
-              )}>
+            <div
+              className={classNames(
+                'absolute inset-y-0 left-0 flex items-center pointer-events-none',
+                iconPositionClasses.left
+              )}
+            >
+              <span
+                className={classNames(
+                  'text-text-secondary',
+                  iconSizeClasses[size]
+                )}
+              >
                 {leftIcon}
               </span>
             </div>
           )}
-          
+
           <Component
             ref={ref}
             id={inputId}
@@ -116,10 +132,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             disabled={disabled}
             readOnly={readOnly}
             placeholder={placeholder}
-            aria-describedby={classNames(
-              descriptionId,
-              errorId
-            ).trim() || undefined}
+            aria-describedby={
+              classNames(descriptionId, errorId).trim() || undefined
+            }
             aria-invalid={error ? 'true' : 'false'}
             className={classNames(
               baseClasses,
@@ -132,37 +147,34 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             )}
             {...props}
           />
-          
+
           {rightIcon && (
-            <div className={classNames(
-              'absolute inset-y-0 right-0 flex items-center pointer-events-none',
-              iconPositionClasses.right
-            )}>
-              <span className={classNames(
-                'text-text-secondary',
-                iconSizeClasses[size]
-              )}>
+            <div
+              className={classNames(
+                'absolute inset-y-0 right-0 flex items-center pointer-events-none',
+                iconPositionClasses.right
+              )}
+            >
+              <span
+                className={classNames(
+                  'text-text-secondary',
+                  iconSizeClasses[size]
+                )}
+              >
                 {rightIcon}
               </span>
             </div>
           )}
         </div>
-        
+
         {description && !error && (
-          <p
-            id={descriptionId}
-            className="text-sm text-text-secondary"
-          >
+          <p id={descriptionId} className='text-sm text-text-secondary'>
             {description}
           </p>
         )}
-        
+
         {error && (
-          <p
-            id={errorId}
-            className="text-sm text-danger-600"
-            role="alert"
-          >
+          <p id={errorId} className='text-sm text-danger-600' role='alert'>
             {error}
           </p>
         )}
@@ -174,7 +186,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 Input.displayName = 'Input';
 
 // Static properties
-(Input as any).variants = INPUT_VARIANTS;
-(Input as any).sizes = INPUT_SIZES;
+(Input as typeof Input & { variants: typeof INPUT_VARIANTS; sizes: typeof INPUT_SIZES }).variants = INPUT_VARIANTS;
+(Input as typeof Input & { variants: typeof INPUT_VARIANTS; sizes: typeof INPUT_SIZES }).sizes = INPUT_SIZES;
 
 export default Input;

@@ -1,7 +1,5 @@
 import { forwardRef } from 'react';
-import {
-  DividerProps,
-} from '../../types';
+import { DividerProps } from '../../types';
 import { classNames } from '../../utils';
 
 const Divider = forwardRef<HTMLHRElement, DividerProps>(
@@ -41,7 +39,7 @@ const Divider = forwardRef<HTMLHRElement, DividerProps>(
     if (label) {
       return (
         <div
-          ref={ref as any}
+          ref={ref as React.Ref<HTMLDivElement>}
           className={classNames(
             'relative flex items-center',
             spacingClasses[spacing],
@@ -57,7 +55,7 @@ const Divider = forwardRef<HTMLHRElement, DividerProps>(
               variantClasses[variant]
             )}
           />
-          <span className="px-3 text-sm text-text-secondary bg-background-primary">
+          <span className='px-3 text-sm text-text-secondary bg-background-primary'>
             {label}
           </span>
           <div

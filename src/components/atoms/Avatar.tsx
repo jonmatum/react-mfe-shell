@@ -1,8 +1,5 @@
 import { forwardRef, useState, useCallback } from 'react';
-import {
-  AvatarProps,
-  AVATAR_SIZES,
-} from '../../types';
+import { AvatarProps, AVATAR_SIZES } from '../../types';
 import { classNames } from '../../utils';
 
 const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
@@ -32,7 +29,8 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
       '2xl': 'w-20 h-20 text-2xl',
     };
 
-    const baseClasses = 'relative inline-flex items-center justify-center rounded-full bg-surface-secondary overflow-hidden';
+    const baseClasses =
+      'relative inline-flex items-center justify-center rounded-full bg-surface-secondary overflow-hidden';
 
     const handleImageError = useCallback(() => {
       setImageError(true);
@@ -53,17 +51,14 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
     };
 
     const showImage = src && !imageError;
-    const showFallback = ((!src || imageError) || (!imageLoaded && src)) && (fallback || children);
+    const showFallback =
+      (!src || imageError || (!imageLoaded && src)) && (fallback || children);
     const showDefaultIcon = !showImage && !showFallback;
 
     return (
       <Component
         ref={ref}
-        className={classNames(
-          baseClasses,
-          sizeClasses[size],
-          className
-        )}
+        className={classNames(baseClasses, sizeClasses[size], className)}
         {...props}
       >
         {showImage && (
@@ -79,29 +74,29 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
             )}
           />
         )}
-        
+
         {showFallback && (
           <span
-            className="font-medium text-text-secondary select-none"
+            className='font-medium text-text-secondary select-none'
             aria-hidden={!!alt}
           >
             {children || (fallback && getInitials(fallback))}
           </span>
         )}
-        
+
         {showDefaultIcon && (
           <svg
-            className="w-full h-full text-text-secondary"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            role="img"
-            aria-hidden="true"
+            className='w-full h-full text-text-secondary'
+            fill='currentColor'
+            viewBox='0 0 24 24'
+            xmlns='http://www.w3.org/2000/svg'
+            role='img'
+            aria-hidden='true'
           >
             <path
-              fillRule="evenodd"
-              d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
-              clipRule="evenodd"
+              fillRule='evenodd'
+              d='M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z'
+              clipRule='evenodd'
             />
           </svg>
         )}
@@ -113,6 +108,6 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
 Avatar.displayName = 'Avatar';
 
 // Add static properties
-(Avatar as any).sizes = AVATAR_SIZES;
+(Avatar as typeof Avatar & { sizes: typeof AVATAR_SIZES }).sizes = AVATAR_SIZES;
 
 export default Avatar;

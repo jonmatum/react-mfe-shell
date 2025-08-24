@@ -100,8 +100,14 @@ const Text = forwardRef<HTMLParagraphElement, TextProps>(
 Text.displayName = 'Text';
 
 // Add static properties
-(Text as any).variants = TEXT_VARIANTS;
-(Text as any).sizes = TEXT_SIZES;
-(Text as any).weights = TEXT_WEIGHTS;
+type TextWithStatics = typeof Text & {
+  variants: typeof TEXT_VARIANTS;
+  sizes: typeof TEXT_SIZES;
+  weights: typeof TEXT_WEIGHTS;
+};
+
+(Text as TextWithStatics).variants = TEXT_VARIANTS;
+(Text as TextWithStatics).sizes = TEXT_SIZES;
+(Text as TextWithStatics).weights = TEXT_WEIGHTS;
 
 export default Text;

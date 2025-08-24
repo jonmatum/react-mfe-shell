@@ -11,7 +11,8 @@
  * Base interactive element classes
  * Used by Button, Badge, Input, etc.
  */
-export const BASE_INTERACTIVE_CLASSES = 'inline-flex items-center justify-center transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+export const BASE_INTERACTIVE_CLASSES =
+  'inline-flex items-center justify-center transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
 
 /**
  * Base component classes for consistent styling
@@ -50,7 +51,7 @@ export const createSemanticColorVariant = (
   type: 'solid' | 'soft' | 'outline' | 'ghost' = 'soft'
 ) => {
   const baseColor = colorName === 'danger' ? 'error' : colorName;
-  
+
   const variants = {
     solid: `bg-${baseColor}-600 text-white hover:bg-${baseColor}-700 dark:bg-${baseColor}-500 dark:hover:bg-${baseColor}-600`,
     soft: `bg-${baseColor}-50 text-${baseColor}-700 border border-${baseColor}-200 dark:bg-${baseColor}-900/30 dark:text-${baseColor}-300 dark:border-${baseColor}-700/50`,
@@ -141,7 +142,10 @@ export const createSizeClasses = (
   }
 
   if (includeGap) {
-    classes.push(SIZE_MAPPINGS.gap[size as keyof typeof SIZE_MAPPINGS.gap] || SIZE_MAPPINGS.gap.md);
+    classes.push(
+      SIZE_MAPPINGS.gap[size as keyof typeof SIZE_MAPPINGS.gap] ||
+        SIZE_MAPPINGS.gap.md
+    );
   }
 
   return classes.join(' ');
@@ -164,29 +168,29 @@ export const createAriaLabel = (
 ) => {
   const { prefix = '', suffix = '', fallback = 'Element' } = options;
   const text = typeof children === 'string' ? children : fallback;
-  
+
   return [prefix, text, suffix].filter(Boolean).join(' ').trim();
 };
 
 /**
  * Generate ARIA attributes for interactive elements
  */
-export const createAriaAttributes = (
-  props: {
-    disabled?: boolean;
-    loading?: boolean;
-    expanded?: boolean;
-    selected?: boolean;
-    label?: string;
-    describedBy?: string;
-  }
-) => {
+export const createAriaAttributes = (props: {
+  disabled?: boolean;
+  loading?: boolean;
+  expanded?: boolean;
+  selected?: boolean;
+  label?: string;
+  describedBy?: string;
+}) => {
   const attributes: Record<string, string | boolean | undefined> = {};
 
   if (props.disabled) attributes['aria-disabled'] = true;
   if (props.loading) attributes['aria-busy'] = true;
-  if (props.expanded !== undefined) attributes['aria-expanded'] = props.expanded;
-  if (props.selected !== undefined) attributes['aria-selected'] = props.selected;
+  if (props.expanded !== undefined)
+    attributes['aria-expanded'] = props.expanded;
+  if (props.selected !== undefined)
+    attributes['aria-selected'] = props.selected;
   if (props.label) attributes['aria-label'] = props.label;
   if (props.describedBy) attributes['aria-describedby'] = props.describedBy;
 
@@ -204,7 +208,8 @@ export const SURFACE_VARIANTS = {
   primary: 'bg-surface-primary text-text-primary border-border-primary',
   secondary: 'bg-surface-secondary text-text-primary border-border-primary',
   tertiary: 'bg-surface-tertiary text-text-secondary border-border-secondary',
-  elevated: 'bg-surface-elevated text-text-primary border-border-primary shadow-sm',
+  elevated:
+    'bg-surface-elevated text-text-primary border-border-primary shadow-sm',
 };
 
 /**
@@ -249,7 +254,7 @@ export const createValidationClasses = (
  */
 export const createCompoundComponent = <
   TMain extends React.ComponentType<any>,
-  TCompounds extends Record<string, React.ComponentType<any>>
+  TCompounds extends Record<string, React.ComponentType<any>>,
 >(
   MainComponent: TMain,
   compounds: TCompounds,
@@ -281,16 +286,18 @@ export const createCompoundComponent = <
  */
 const classNameCache = new Map<string, string>();
 
-export const memoizedClassNames = (...classes: (string | undefined | null | false)[]): string => {
+export const memoizedClassNames = (
+  ...classes: (string | undefined | null | false)[]
+): string => {
   const key = classes.join('|');
-  
+
   if (classNameCache.has(key)) {
     return classNameCache.get(key)!;
   }
 
   const result = classes.filter(Boolean).join(' ');
   classNameCache.set(key, result);
-  
+
   // Prevent memory leaks by limiting cache size
   if (classNameCache.size > 1000) {
     const firstKey = classNameCache.keys().next().value;

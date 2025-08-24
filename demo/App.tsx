@@ -13,7 +13,6 @@ import {
   MoonIcon,
   RocketLaunchIcon,
   SparklesIcon,
-  CheckCircleIcon,
   CpuChipIcon,
   ShieldCheckIcon,
   LightBulbIcon,

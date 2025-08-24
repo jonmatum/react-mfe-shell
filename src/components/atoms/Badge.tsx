@@ -1,9 +1,5 @@
 import { forwardRef, useCallback } from 'react';
-import {
-  BadgeProps,
-  BADGE_VARIANTS,
-  BADGE_SIZES,
-} from '../../types';
+import { BadgeProps, BADGE_VARIANTS, BADGE_SIZES } from '../../types';
 import { classNames } from '../../utils';
 import {
   createSemanticColorVariant,
@@ -27,13 +23,16 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
     },
     ref
   ) => {
-    const baseClasses = 'inline-flex items-center font-medium rounded-full transition-colors duration-200';
+    const baseClasses =
+      'inline-flex items-center font-medium rounded-full transition-colors duration-200';
 
     // DRY variant classes using utility functions
     const variantClasses = {
-      default: 'bg-surface-secondary text-text-primary border border-border-primary',
+      default:
+        'bg-surface-secondary text-text-primary border border-border-primary',
       primary: createSemanticColorVariant('primary', 'soft'),
-      secondary: 'bg-surface-tertiary text-text-secondary border border-border-secondary',
+      secondary:
+        'bg-surface-tertiary text-text-secondary border border-border-secondary',
       success: createSemanticColorVariant('success', 'soft'),
       warning: createSemanticColorVariant('warning', 'soft'),
       danger: createSemanticColorVariant('danger', 'soft'),
@@ -49,7 +48,7 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
         };
         return dotSizes[size as keyof typeof dotSizes] || dotSizes.md;
       }
-      
+
       const badgeSizes = {
         sm: 'px-2 py-0.5 text-xs gap-1',
         md: 'px-2.5 py-0.5 text-sm gap-1',
@@ -61,15 +60,18 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
     const sizeClasses = getSizeClasses(size, dot);
 
     // Memoized remove handler
-    const handleRemove = useCallback((event: React.MouseEvent) => {
-      event.stopPropagation();
-      onRemove?.();
-    }, [onRemove]);
+    const handleRemove = useCallback(
+      (event: React.MouseEvent) => {
+        event.stopPropagation();
+        onRemove?.();
+      },
+      [onRemove]
+    );
 
     // DRY remove button classes generator
     const getRemoveButtonClasses = (variant: BadgeProps['variant']) => {
       const baseRemoveClasses = `ml-1 ${BASE_INTERACTIVE_CLASSES} rounded-full focus:ring-offset-transparent`;
-      
+
       const variantRemoveClasses = {
         default: 'hover:bg-surface-tertiary focus:ring-border-focus',
         primary: `hover:bg-primary-100 ${createSemanticFocusRing('primary')} dark:hover:bg-primary-800/50`,
@@ -79,7 +81,10 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
         danger: `hover:bg-error-100 ${createSemanticFocusRing('danger')} dark:hover:bg-error-800/50`,
       };
 
-      return classNames(baseRemoveClasses, variantRemoveClasses[variant || 'default']);
+      return classNames(
+        baseRemoveClasses,
+        variantRemoveClasses[variant || 'default']
+      );
     };
 
     // DRY icon size mapping
@@ -113,28 +118,31 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
         {children}
         {removable && (
           <button
-            type="button"
+            type='button'
             onClick={handleRemove}
             className={classNames(
               getRemoveButtonClasses(variant),
               getIconSize(size)
             )}
-            aria-label={createAriaLabel(children, { prefix: 'Remove', fallback: 'badge' })}
+            aria-label={createAriaLabel(children, {
+              prefix: 'Remove',
+              fallback: 'badge',
+            })}
             tabIndex={0}
           >
             <svg
-              className="w-full h-full"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
+              className='w-full h-full'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+              xmlns='http://www.w3.org/2000/svg'
+              aria-hidden='true'
             >
               <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                strokeLinecap='round'
+                strokeLinejoin='round'
                 strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
+                d='M6 18L18 6M6 6l12 12'
               />
             </svg>
           </button>
@@ -147,7 +155,7 @@ const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
 Badge.displayName = 'Badge';
 
 // Static properties
-(Badge as any).variants = BADGE_VARIANTS;
-(Badge as any).sizes = BADGE_SIZES;
+(Badge as typeof Badge & { variants: typeof BADGE_VARIANTS; sizes: typeof BADGE_SIZES }).variants = BADGE_VARIANTS;
+(Badge as typeof Badge & { variants: typeof BADGE_VARIANTS; sizes: typeof BADGE_SIZES }).sizes = BADGE_SIZES;
 
 export default Badge;

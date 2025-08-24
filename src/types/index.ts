@@ -77,7 +77,9 @@ export interface ButtonOwnProps {
   as?: React.ElementType;
 }
 
-export interface ButtonProps extends Omit<BaseComponentProps, 'children'>, ButtonOwnProps {
+export interface ButtonProps
+  extends Omit<BaseComponentProps, 'children'>,
+    ButtonOwnProps {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -140,7 +142,14 @@ export interface IconProps extends BaseComponentProps {
 }
 
 // Badge component types
-export const BADGE_VARIANTS = ['default', 'primary', 'secondary', 'success', 'warning', 'danger'] as const;
+export const BADGE_VARIANTS = [
+  'default',
+  'primary',
+  'secondary',
+  'success',
+  'warning',
+  'danger',
+] as const;
 export const BADGE_SIZES = ['sm', 'md', 'lg'] as const;
 
 export type BadgeVariant = (typeof BADGE_VARIANTS)[number];
@@ -179,8 +188,28 @@ export interface DividerProps extends BaseComponentProps {
 
 // Text/Typography component types
 export const TEXT_VARIANTS = ['body', 'caption', 'overline'] as const;
-export const TEXT_SIZES = ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl'] as const;
-export const TEXT_WEIGHTS = ['thin', 'light', 'normal', 'medium', 'semibold', 'bold', 'extrabold', 'black'] as const;
+export const TEXT_SIZES = [
+  'xs',
+  'sm',
+  'md',
+  'lg',
+  'xl',
+  '2xl',
+  '3xl',
+  '4xl',
+  '5xl',
+  '6xl',
+] as const;
+export const TEXT_WEIGHTS = [
+  'thin',
+  'light',
+  'normal',
+  'medium',
+  'semibold',
+  'bold',
+  'extrabold',
+  'black',
+] as const;
 
 export type TextVariant = (typeof TEXT_VARIANTS)[number];
 export type TextSize = (typeof TEXT_SIZES)[number];

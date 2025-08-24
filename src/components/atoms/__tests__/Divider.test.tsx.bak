@@ -1,0 +1,294 @@
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import Divider from '../Divider';
+
+describe('Divider', () => {
+  // Basic rendering tests
+  describe('Rendering', () => {
+    it('renders correctly with default props', () => {
+      render(<Divider />);
+      const divider = screen.getByRole('separator');
+      expect(divider).toBeInTheDocument();
+      expect(divider.tagName).toBe('HR');
+    });
+
+    it('renders with custom className', () => {
+      render(<Divider className="custom-class" />);
+      const divider = screen.getByRole('separator');
+      expect(divider).toHaveClass('custom-class');
+    });
+  });
+
+  // Orientation tests
+  describe('Orientations', () => {
+    it('renders horizontal orientation by default', () => {
+      render(<Divider />);
+      const divider = screen.getByRole('separator');
+
+      expect(divider).toHaveClass('w-full', 'border-t');
+      expect(divider).toHaveAttribute('aria-orientation', 'horizontal');
+    });
+
+    it('renders vertical orientation correctly', () => {
+      render(<Divider orientation="vertical" />);
+      const divider = screen.getByRole('separator');
+
+      expect(divider).toHaveClass('h-full', 'border-l');
+      expect(divider).toHaveAttribute('aria-orientation', 'vertical');
+    });
+  });
+
+  // Variant tests
+  describe('Variants', () => {
+    it.each([
+      ['solid', 'border-solid'],
+      ['dashed', 'border-dashed'],
+      ['dotted', 'border-dotted'],
+    ])('renders %s variant correctly', (variant, expectedClass) => {
+      render(<Divider variant={variant as any} />);
+      const divider = screen.getByRole('separator');
+      expect(divider).toHaveClass(expectedClass);
+    });
+  });
+
+  // Spacing tests
+  describe('Spacing', () => {
+    it.each([
+      ['none', 'my-0'],
+      ['sm', 'my-2'],
+      ['md', 'my-4'],
+      ['lg', 'my-6'],
+    ])('renders horizontal %s spacing correctly', (spacing, expectedClass) => {
+      render(<Divider spacing={spacing as any} />);
+      const divider = screen.getByRole('separator');
+      expect(divider).toHaveClass(expectedClass);
+    });
+
+    it.each([
+      ['none', 'mx-0'],
+      ['sm', 'mx-2'],
+      ['md', 'mx-4'],
+      ['lg', 'mx-6'],
+    ])('renders vertical %s spacing correctly', (spacing, expectedClass) => {
+      render(<Divider orientation="vertical" spacing={spacing as any} />);
+      const divider = screen.getByRole('separator');
+      expect(divider).toHaveClass(expectedClass);
+    });
+  });
+
+  // Label tests
+  describe('Labels', () => {
+    it('renders with label correctly', () => {
+      render(<Divider label="OR" />);
+
+      const container = screen.getByRole('separator');
+      expect(container).toHaveAttribute('aria-label', 'OR');
+      expect(screen.getByText('OR')).toBeInTheDocument();
+    });
+
+    it('renders label with proper styling', () => {
+      render(<Divider label="Section Break" />);
+
+      const label = screen.getByText('Section Break');
+      expect(label).toHaveClass(
+        'px-3',
+        'text-sm',
+        'text-text-secondary',
+        'bg-background-primary'
+      );
+    });
+    });
+
+    it('renders as div container when label is provided', () => {
+      render(<Divider label="OR" />);
+
+      const container = screen.getByRole('separator');
+      expect(container.tagName).toBe('DIV');
+      expect(container).toHaveClass('relative', 'flex', 'items-center');
+    });
+
+    it('creates two divider lines when label is provided', () => {
+      render(<Divider label="OR" />);
+
+      const container = screen.getByRole('separator');
+      const dividerLines = container.querySelectorAll('div[class*="border-t"]');
+      expect(dividerLines).toHaveLength(2);
+
+      dividerLines.forEach(line => {
+        expect(line).toHaveClass('flex-grow', 'border-border-primary');
+      });
+    });
+
+    it('ignores label for vertical orientation', () => {
+      render(<Divider orientation="vertical" label="This should be ignored" />);
+
+      const divider = screen.getByRole('separator');
+      expect(divider.tagName).toBe('HR');
+      expect(screen.queryByText('This should be ignored')).not.toBeInTheDocument();
+    });
+  });
+
+  // Polymorphic tests
+  describe('Polymorphic rendering', () => {
+    it('renders as div when as="div"', () => {
+      render(<Divider as="div" />);
+
+      const divider = screen.getByRole('separator');
+      expect(divider.tagName).toBe('DIV');
+    });
+
+    it('renders as section when as="section"', () => {
+      render(<Divider as="section" />);
+
+      const divider = screen.getByRole('separator');
+      expect(divider.tagName).toBe('SECTION');
+    });
+
+    it('maintains proper classes with polymorphic rendering', () => {
+      render(<Divider as="div" variant="dashed" />);
+
+      const divider = screen.getByRole('separator');
+      expect(divider).toHaveClass('border-dashed', 'border-border-primary');
+    });
+  });
+
+  // Accessibility tests
+  describe('Accessibility', () => {
+    it('has proper separator role', () => {
+      render(<Divider />);
+      const divider = screen.getByRole('separator');
+      expect(divider).toBeInTheDocument();
+    });
+
+    it('has proper aria-orientation', () => {
+      render(<Divider orientation="horizontal" />);
+      const divider = screen.getByRole('separator');
+      expect(divider).toHaveAttribute('aria-orientation', 'horizontal');
+    });
+
+    it('has proper aria-label when label is provided', () => {
+      render(<Divider label="Section separator" />);
+      const divider = screen.getByRole('separator');
+      expect(divider).toHaveAttribute('aria-label', 'Section separator');
+    });
+
+    it('maintains accessibility with polymorphic rendering', () => {
+      render(<Divider as="div" orientation="vertical" />);
+      const divider = screen.getByRole('separator');
+      expect(divider).toHaveAttribute('aria-orientation', 'vertical');
+    });
+  });
+
+  // Base classes tests
+  describe('Base Classes', () => {
+    it('has proper base styling', () => {
+      render(<Divider />);
+      const divider = screen.getByRole('separator');
+
+      expect(divider).toHaveClass('border-border-primary');
+    });
+
+    it('combines all classes correctly', () => {
+      render(<Divider variant="dashed" spacing="lg" />);
+      const divider = screen.getByRole('separator');
+
+      expect(divider).toHaveClass(
+        'border-border-primary',
+        'w-full',
+        'border-t',
+        'border-dashed',
+        'my-6'
+      );
+    });
+  });
+
+  // Complex scenarios tests
+  describe('Complex Scenarios', () => {
+    it('handles all props together', () => {
+      render(
+        <Divider
+          orientation="horizontal"
+          variant="dashed"
+          spacing="lg"
+          className="custom-divider"
+          data-testid="complex-divider"
+        />
+      );
+
+      const divider = screen.getByTestId('complex-divider');
+      expect(divider).toHaveClass(
+        'border-border-primary',
+        'w-full',
+        'border-t',
+        'border-dashed',
+        'my-6',
+        'custom-divider'
+      );
+    });
+
+    it('handles label with custom spacing', () => {
+      render(<Divider label="Custom Section" spacing="lg" />);
+
+      const container = screen.getByRole('separator');
+      expect(container).toHaveClass('my-6');
+      expect(screen.getByText('Custom Section')).toBeInTheDocument();
+    });
+
+    it('handles polymorphic rendering with label', () => {
+      render(<Divider as="section" label="Section Title" />);
+
+      const container = screen.getByRole('separator');
+      // When label is provided, it renders as div container regardless of 'as' prop
+      expect(container.tagName).toBe('DIV');
+      expect(screen.getByText('Section Title')).toBeInTheDocument();
+    });
+  });
+
+  // Dark mode tests
+  describe('Dark Mode', () => {
+    it('applies dark mode classes correctly', () => {
+      render(<Divider />);
+      const divider = screen.getByRole('separator');
+
+      // Design tokens handle dark mode automatically
+      expect(divider).toHaveClass('border-border-primary');
+    });
+
+    it('applies dark mode classes to label background', () => {
+      render(<Divider label="Dark Mode Test" />);
+
+      const label = screen.getByText('Dark Mode Test');
+      expect(label).toHaveClass('bg-background-primary', 'text-text-secondary');
+    });
+  });
+
+  // Edge cases
+  describe('Edge Cases', () => {
+    it('handles empty label gracefully', () => {
+      render(<Divider label="" />);
+
+      // Should render as regular divider when label is empty
+      const divider = screen.getByRole('separator');
+      expect(divider.tagName).toBe('HR');
+    });
+
+    it('handles whitespace-only label', () => {
+      const { container } = render(<Divider label="   " />);
+
+      const separator = screen.getByRole('separator');
+      expect(separator.tagName).toBe('DIV');
+
+      const labelSpan = container.querySelector('span');
+      expect(labelSpan).toBeInTheDocument();
+      expect(labelSpan?.textContent).toBe('   ');
+    });
+
+    it('handles very long labels', () => {
+      const longLabel = 'This is a very long label that might cause layout issues if not handled properly';
+      render(<Divider label={longLabel} />);
+      expect(screen.getByText(longLabel)).toBeInTheDocument();
+    });
+  });
+});
+

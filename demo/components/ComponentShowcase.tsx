@@ -265,7 +265,7 @@ const ComponentShowcase: React.FC = () => {
                     <span className="text-text-primary">Dark Mode</span>
                     <Switch
                       checked={settings.theme === 'dark'}
-                      onChange={(checked) => console.log('Theme toggle:', checked)}
+                      onChange={(checked) => console.warn('Theme toggle:', checked)}
                       size="sm"
                     />
                   </div>

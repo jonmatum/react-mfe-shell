@@ -90,11 +90,19 @@ describe('Badge', () => {
   });
 
   it('renders dot with different sizes', () => {
-    const { rerender, container } = render(<Badge dot size='sm'>Small Dot</Badge>);
+    const { rerender, container } = render(
+      <Badge dot size='sm'>
+        Small Dot
+      </Badge>
+    );
     let badge = container.firstChild as HTMLElement;
     expect(badge).toHaveClass('w-2', 'h-2');
 
-    rerender(<Badge dot size='lg'>Large Dot</Badge>);
+    rerender(
+      <Badge dot size='lg'>
+        Large Dot
+      </Badge>
+    );
     badge = container.firstChild as HTMLElement;
     expect(badge).toHaveClass('w-3', 'h-3');
   });
@@ -107,7 +115,9 @@ describe('Badge', () => {
       </Badge>
     );
 
-    const removeButton = screen.getByRole('button', { name: 'Remove Removable' });
+    const removeButton = screen.getByRole('button', {
+      name: 'Remove Removable',
+    });
     expect(removeButton).toBeInTheDocument();
     expect(removeButton).toHaveClass(
       'hover:bg-primary-100',
@@ -175,7 +185,7 @@ describe('Badge', () => {
 
     const removeButton = screen.getByRole('button');
     expect(removeButton).toHaveAttribute('tabIndex', '0');
-    
+
     // Test focus
     removeButton.focus();
     expect(removeButton).toHaveFocus();
@@ -184,7 +194,7 @@ describe('Badge', () => {
   it('stops event propagation on remove button click', () => {
     const handleRemove = vi.fn();
     const handleBadgeClick = vi.fn();
-    
+
     render(
       <Badge removable onRemove={handleRemove} onClick={handleBadgeClick}>
         Test Badge
@@ -193,7 +203,7 @@ describe('Badge', () => {
 
     const removeButton = screen.getByRole('button');
     fireEvent.click(removeButton);
-    
+
     expect(handleRemove).toHaveBeenCalled();
     expect(handleBadgeClick).not.toHaveBeenCalled();
   });
@@ -211,7 +221,7 @@ describe('Badge', () => {
   });
 
   it('supports polymorphic rendering', () => {
-    render(<Badge as="div">Polymorphic Badge</Badge>);
+    render(<Badge as='div'>Polymorphic Badge</Badge>);
     const badge = screen.getByText('Polymorphic Badge');
     expect(badge.tagName).toBe('DIV');
   });

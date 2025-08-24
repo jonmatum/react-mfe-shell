@@ -1,0 +1,479 @@
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import Icon from '../Icon';
+
+describe('Icon', () => {
+  // Basic rendering tests
+  describe('Rendering', () => {
+    it('renders correctly with default props', () => {
+      render(
+        <Icon>
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = document.querySelector('svg');
+      expect(icon).toBeInTheDocument();
+      expect(icon?.tagName).toBe('SVG');
+    });
+
+    it('renders with custom className', () => {
+      render(
+        <Icon className="custom-class">
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = document.querySelector('svg');
+      expect(icon).toHaveClass('custom-class');
+    });
+
+    it('renders children correctly', () => {
+      render(
+        <Icon>
+          <path data-testid="icon-path" d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+          <circle data-testid="icon-circle" cx="12" cy="12" r="3" />
+        </Icon>
+      );
+
+      expect(screen.getByTestId('icon-path')).toBeInTheDocument();
+      expect(screen.getByTestId('icon-circle')).toBeInTheDocument();
+    });
+  });
+
+  // Size tests
+  describe('Sizes', () => {
+    it.each([
+      ['xs', 'h-3 w-3'],
+      ['sm', 'h-4 w-4'],
+      ['md', 'h-5 w-5'],
+      ['lg', 'h-6 w-6'],
+      ['xl', 'h-8 w-8'],
+      ['2xl', 'h-10 w-10'],
+    ])('renders %s size correctly', (size, expectedClasses) => {
+      render(
+        <Icon size={size as any}>
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = document.querySelector('svg');
+      expectedClasses.split(' ').forEach(cls => {
+        expect(icon).toHaveClass(cls);
+      });
+    });
+  });
+
+  // Color tests
+  describe('Colors', () => {
+    it('renders with default color (text-current)', () => {
+      render(
+        <Icon>
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = document.querySelector('svg');
+      expect(icon).toHaveClass('text-current');
+    });
+
+    it('renders with custom color', () => {
+      render(
+        <Icon color="text-red-500">
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = document.querySelector('svg');
+      expect(icon).toHaveClass('text-red-500');
+    });
+  });
+
+  // SVG attributes tests
+  describe('SVG Attributes', () => {
+    it('has proper default SVG attributes', () => {
+      render(
+        <Icon>
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = document.querySelector('svg');
+      expect(icon).toHaveAttribute('fill', 'currentColor');
+      expect(icon).toHaveAttribute('viewBox', '0 0 24 24');
+      expect(icon).toHaveAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    });
+
+    it('allows overriding SVG attributes', () => {
+      render(
+        <Icon viewBox="0 0 16 16" fill="none">
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = document.querySelector('svg');
+      expect(icon).toHaveAttribute('viewBox', '0 0 16 16');
+      expect(icon).toHaveAttribute('fill', 'none');
+    });
+  });
+
+  // Accessibility tests
+  describe('Accessibility', () => {
+    it('is hidden from screen readers by default', () => {
+      render(
+        <Icon>
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = document.querySelector('svg');
+      expect(icon).toHaveAttribute('aria-hidden', 'true');
+      expect(icon).not.toHaveAttribute('role');
+    });
+
+    it('is accessible when aria-label is provided', () => {
+      render(
+        <Icon aria-label="Settings">
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = screen.getByRole('img', { name: 'Settings' });
+      expect(icon).toBeInTheDocument();
+      expect(icon).toHaveAttribute('aria-label', 'Settings');
+      expect(icon).toHaveAttribute('aria-hidden', 'false');
+      expect(icon).toHaveAttribute('role', 'img');
+    });
+
+    it('respects explicit aria-hidden', () => {
+      render(
+        <Icon aria-hidden aria-label="This should be hidden">
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = document.querySelector('svg');
+      expect(icon).toHaveAttribute('aria-hidden', 'true');
+      expect(icon).not.toHaveAttribute('role');
+    });
+  });
+
+  // Polymorphic tests
+  describe('Polymorphic rendering', () => {
+    it('renders as span when as="span"', () => {
+      render(
+        <Icon as="span">
+          <i className="fas fa-user" />
+        </Icon>
+      );
+
+      const span = document.querySelector('span');
+      expect(span?.tagName).toBe('SPAN');
+      expect(span).not.toHaveAttribute('viewBox');
+      expect(span).not.toHaveAttribute('fill');
+    });
+
+    it('renders as div when as="div"', () => {
+      render(
+        <Icon as="div">
+          <i className="material-icons">home</i>
+        </Icon>
+      );
+
+      const div = document.querySelector('div');
+      expect(div?.tagName).toBe('DIV');
+    });
+
+    it('maintains accessibility with polymorphic rendering', () => {
+      render(
+        <Icon as="span" aria-label="User">
+          <i className="fas fa-user" />
+        </Icon>
+      );
+
+      const span = screen.getByRole('img', { name: 'User' });
+      expect(span).toBeInTheDocument();
+      expect(span).toHaveAttribute('aria-label', 'User');
+    });
+  });
+
+  // Base classes tests
+  describe('Base Classes', () => {
+    it('has proper base classes', () => {
+      render(
+        <Icon>
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = document.querySelector('svg');
+      expect(icon).toHaveClass('inline-block', 'flex-shrink-0');
+    });
+
+    it('combines base classes with size and color', () => {
+      render(
+        <Icon size="lg" color="text-blue-500">
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = document.querySelector('svg');
+      expect(icon).toHaveClass('inline-block', 'flex-shrink-0', 'h-6', 'w-6', 'text-blue-500');
+    });
+  });
+
+  // Constants tests
+  describe('Constants', () => {
+    it('exports sizes correctly', () => {
+      expect(Icon.sizes).toBeDefined();
+      expect(Icon.sizes).toContain('xs');
+      expect(Icon.sizes).toContain('md');
+      expect(Icon.sizes).toContain('2xl');
+    });
+  });
+
+  // Complex content tests
+  describe('Complex Content', () => {
+    it('renders multiple SVG elements correctly', () => {
+      render(
+        <Icon>
+          <defs>
+            <linearGradient id="grad1">
+              <stop offset="0%" stopColor="rgb(255,255,0)" />
+              <stop offset="100%" stopColor="rgb(255,0,0)" />
+            </linearGradient>
+          </defs>
+          <ellipse cx="100" cy="70" rx="85" ry="55" fill="url(#grad1)" />
+        </Icon>
+      );
+
+      const icon = document.querySelector('svg');
+      expect(icon?.querySelector('defs')).toBeInTheDocument();
+      expect(icon?.querySelector('ellipse')).toBeInTheDocument();
+    });
+
+    it('renders with nested components', () => {
+      render(
+        <Icon>
+          <g>
+            <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+            <circle cx="12" cy="12" r="3" />
+          </g>
+        </Icon>
+      );
+
+      const icon = document.querySelector('svg');
+      expect(icon?.querySelector('g')).toBeInTheDocument();
+      expect(icon?.querySelector('path')).toBeInTheDocument();
+      expect(icon?.querySelector('circle')).toBeInTheDocument();
+    });
+  });
+});
+
+  // Color tests
+  describe('Colors', () => {
+    it('renders with default color (text-current)', () => {
+      render(
+        <Icon>
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = screen.getByRole('img', { hidden: true });
+      expect(icon).toHaveClass('text-current');
+    });
+
+    it('renders with custom color', () => {
+      render(
+        <Icon color="text-red-500">
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = screen.getByRole('img', { hidden: true });
+      expect(icon).toHaveClass('text-red-500');
+    });
+  });
+
+  // SVG attributes tests
+  describe('SVG Attributes', () => {
+    it('has proper default SVG attributes', () => {
+      render(
+        <Icon>
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = screen.getByRole('img', { hidden: true });
+      expect(icon).toHaveAttribute('fill', 'currentColor');
+      expect(icon).toHaveAttribute('viewBox', '0 0 24 24');
+      expect(icon).toHaveAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    });
+
+    it('allows overriding SVG attributes', () => {
+      render(
+        <Icon viewBox="0 0 16 16" fill="none">
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = screen.getByRole('img', { hidden: true });
+      expect(icon).toHaveAttribute('viewBox', '0 0 16 16');
+      expect(icon).toHaveAttribute('fill', 'none');
+    });
+  });
+
+  // Accessibility tests
+  describe('Accessibility', () => {
+    it('is hidden from screen readers by default', () => {
+      render(
+        <Icon>
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = screen.getByRole('img', { hidden: true });
+      expect(icon).toHaveAttribute('aria-hidden', 'true');
+      expect(icon).not.toHaveAttribute('role');
+    });
+
+    it('is accessible when aria-label is provided', () => {
+      render(
+        <Icon aria-label="Shield icon">
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = screen.getByRole('img', { name: 'Shield icon' });
+      expect(icon).toHaveAttribute('aria-label', 'Shield icon');
+      expect(icon).toHaveAttribute('aria-hidden', 'false');
+      expect(icon).toHaveAttribute('role', 'img');
+    });
+
+    it('respects explicit aria-hidden', () => {
+      render(
+        <Icon aria-hidden aria-label="This should be hidden">
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = screen.getByRole('img', { hidden: true });
+      expect(icon).toHaveAttribute('aria-hidden', 'true');
+      expect(icon).not.toHaveAttribute('role');
+    });
+  });
+
+  // Polymorphic tests
+  describe('Polymorphic rendering', () => {
+    it('renders as span when as="span"', () => {
+      render(
+        <Icon as="span">
+          <i className="fas fa-user" />
+        </Icon>
+      );
+
+      const span = screen.getByRole('img', { hidden: true });
+      expect(span.tagName).toBe('SPAN');
+      expect(span).not.toHaveAttribute('viewBox');
+      expect(span).not.toHaveAttribute('xmlns');
+    });
+
+    it('renders as div when as="div"', () => {
+      render(
+        <Icon as="div">
+          <i className="material-icons">home</i>
+        </Icon>
+      );
+
+      const div = screen.getByRole('img', { hidden: true });
+      expect(div.tagName).toBe('DIV');
+    });
+
+    it('maintains accessibility with polymorphic rendering', () => {
+      render(
+        <Icon as="span" aria-label="User icon">
+          <i className="fas fa-user" />
+        </Icon>
+      );
+
+      const span = screen.getByRole('img', { name: 'User icon' });
+      expect(span).toHaveAttribute('aria-label', 'User icon');
+      expect(span).toHaveAttribute('aria-hidden', 'false');
+    });
+  });
+
+  // Base classes tests
+  describe('Base Classes', () => {
+    it('has proper base classes', () => {
+      render(
+        <Icon>
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = screen.getByRole('img', { hidden: true });
+      expect(icon).toHaveClass('inline-block', 'flex-shrink-0');
+    });
+
+    it('combines base classes with size and color', () => {
+      render(
+        <Icon size="lg" color="text-blue-500">
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+        </Icon>
+      );
+
+      const icon = screen.getByRole('img', { hidden: true });
+      expect(icon).toHaveClass('inline-block', 'flex-shrink-0', 'h-6', 'w-6', 'text-blue-500');
+    });
+  });
+
+  // Constants tests
+  describe('Constants', () => {
+    it('exports sizes correctly', () => {
+      expect(Icon.sizes).toEqual(['xs', 'sm', 'md', 'lg', 'xl', '2xl']);
+    });
+  });
+
+  // Complex content tests
+  describe('Complex Content', () => {
+    it('renders multiple SVG elements correctly', () => {
+      render(
+        <Icon>
+          <defs>
+            <linearGradient id="grad1">
+              <stop offset="0%" stopColor="rgb(255,255,0)" />
+              <stop offset="100%" stopColor="rgb(255,0,0)" />
+            </linearGradient>
+          </defs>
+          <ellipse cx="100" cy="70" rx="85" ry="55" fill="url(#grad1)" />
+        </Icon>
+      );
+
+      const icon = screen.getByRole('img', { hidden: true });
+      expect(icon.querySelector('defs')).toBeInTheDocument();
+      expect(icon.querySelector('ellipse')).toBeInTheDocument();
+    });
+
+    it('renders with nested components', () => {
+      const NestedIcon = () => (
+        <g>
+          <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+          <circle cx="12" cy="12" r="3" />
+        </g>
+      );
+
+      render(
+        <Icon>
+          <NestedIcon />
+        </Icon>
+      );
+
+      const icon = screen.getByRole('img', { hidden: true });
+      expect(icon.querySelector('g')).toBeInTheDocument();
+      expect(icon?.querySelector('path')).toBeInTheDocument();
+      expect(icon?.querySelector('circle')).toBeInTheDocument();
+    });
+  });
+});
+

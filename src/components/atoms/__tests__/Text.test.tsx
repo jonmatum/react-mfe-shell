@@ -14,7 +14,7 @@ describe('Text', () => {
     });
 
     it('renders with custom className', () => {
-      render(<Text className="custom-class">Test</Text>);
+      render(<Text className='custom-class'>Test</Text>);
       const text = screen.getByText('Test');
       expect(text).toHaveClass('custom-class');
     });
@@ -38,7 +38,7 @@ describe('Text', () => {
       it(`renders ${variant} variant correctly`, () => {
         render(<Text variant={variant}>{variant}</Text>);
         const text = screen.getByText(variant);
-        
+
         switch (variant) {
           case 'body':
             expect(text).toHaveClass('text-text-primary');
@@ -47,7 +47,12 @@ describe('Text', () => {
             expect(text).toHaveClass('text-text-secondary');
             break;
           case 'overline':
-            expect(text).toHaveClass('text-text-secondary', 'text-xs', 'uppercase', 'tracking-wide');
+            expect(text).toHaveClass(
+              'text-text-secondary',
+              'text-xs',
+              'uppercase',
+              'tracking-wide'
+            );
             break;
         }
       });
@@ -58,7 +63,7 @@ describe('Text', () => {
   describe('Sizes', () => {
     const sizeClassMap = {
       xs: 'text-xs',
-      sm: 'text-sm', 
+      sm: 'text-sm',
       md: 'text-base', // md maps to text-base in Tailwind
       lg: 'text-lg',
       xl: 'text-xl',
@@ -69,7 +74,18 @@ describe('Text', () => {
       '6xl': 'text-6xl',
     } as const;
 
-    const sizes = ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl'] as const;
+    const sizes = [
+      'xs',
+      'sm',
+      'md',
+      'lg',
+      'xl',
+      '2xl',
+      '3xl',
+      '4xl',
+      '5xl',
+      '6xl',
+    ] as const;
 
     sizes.forEach(size => {
       it(`renders ${size} size correctly`, () => {
@@ -82,7 +98,16 @@ describe('Text', () => {
 
   // Weight tests
   describe('Weights', () => {
-    const weights = ['thin', 'light', 'normal', 'medium', 'semibold', 'bold', 'extrabold', 'black'] as const;
+    const weights = [
+      'thin',
+      'light',
+      'normal',
+      'medium',
+      'semibold',
+      'bold',
+      'extrabold',
+      'black',
+    ] as const;
 
     weights.forEach(weight => {
       it(`renders ${weight} weight correctly`, () => {
@@ -108,13 +133,18 @@ describe('Text', () => {
 
   // Transform tests
   describe('Text Transform', () => {
-    const transforms = ['none', 'uppercase', 'lowercase', 'capitalize'] as const;
+    const transforms = [
+      'none',
+      'uppercase',
+      'lowercase',
+      'capitalize',
+    ] as const;
 
     transforms.forEach(transform => {
       it(`renders ${transform} transform correctly`, () => {
         render(<Text transform={transform}>{transform}</Text>);
         const text = screen.getByText(transform);
-        
+
         if (transform !== 'none') {
           expect(text).toHaveClass(transform);
         }
@@ -125,8 +155,12 @@ describe('Text', () => {
   // Truncate tests
   describe('Truncation', () => {
     it('applies truncate class when truncate is true', () => {
-      render(<Text truncate>This is a very long text that should be truncated</Text>);
-      const text = screen.getByText('This is a very long text that should be truncated');
+      render(
+        <Text truncate>This is a very long text that should be truncated</Text>
+      );
+      const text = screen.getByText(
+        'This is a very long text that should be truncated'
+      );
       expect(text).toHaveClass('truncate');
     });
 
@@ -140,19 +174,23 @@ describe('Text', () => {
   // Color tests
   describe('Color', () => {
     it('applies custom color when provided', () => {
-      render(<Text color="text-red-500">Red text</Text>);
+      render(<Text color='text-red-500'>Red text</Text>);
       const text = screen.getByText('Red text');
       expect(text).toHaveClass('text-red-500');
     });
 
     it('uses variant color when no custom color is provided', () => {
-      render(<Text variant="caption">Caption text</Text>);
+      render(<Text variant='caption'>Caption text</Text>);
       const text = screen.getByText('Caption text');
       expect(text).toHaveClass('text-text-secondary');
     });
 
     it('custom color overrides variant color', () => {
-      render(<Text variant="caption" color="text-blue-600">Custom color</Text>);
+      render(
+        <Text variant='caption' color='text-blue-600'>
+          Custom color
+        </Text>
+      );
       const text = screen.getByText('Custom color');
       expect(text).toHaveClass('text-blue-600');
       expect(text).not.toHaveClass('text-text-secondary');
@@ -162,19 +200,19 @@ describe('Text', () => {
   // Polymorphic tests
   describe('Polymorphic behavior', () => {
     it('renders as different HTML elements', () => {
-      const { rerender } = render(<Text as="h1">Heading</Text>);
+      const { rerender } = render(<Text as='h1'>Heading</Text>);
       expect(screen.getByText('Heading').tagName).toBe('H1');
 
-      rerender(<Text as="span">Span text</Text>);
+      rerender(<Text as='span'>Span text</Text>);
       expect(screen.getByText('Span text').tagName).toBe('SPAN');
 
-      rerender(<Text as="div">Div text</Text>);
+      rerender(<Text as='div'>Div text</Text>);
       expect(screen.getByText('Div text').tagName).toBe('DIV');
     });
 
     it('renders as heading elements', () => {
       const headings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] as const;
-      
+
       headings.forEach(heading => {
         render(<Text as={heading}>{heading} text</Text>);
         const element = screen.getByText(`${heading} text`);
@@ -183,7 +221,11 @@ describe('Text', () => {
     });
 
     it('passes through additional props to the rendered element', () => {
-      render(<Text as="div" data-testid="custom-text" role="banner">Custom</Text>);
+      render(
+        <Text as='div' data-testid='custom-text' role='banner'>
+          Custom
+        </Text>
+      );
       const text = screen.getByTestId('custom-text');
       expect(text).toHaveAttribute('role', 'banner');
     });
@@ -192,20 +234,24 @@ describe('Text', () => {
   // Accessibility tests
   describe('Accessibility', () => {
     it('maintains semantic meaning with appropriate elements', () => {
-      render(<Text as="h1">Main Heading</Text>);
+      render(<Text as='h1'>Main Heading</Text>);
       const heading = screen.getByRole('heading', { level: 1 });
       expect(heading).toBeInTheDocument();
     });
 
     it('supports ARIA attributes', () => {
-      render(<Text aria-label="Custom label" aria-describedby="description">Text</Text>);
+      render(
+        <Text aria-label='Custom label' aria-describedby='description'>
+          Text
+        </Text>
+      );
       const text = screen.getByText('Text');
       expect(text).toHaveAttribute('aria-label', 'Custom label');
       expect(text).toHaveAttribute('aria-describedby', 'description');
     });
 
     it('supports role attribute', () => {
-      render(<Text role="status">Status message</Text>);
+      render(<Text role='status'>Status message</Text>);
       const text = screen.getByRole('status');
       expect(text).toBeInTheDocument();
     });
@@ -215,19 +261,19 @@ describe('Text', () => {
   describe('Property Combinations', () => {
     it('combines multiple properties correctly', () => {
       render(
-        <Text 
-          variant="overline"
-          size="lg"
-          weight="bold"
-          align="center"
-          transform="uppercase"
+        <Text
+          variant='overline'
+          size='lg'
+          weight='bold'
+          align='center'
+          transform='uppercase'
           truncate
-          className="custom-class"
+          className='custom-class'
         >
           Combined properties
         </Text>
       );
-      
+
       const text = screen.getByText('Combined properties');
       expect(text).toHaveClass(
         'text-text-secondary', // variant
@@ -243,7 +289,11 @@ describe('Text', () => {
     });
 
     it('handles conflicting transform properties correctly', () => {
-      render(<Text variant="overline" transform="lowercase">Mixed case</Text>);
+      render(
+        <Text variant='overline' transform='lowercase'>
+          Mixed case
+        </Text>
+      );
       const text = screen.getByText('Mixed case');
       // Transform prop should override variant transform
       expect(text).toHaveClass('lowercase');
@@ -256,7 +306,7 @@ describe('Text', () => {
     it('renders efficiently with minimal re-renders', () => {
       const { rerender } = render(<Text>Initial text</Text>);
       const text = screen.getByText('Initial text');
-      
+
       // Rerender with same props should not cause issues
       rerender(<Text>Initial text</Text>);
       expect(text).toBeInTheDocument();
@@ -281,10 +331,10 @@ describe('Text', () => {
       render(
         <Text>
           <strong>Bold</strong> and <em>italic</em> text with{' '}
-          <a href="#link">links</a>
+          <a href='#link'>links</a>
         </Text>
       );
-      
+
       expect(screen.getByText('Bold')).toBeInTheDocument();
       expect(screen.getByText('italic')).toBeInTheDocument();
       expect(screen.getByText('links')).toBeInTheDocument();
@@ -292,16 +342,16 @@ describe('Text', () => {
 
     it('combines multiple CSS classes correctly', () => {
       render(
-        <Text 
-          className="custom-class another-class" 
-          variant="caption" 
-          size="xl" 
-          weight="semibold"
+        <Text
+          className='custom-class another-class'
+          variant='caption'
+          size='xl'
+          weight='semibold'
         >
           Multiple classes
         </Text>
       );
-      
+
       const text = screen.getByText('Multiple classes');
       expect(text).toHaveClass(
         'custom-class',
