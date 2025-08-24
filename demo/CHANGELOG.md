@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.0.1](https://github.com/jonmatum/react-mfe-shell/compare/demo-v5.0.0...demo-v5.0.1) (2025-08-24)
+
+
+### Bug Fixes
+
+* **lint:** resolve all ESLint errors and warnings ([04da16a](https://github.com/jonmatum/react-mfe-shell/commit/04da16ac8394c49ab189fbd975d8b58f95ea8d97))
+
 ## [5.0.0](https://github.com/jonmatum/react-mfe-shell/compare/demo-v4.1.1...demo-v5.0.0) (2025-08-24)
 
 
