@@ -56,7 +56,7 @@ const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
           disabled,
           size,
           // Don't pass error to child to avoid duplicate error messages
-        } as any)
+        } as Record<string, unknown>)
       : children;
 
     const sizeClasses = {
