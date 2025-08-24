@@ -1,0 +1,21 @@
+{
+  "name": "React MFE Shell",
+  "short_name": "MFE Shell",
+  "description": "A production-ready micro frontend shell with React, TypeScript, and modern tooling",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "apple-touch-icon.svg",
+      "sizes": "180x180",
+      "type": "image/svg+xml"
+    }
+  ]
+}

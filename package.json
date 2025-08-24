@@ -52,6 +52,7 @@
     "format": "node scripts/format.js",
     "format:quick": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,md}\" && eslint . --fix --quiet",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,md}\"",
+    "favicon": "node scripts/generate-favicon.mjs",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf dist",
     "test": "vitest",
