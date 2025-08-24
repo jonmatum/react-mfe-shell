@@ -125,6 +125,17 @@ export default {
     'dark:hover:bg-success-800/50',
     'dark:hover:bg-warning-800/50',
     'dark:hover:bg-error-800/50',
+    
+    // Switch component classes - ensure these are always generated
+    'bg-surface-secondary',
+    'bg-primary-600',
+    'bg-success-600',
+    'bg-warning-600',
+    'bg-danger-600',
+    'focus:ring-primary-500',
+    'focus:ring-success-500',
+    'focus:ring-warning-500',
+    'focus:ring-danger-500',
   ],
   plugins: [],
 };

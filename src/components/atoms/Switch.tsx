@@ -67,17 +67,17 @@ const Switch = memo<SwitchProps>(
     };
 
     const colorClasses = {
-      primary: checked ? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-700',
-      success: checked ? 'bg-green-600' : 'bg-gray-200 dark:bg-gray-700',
-      warning: checked ? 'bg-yellow-600' : 'bg-gray-200 dark:bg-gray-700',
-      danger: checked ? 'bg-red-600' : 'bg-gray-200 dark:bg-gray-700',
+      primary: checked ? 'bg-primary-600' : 'bg-surface-secondary',
+      success: checked ? 'bg-success-600' : 'bg-surface-secondary',
+      warning: checked ? 'bg-warning-600' : 'bg-surface-secondary',
+      danger: checked ? 'bg-danger-600' : 'bg-surface-secondary',
     };
 
     const focusColorClasses = {
-      primary: 'focus:ring-blue-500',
-      success: 'focus:ring-green-500',
-      warning: 'focus:ring-yellow-500',
-      danger: 'focus:ring-red-500',
+      primary: 'focus:ring-primary-500',
+      success: 'focus:ring-success-500',
+      warning: 'focus:ring-warning-500',
+      danger: 'focus:ring-danger-500',
     };
 
     const switchElement = (
@@ -86,19 +86,29 @@ const Switch = memo<SwitchProps>(
         onChange={onChange}
         disabled={disabled}
         className={classNames(
-          'relative inline-flex flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2',
+          // Base switch styles
+          'group relative inline-flex flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out',
+          // Focus styles
+          'focus:outline-none focus:ring-2 focus:ring-offset-2',
+          // Size classes
           sizeClasses[size].switch,
+          // Color classes
           colorClasses[color],
           focusColorClasses[color],
+          // Disabled styles
           disabled && 'cursor-not-allowed opacity-50'
         )}
         {...props}
       >
         <span className="sr-only">{label || 'Toggle switch'}</span>
         <span
+          aria-hidden="true"
           className={classNames(
+            // Base thumb styles
             'pointer-events-none inline-block rounded-full bg-white shadow transform ring-0 transition duration-200 ease-in-out',
+            // Size classes
             sizeClasses[size].thumb,
+            // Position based on checked state
             checked ? sizeClasses[size].translate : 'translate-x-0'
           )}
         />

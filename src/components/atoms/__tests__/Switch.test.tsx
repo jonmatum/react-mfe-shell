@@ -18,12 +18,12 @@ describe('Switch', () => {
 
     let switchElement = screen.getByRole('switch');
     expect(switchElement).toHaveAttribute('aria-checked', 'false');
-    expect(switchElement).toHaveClass('bg-gray-200');
+    expect(switchElement).toHaveClass('bg-surface-secondary');
 
     rerender(<Switch checked={true} onChange={onChange} />);
     switchElement = screen.getByRole('switch');
     expect(switchElement).toHaveAttribute('aria-checked', 'true');
-    expect(switchElement).toHaveClass('bg-blue-600');
+    expect(switchElement).toHaveClass('bg-primary-600');
   });
 
   it('calls onChange when clicked', () => {
