@@ -9,19 +9,9 @@ export default defineConfig({
     environment: 'happy-dom',
     setupFiles: ['./src/test/setup.ts'],
     css: true,
-    // Memory and performance optimizations
-    isolate: true,
-    pool: 'forks',
-    poolOptions: {
-      forks: {
-        singleFork: true,
-      },
-    },
-    // Timeout settings
+    // Keep timeout settings for stability
     testTimeout: 10000,
     hookTimeout: 10000,
-    // Memory management
-    maxConcurrency: 1,
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html', 'lcov'],
