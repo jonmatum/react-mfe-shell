@@ -62,3 +62,7 @@ demo/
 ```
 
 The demo imports directly from `../src` to showcase the library components in real-time during development.
+
+---
+
+*Pura Vida & Happy Coding!*
