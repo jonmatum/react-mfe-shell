@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.0.1](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v6.0.0...react-mfe-shell-v6.0.1) (2025-08-24)
+
+
+### Documentation
+
+* add npm package link to README for better discoverability ([98863f4](https://github.com/jonmatum/react-mfe-shell/commit/98863f436a2a85e123f4e00a32d1a0cd2c82e0a8))
+* add version verification comment to trigger fresh deployment ([e29368e](https://github.com/jonmatum/react-mfe-shell/commit/e29368e63eee38c27942db931d765b7e6eccd32d))
+
 ## [6.0.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v5.0.0...react-mfe-shell-v6.0.0) (2025-08-24)
 
 
