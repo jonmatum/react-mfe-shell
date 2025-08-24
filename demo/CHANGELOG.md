@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.1.1](https://github.com/jonmatum/react-mfe-shell/compare/demo-v5.1.0...demo-v5.1.1) (2025-08-24)
+
+
+### Bug Fixes
+
+* **docs:** correct test counts, component counts, and bundle sizes ([483b985](https://github.com/jonmatum/react-mfe-shell/commit/483b98512b4826281b42fe4796467ccee1684359))
+
 ## [5.1.0](https://github.com/jonmatum/react-mfe-shell/compare/demo-v5.0.1...demo-v5.1.0) (2025-08-24)
 
 
