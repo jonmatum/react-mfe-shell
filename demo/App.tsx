@@ -373,21 +373,21 @@ function ComponentShowcase() {
               <div className="space-y-4">
                 <h4 className="font-medium text-text-primary mb-3">Sizes</h4>
                 <div className="flex items-center gap-4">
-                  <Avatar size="xs" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" alt="User" />
-                  <Avatar size="sm" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="User" />
-                  <Avatar size="md" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=48&h=48&fit=crop&crop=face" alt="User" />
-                  <Avatar size="lg" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=64&h=64&fit=crop&crop=face" alt="User" />
-                  <Avatar size="xl" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" alt="User" />
+                  <Avatar size="xs" src="https://github.com/jonmatum.png" alt="Jon Matum" />
+                  <Avatar size="sm" src="https://github.com/jonmatum.png" alt="Jon Matum" />
+                  <Avatar size="md" src="https://github.com/jonmatum.png" alt="Jon Matum" />
+                  <Avatar size="lg" src="https://github.com/jonmatum.png" alt="Jon Matum" />
+                  <Avatar size="xl" src="https://github.com/jonmatum.png" alt="Jon Matum" />
                 </div>
               </div>
               
               <div className="space-y-4">
                 <h4 className="font-medium text-text-primary mb-3">Fallbacks</h4>
                 <div className="flex items-center gap-4">
-                  <Avatar size="md" alt="John Doe" />
-                  <Avatar size="md" alt="Jane Smith" />
-                  <Avatar size="md" alt="Bob Johnson" />
-                  <Avatar size="md" src="invalid-url" alt="Fallback Test" />
+                  <Avatar size="md" alt="Jon Matum" />
+                  <Avatar size="md" alt="React Developer" />
+                  <Avatar size="md" alt="MFE Architect" />
+                  <Avatar size="md" src="https://github.com/jonmatum.png" alt="Jon Matum (GitHub)" />
                 </div>
               </div>
             </div>
