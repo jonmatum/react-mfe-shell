@@ -95,6 +95,7 @@ function HeroSection() {
         Featuring atomic design principles, accessibility compliance, and modern tooling.
       </p>
       <div className="flex flex-wrap justify-center gap-2">
+        <Badge variant="primary">v{__APP_VERSION__}</Badge>
         <Badge variant="success">142 Tests Passing</Badge>
         <Badge variant="primary">TypeScript</Badge>
         <Badge variant="secondary">Tailwind CSS</Badge>
@@ -475,6 +476,9 @@ function DemoFooter() {
             >
               NPM Package
             </a>
+          </div>
+          <div className="text-xs text-gray-400 dark:text-gray-500 mb-2">
+            React MFE Shell v{__APP_VERSION__}
           </div>
           <div className="text-sm text-gray-500 dark:text-gray-400 italic">
             Pura Vida & Happy Coding!
