@@ -1,9 +1,9 @@
 {
   "name": "@jonmatum/react-mfe-shell-demo",
-  "version": "5.0.1",
+  "version": "8.0.0",
   "private": true,
   "type": "module",
-  "description": "Interactive demo application for React MFE Shell component library",
+  "description": "Interactive demo application for React MFE Shell component library showcasing all 18 components including 8 form molecules",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -26,7 +26,10 @@
     "mfe",
     "micro-frontend",
     "component-library",
-    "design-system"
+    "design-system",
+    "form-molecules",
+    "accessibility",
+    "typescript"
   ],
   "author": "Jonatan Mata <jonmatum@gmail.com>",
   "license": "MIT",

@@ -18,8 +18,10 @@ import {
   SearchBox,
   Select,
   Checkbox,
+  Radio,
   SwitchField,
   Textarea,
+  FileUpload,
 } from '../src';
 import { 
   SunIcon, 
@@ -696,6 +698,8 @@ function FormMoleculesShowcase() {
   const [isChecked, setIsChecked] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
   const [bio, setBio] = useState('');
+  const [selectedOption, setSelectedOption] = useState('');
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
   const countries = [
     { value: 'us', label: 'United States' },
@@ -716,7 +720,7 @@ function FormMoleculesShowcase() {
             built-in validation, accessibility features, and seamless theme integration.
           </p>
           <div className="flex justify-center gap-2 mt-6">
-            <Badge variant="success" size="sm">8 New Components</Badge>
+            <Badge variant="success" size="sm">8 Form Molecules</Badge>
             <Badge variant="primary" size="sm">WCAG AA Compliant</Badge>
             <Badge variant="secondary" size="sm">Form Utilities</Badge>
           </div>
@@ -875,6 +879,96 @@ function FormMoleculesShowcase() {
                     ))}
                   </div>
                 </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* Radio Component */}
+          <Card className="p-6">
+            <h3 className="text-xl font-bold text-text-primary mb-4 flex items-center space-x-2">
+              <span>Radio</span>
+              <Badge variant="success" size="sm">RadioGroup</Badge>
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                label="Preferred Contact Method"
+                description="How would you like us to reach you?"
+                required
+              >
+                <Radio
+                  name="contact-method"
+                  value={selectedOption}
+                  onChange={setSelectedOption}
+                  options={[
+                    { value: 'email', label: 'Email' },
+                    { value: 'phone', label: 'Phone' },
+                    { value: 'sms', label: 'SMS' },
+                  ]}
+                />
+              </FormField>
+              
+              <div className="bg-surface-secondary p-4 rounded-lg">
+                <Text variant="caption" className="mb-2">Selected Value:</Text>
+                <Text variant="body">{selectedOption || 'None selected'}</Text>
+                <div className="mt-4">
+                  <Button 
+                    size="sm" 
+                    variant="ghost" 
+                    onClick={() => setSelectedOption('')}
+                  >
+                    Clear Selection
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          {/* FileUpload Component */}
+          <Card className="p-6">
+            <h3 className="text-xl font-bold text-text-primary mb-4 flex items-center space-x-2">
+              <span>FileUpload</span>
+              <Badge variant="success" size="sm">Drag & Drop</Badge>
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormField
+                label="Upload Documents"
+                description="Drag and drop files or click to browse"
+              >
+                <FileUpload
+                  onFilesChange={setUploadedFiles}
+                  accept=".pdf,.doc,.docx,.txt"
+                  multiple
+                  maxFiles={5}
+                  maxSize={10 * 1024 * 1024} // 10MB
+                />
+              </FormField>
+              
+              <div className="bg-surface-secondary p-4 rounded-lg">
+                <Text variant="caption" className="mb-2">Uploaded Files:</Text>
+                {uploadedFiles.length > 0 ? (
+                  <div className="space-y-2">
+                    {uploadedFiles.map((file, index) => (
+                      <div key={index} className="flex items-center justify-between bg-surface-primary p-2 rounded">
+                        <Text variant="body" className="truncate">{file.name}</Text>
+                        <Badge variant="secondary" size="sm">
+                          {(file.size / 1024).toFixed(1)} KB
+                        </Badge>
+                      </div>
+                    ))}
+                    <Button 
+                      size="sm" 
+                      variant="ghost" 
+                      onClick={() => setUploadedFiles([])}
+                      className="mt-2"
+                    >
+                      Clear All Files
+                    </Button>
+                  </div>
+                ) : (
+                  <Text variant="body">No files uploaded</Text>
+                )}
               </div>
             </div>
           </Card>
