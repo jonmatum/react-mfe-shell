@@ -222,6 +222,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Version**: 1.0.0
 - **License**: MIT
 - **Repository**: https://github.com/jonmatum/react-mfe-template
-- **Author**: Jonathan Matum
+- **Author**: Jonatan Mata
 
 [1.0.0]: https://github.com/jonmatum/react-mfe-template/releases/tag/v1.0.0
