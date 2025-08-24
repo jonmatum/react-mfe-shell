@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.1.0](https://github.com/jonmatum/react-mfe-shell/compare/demo-v5.0.1...demo-v5.1.0) (2025-08-24)
+
+
+### Features
+
+* **demo:** add Radio and FileUpload components showcase ([cd806da](https://github.com/jonmatum/react-mfe-shell/commit/cd806da2d282b8a3b05faaf634c912c6df8b41e1))
+
 ## [5.0.1](https://github.com/jonmatum/react-mfe-shell/compare/demo-v5.0.0...demo-v5.0.1) (2025-08-24)
 
 
