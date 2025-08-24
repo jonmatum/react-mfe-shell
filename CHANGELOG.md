@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.0.2](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v7.0.1...react-mfe-shell-v7.0.2) (2025-08-24)
+
+
+### Code Refactoring
+
+* move React to peerDependencies and update build config ([18b4a05](https://github.com/jonmatum/react-mfe-shell/commit/18b4a0519a22d6ebc01bd45d7c13070cadb16ee0))
+
+
+### Tests
+
+* add comprehensive test coverage for molecules and fix linting issues ([bcfe0c2](https://github.com/jonmatum/react-mfe-shell/commit/bcfe0c2fe2496e20dd74f4146a9727af8f5d3a27))
+
 ## [7.0.1](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v7.0.0...react-mfe-shell-v7.0.1) (2025-08-24)
 
 
