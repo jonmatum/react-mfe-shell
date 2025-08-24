@@ -122,18 +122,11 @@ const Radio = forwardRef<HTMLDivElement, RadioProps>(
           value={value}
           onChange={handleChange}
           disabled={disabled}
+          aria-disabled={disabled}
           className={classNames(
             orientationClasses[orientation],
             sizeClasses[size].spacing
           )}
-          aria-describedby={
-            [
-              description ? `${fieldId}-description` : null,
-              error ? `${fieldId}-error` : null,
-            ]
-              .filter(Boolean)
-              .join(' ') || undefined
-          }
           aria-invalid={error ? 'true' : 'false'}
           aria-required={required ? 'true' : undefined}
         >

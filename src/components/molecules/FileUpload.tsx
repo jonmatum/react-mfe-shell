@@ -77,13 +77,23 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
           return { valid, errors };
         }
 
-        fileList.forEach(file => {
+        for (const file of fileList) {
           // Check file size
           if (file.size > maxSize) {
+            // Inline file size formatting to avoid circular dependency
+            const formatSize = (bytes: number): string => {
+              if (bytes === 0) return '0 Bytes';
+              const k = 1024;
+              const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+              const i = Math.floor(Math.log(bytes) / Math.log(k));
+              return (
+                parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+              );
+            };
             errors.push(
-              `${file.name} is too large. Maximum size is ${formatFileSize(maxSize)}`
+              `${file.name} is too large. Maximum size is ${formatSize(maxSize)}`
             );
-            return;
+            continue; // Skip this file
           }
 
           // Check file type if accept is specified
@@ -93,21 +103,30 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
               if (type.startsWith('.')) {
                 return file.name.toLowerCase().endsWith(type.toLowerCase());
               }
-              return file.type.match(type.replace('*', '.*'));
+              // Safely create regex pattern
+              try {
+                const pattern = type.replace(/\*/g, '.*');
+                const regex = new RegExp(`^${pattern}$`, 'i');
+                return regex.test(file.type);
+              } catch {
+                // Fallback to simple string comparison if regex fails
+                return file.type === type;
+              }
             });
 
             if (!isValidType) {
               errors.push(`${file.name} is not an accepted file type`);
-              return;
+              continue; // Skip this file
             }
           }
 
+          // Only add to valid array if all validations passed
           valid.push(file);
-        });
+        }
 
         return { valid, errors };
       },
-      [maxFiles, maxSize, accept, formatFileSize]
+      [maxFiles, maxSize, accept]
     );
 
     // Handle file selection
@@ -123,11 +142,13 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
           return;
         }
 
-        const updatedFiles = multiple ? [...files, ...valid] : valid;
-        setFiles(updatedFiles);
-        onFilesChange?.(updatedFiles);
+        setFiles(currentFiles => {
+          const updatedFiles = multiple ? [...currentFiles, ...valid] : valid;
+          onFilesChange?.(updatedFiles);
+          return updatedFiles;
+        });
       },
-      [files, multiple, onFilesChange, onError, validateFiles]
+      [multiple, onFilesChange, onError, validateFiles]
     );
 
     // Handle input change
@@ -169,9 +190,11 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
 
     // Remove file
     const removeFile = (index: number) => {
-      const updatedFiles = files.filter((_, i) => i !== index);
-      setFiles(updatedFiles);
-      onFilesChange?.(updatedFiles);
+      setFiles(currentFiles => {
+        const updatedFiles = currentFiles.filter((_, i) => i !== index);
+        onFilesChange?.(updatedFiles);
+        return updatedFiles;
+      });
     };
 
     // Open file picker

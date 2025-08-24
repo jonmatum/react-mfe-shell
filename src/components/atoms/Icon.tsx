@@ -28,8 +28,6 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(
 
     const baseClasses = 'inline-block flex-shrink-0';
 
-    const colorStyle = color ? { color } : undefined;
-
     // If no children provided and name is given, render a placeholder
     const iconContent =
       children ||
@@ -50,13 +48,16 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(
     return (
       <Component
         ref={ref}
-        className={classNames(baseClasses, sizeClasses[size], className)}
-        style={colorStyle}
-        viewBox='0 0 24 24'
-        fill='none'
-        xmlns='http://www.w3.org/2000/svg'
+        className={classNames(
+          baseClasses,
+          sizeClasses[size],
+          color && `text-${color}`,
+          className
+        )}
         aria-hidden={ariaHidden}
         aria-label={ariaLabel}
+        fill='currentColor'
+        viewBox='0 0 24 24'
         role={ariaLabel ? 'img' : undefined}
         {...props}
       >
@@ -68,7 +69,7 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(
 
 Icon.displayName = 'Icon';
 
-// Add static properties
+// Add static properties for easier access to size constants
 (Icon as typeof Icon & { sizes: typeof ICON_SIZES }).sizes = ICON_SIZES;
 
 export default Icon;

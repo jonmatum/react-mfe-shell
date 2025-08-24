@@ -1,4 +1,9 @@
 import '@testing-library/jest-dom';
+import { mockAnimationsApi } from 'jsdom-testing-mocks';
+import { vi } from 'vitest';
+
+// Mock animations API for HeadlessUI
+mockAnimationsApi();
 
 // Mock localStorage
 const localStorageMock = {
