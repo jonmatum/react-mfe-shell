@@ -118,3 +118,7 @@ You can also trigger deployment manually:
 5. Click "Run workflow"
 
 The demo will be automatically updated whenever you push changes to the main branch that affect the demo or source code.
+
+---
+
+*Pura Vida & Happy Coding!*
