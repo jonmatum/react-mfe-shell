@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.1.0](https://github.com/jonmatum/react-mfe-shell/compare/demo-v4.0.0...demo-v4.1.0) (2025-08-24)
+
+
+### Features
+
+* add meaningful functionality to demo app navigation buttons ([5b9e085](https://github.com/jonmatum/react-mfe-shell/commit/5b9e085204cf87be74d92d06e0d6bbc8fd985c80))
+* comprehensive demo app QA - showcase all available components and features ([8ca788e](https://github.com/jonmatum/react-mfe-shell/commit/8ca788e18e4896343d60706939139ef66e5a4084))
+* enhance LoadingSpinner with design tokens and comprehensive safelist ([144bf98](https://github.com/jonmatum/react-mfe-shell/commit/144bf986a75cbf6e14363c1ac3edfdcc1cc18181))
+* remove redundant Live Demo link from footer ([12dde95](https://github.com/jonmatum/react-mfe-shell/commit/12dde9526dc7c7025227a5a79db1b036715b9eac))
+* update Avatar demo to showcase jonmatum GitHub profile ([b60077e](https://github.com/jonmatum/react-mfe-shell/commit/b60077ea129b3c03c30b7441b5c9baf3fede60b4))
+* update Avatar demo with proper name and professional title ([096b271](https://github.com/jonmatum/react-mfe-shell/commit/096b271b4ba7cf8d8e925a07ac2af18a289580d8))
+
 ## [4.0.0](https://github.com/jonmatum/react-mfe-shell/compare/demo-v3.0.0...demo-v4.0.0) (2025-08-24)
 
 

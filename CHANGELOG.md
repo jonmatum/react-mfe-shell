@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.1.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v6.0.3...react-mfe-shell-v6.1.0) (2025-08-24)
+
+
+### Features
+
+* add meaningful functionality to demo app navigation buttons ([5b9e085](https://github.com/jonmatum/react-mfe-shell/commit/5b9e085204cf87be74d92d06e0d6bbc8fd985c80))
+* comprehensive demo app QA - showcase all available components and features ([8ca788e](https://github.com/jonmatum/react-mfe-shell/commit/8ca788e18e4896343d60706939139ef66e5a4084))
+* enhance LoadingSpinner with design tokens and comprehensive safelist ([144bf98](https://github.com/jonmatum/react-mfe-shell/commit/144bf986a75cbf6e14363c1ac3edfdcc1cc18181))
+* integrate Headless UI for enhanced Switch component accessibility ([8669453](https://github.com/jonmatum/react-mfe-shell/commit/86694536800307b2e45b7d2534d4115dd42fc4a2))
+* remove redundant Live Demo link from footer ([12dde95](https://github.com/jonmatum/react-mfe-shell/commit/12dde9526dc7c7025227a5a79db1b036715b9eac))
+* update Avatar demo to showcase jonmatum GitHub profile ([b60077e](https://github.com/jonmatum/react-mfe-shell/commit/b60077ea129b3c03c30b7441b5c9baf3fede60b4))
+* update Avatar demo with proper name and professional title ([096b271](https://github.com/jonmatum/react-mfe-shell/commit/096b271b4ba7cf8d8e925a07ac2af18a289580d8))
+
+
+### Bug Fixes
+
+* improve Switch component thumb centering and sizing ([85a9484](https://github.com/jonmatum/react-mfe-shell/commit/85a948491260fe9b9ed0a646773723be1f60c6fe))
+* improve Switch thumb sizing and vertical centering ([ffcfacd](https://github.com/jonmatum/react-mfe-shell/commit/ffcfacd0ceeab7947f13719aa34badbee6bf058c))
+* resolve Switch component styling issues with Headless UI integration ([ac08211](https://github.com/jonmatum/react-mfe-shell/commit/ac08211cdd2b11003dfd47b24839dee11f51cead))
+
+
+### Documentation
+
+* correct author name from Jonathan Matum to Jonatan Mata ([787d3d8](https://github.com/jonmatum/react-mfe-shell/commit/787d3d86f45b65d84d1267ebabb3c33f912d2571))
+* remove all emojis from documentation for professional presentation ([1e5ecaf](https://github.com/jonmatum/react-mfe-shell/commit/1e5ecaf4ad6e97e618f91dcffdeae6a6ffd7656d))
+
 ## [6.0.3](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v6.0.2...react-mfe-shell-v6.0.3) (2025-08-24)
 
 
