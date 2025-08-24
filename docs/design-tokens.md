@@ -196,7 +196,7 @@ All color tokens meet WCAG AA accessibility standards:
 
 ### 1. Use Semantic Colors
 ```typescript
-// ✅ Good - semantic meaning
+// Good - semantic meaning
 className="text-status-error"
 
 // ❌ Avoid - specific color values
@@ -205,7 +205,7 @@ className="text-red-600"
 
 ### 2. Use Theme-Aware Colors
 ```typescript
-// ✅ Good - adapts to theme
+// Good - adapts to theme
 className="bg-surface-primary text-text-primary"
 
 // ❌ Avoid - fixed colors
@@ -214,7 +214,7 @@ className="bg-white text-black"
 
 ### 3. Use Consistent Spacing
 ```typescript
-// ✅ Good - design system spacing
+// Good - design system spacing
 className="p-4 m-8"
 
 // ❌ Avoid - arbitrary values
@@ -223,7 +223,7 @@ className="p-[17px] m-[33px]"
 
 ### 4. Leverage TypeScript
 ```typescript
-// ✅ Good - type-safe token access
+// Good - type-safe token access
 import type { ColorScaleKey } from '@jonmatum/react-mfe-shell';
 
 function getColorShade(shade: ColorScaleKey) {

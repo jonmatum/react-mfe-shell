@@ -125,7 +125,7 @@ npm run lint             # Lint code
 
 ## Live Demo
 
-🚀 **[View Interactive Demo](https://jonmatum.github.io/react-mfe-shell/)**
+**[View Interactive Demo](https://jonmatum.github.io/react-mfe-shell/)**
 
 ## Additional Resources
 

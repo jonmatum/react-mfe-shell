@@ -6,18 +6,18 @@ A production-ready micro frontend (MFE) shell built with React, TypeScript, and 
 
 The React MFE Shell serves as the foundation for micro frontend architectures, providing:
 
-- **🎨 Design Token System**: Comprehensive design tokens with theme support
-- **🧩 Component Library**: Atomic design system with reusable components
-- **🌓 Theme Management**: Light, dark, and system theme modes with persistence
-- **♿ Accessibility First**: WCAG AA compliance across all components
-- **📱 Responsive Design**: Mobile-first approach with consistent breakpoints
-- **🔧 Modern Tooling**: React 18, TypeScript, Vite, Tailwind CSS
-- **🧪 Quality Assurance**: 90%+ test coverage with comprehensive testing
-- **⚡ Performance**: Tree-shaking, optimized bundles, and fast builds
+- **Design Token System**: Comprehensive design tokens with theme support
+- **Component Library**: Atomic design system with reusable components
+- **Theme Management**: Light, dark, and system theme modes with persistence
+- **Accessibility First**: WCAG AA compliance across all components
+- **Responsive Design**: Mobile-first approach with consistent breakpoints
+- **Modern Tooling**: React 18, TypeScript, Vite, Tailwind CSS
+- **Quality Assurance**: 90%+ test coverage with comprehensive testing
+- **Performance**: Tree-shaking, optimized bundles, and fast builds
 
 ## Live Demo
 
-🚀 **[View Live Demo](https://jonmatum.github.io/react-mfe-shell/)**
+**[View Live Demo](https://jonmatum.github.io/react-mfe-shell/)**
 
 The interactive demo showcases all components and features:
 

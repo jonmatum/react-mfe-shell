@@ -353,10 +353,10 @@ describe('MyComponent', () => {
 Import only what you need:
 
 ```tsx
-// ✅ Good - tree-shakeable imports
+// Good - tree-shakeable imports
 import { Button, Input } from '@jonmatum/react-mfe-shell';
 
-// ❌ Avoid - imports entire library
+// Avoid - imports entire library
 import * as MFEShell from '@jonmatum/react-mfe-shell';
 ```
 

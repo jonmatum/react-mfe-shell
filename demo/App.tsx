@@ -16,8 +16,7 @@ import {
   CheckCircleIcon, 
   SunIcon, 
   MoonIcon,
-  BeakerIcon,
-  HeartIcon
+  BeakerIcon
 } from '@heroicons/react/24/outline';
 import '../src/styles/index.css';
 
@@ -451,11 +450,6 @@ function DemoFooter() {
     <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-16">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         <div className="text-center">
-          <div className="flex items-center justify-center space-x-2 text-gray-600 dark:text-gray-400 mb-4">
-            <span>Built with</span>
-            <HeartIcon className="h-4 w-4 text-red-500" />
-            <span>for the micro frontend community</span>
-          </div>
           <div className="flex justify-center space-x-6 text-sm mb-4">
             <a 
               href="https://github.com/jonmatum/react-mfe-shell" 
