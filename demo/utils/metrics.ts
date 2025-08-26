@@ -1,30 +1,30 @@
 /**
  * Auto-generated metrics
- * Generated on: 2025-08-26T00:43:17.054Z
+ * Generated on: 2025-08-26T01:09:11.361Z
  * DO NOT EDIT MANUALLY - Run 'npm run generate:metrics' to update
  */
 
 export const METRICS = {
-  "generated": "2025-08-26T00:43:17.054Z",
+  "generated": "2025-08-26T01:09:11.361Z",
   "version": "8.1.1",
   "bundle": {
     "esm": {
-      "size": 155068,
-      "sizeFormatted": "151.4KB",
-      "gzipped": 30126,
-      "gzippedFormatted": "29.4KB"
+      "size": 155326,
+      "sizeFormatted": "151.7KB",
+      "gzipped": 30228,
+      "gzippedFormatted": "29.5KB"
     },
     "cjs": {
-      "size": 164816,
-      "sizeFormatted": "161KB",
-      "gzipped": 30821,
-      "gzippedFormatted": "30.1KB"
+      "size": 165074,
+      "sizeFormatted": "161.2KB",
+      "gzipped": 30917,
+      "gzippedFormatted": "30.2KB"
     },
     "css": {
-      "size": 49326,
-      "sizeFormatted": "48.2KB",
-      "gzipped": 8538,
-      "gzippedFormatted": "8.3KB"
+      "size": 49973,
+      "sizeFormatted": "48.8KB",
+      "gzipped": 8580,
+      "gzippedFormatted": "8.4KB"
     },
     "standalone": {
       "size": 12505,
@@ -38,9 +38,9 @@ export const METRICS = {
     }
   },
   "tests": {
-    "totalTests": 0,
-    "testFiles": 0,
-    "coverage": 0,
+    "totalTests": 666,
+    "testFiles": 28,
+    "coverage": 75.05,
     "passRate": 100
   },
   "dry": {
@@ -51,20 +51,20 @@ export const METRICS = {
   },
   "code": {
     "totalFiles": 158,
-    "totalLines": 25966,
+    "totalLines": 26190,
     "complexity": 0,
     "commentRatio": 0
   },
   "scc": {
-    "estimatedCost": 443856,
-    "estimatedCostFormatted": "$443,856",
-    "scheduleMonths": 10.1,
-    "scheduleMonthsFormatted": "10.10 months",
-    "peopleRequired": 3.9,
-    "peopleRequiredFormatted": "3.90 devs",
-    "totalLines": 18734,
-    "codeLines": 14380,
-    "bytesProcessed": 526174,
+    "estimatedCost": 453259,
+    "estimatedCostFormatted": "$453,259",
+    "scheduleMonths": 10.18,
+    "scheduleMonthsFormatted": "10.18 months",
+    "peopleRequired": 3.95,
+    "peopleRequiredFormatted": "3.95 devs",
+    "totalLines": 19100,
+    "codeLines": 14670,
+    "bytesProcessed": 539270,
     "model": "COCOMO (organic)",
     "disclaimer": "Estimates based on COCOMO model analysis of production code"
   }
