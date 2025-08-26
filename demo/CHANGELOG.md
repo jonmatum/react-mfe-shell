@@ -1,5 +1,19 @@
 # Changelog
 
+## [6.0.0](https://github.com/jonmatum/react-mfe-shell/compare/demo-v5.2.0...demo-v6.0.0) (2025-08-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Typography components now use semantic colors by default
+    - text-primary, text-secondary, text-tertiary replace text-text-* classes
+    - Color prop is now the recommended way to set text colors
+    - Improved theme-aware color behavior in light/dark modes
+
+### Features
+
+* add comprehensive typography system with semantic colors ([642af28](https://github.com/jonmatum/react-mfe-shell/commit/642af280c927436703dec3f58d2adbb2f0bff25a))
+
 ## [5.2.0](https://github.com/jonmatum/react-mfe-shell/compare/demo-v5.1.1...demo-v5.2.0) (2025-08-26)
 
 

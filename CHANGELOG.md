@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [9.0.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v8.2.0...react-mfe-shell-v9.0.0) (2025-08-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Typography components now use semantic colors by default
+    - text-primary, text-secondary, text-tertiary replace text-text-* classes
+    - Color prop is now the recommended way to set text colors
+    - Improved theme-aware color behavior in light/dark modes
+
+### Features
+
+* add comprehensive typography system with semantic colors ([642af28](https://github.com/jonmatum/react-mfe-shell/commit/642af280c927436703dec3f58d2adbb2f0bff25a))
+
 ## [8.2.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v8.1.1...react-mfe-shell-v8.2.0) (2025-08-26)
 
 
