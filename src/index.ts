@@ -14,6 +14,9 @@ export * from './utils/tokens';
 // Theme management utilities
 export * from './utils/theme';
 
+// Typography utilities
+export * from './utils/typography';
+
 // Legacy token exports (for backward compatibility)
 export {
   colors,
@@ -44,6 +47,11 @@ export * from './utils';
 // =============================================================================
 
 export { SettingsProvider, useSettings } from './contexts/SettingsContext';
+export {
+  TypographyProvider,
+  useTypography,
+  useScaledTypography,
+} from './contexts/TypographyContext';
 
 // =============================================================================
 // COMPONENTS
@@ -59,6 +67,9 @@ export { default as Avatar } from './components/atoms/Avatar';
 export { default as Divider } from './components/atoms/Divider';
 export { default as FeatureChip } from './components/atoms/FeatureChip';
 export { default as Text } from './components/atoms/Text';
+export { default as Heading } from './components/atoms/Heading';
+export { default as Paragraph } from './components/atoms/Paragraph';
+export { default as Code } from './components/atoms/Code';
 export { default as LoadingSpinner } from './components/atoms/LoadingSpinner';
 export { default as Switch } from './components/atoms/Switch';
 

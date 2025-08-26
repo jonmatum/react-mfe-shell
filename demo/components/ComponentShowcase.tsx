@@ -9,6 +9,8 @@ import {
   Modal,
   Avatar,
   Text,
+  Heading,
+  Code,
   Divider,
   FeatureChip,
   useSettings 
@@ -306,7 +308,7 @@ const AtomsTab: React.FC<AtomsTabProps> = ({ removedBadges, onRemoveBadge, onRes
                 {[
                   { name: 'Online User', status: 'online', color: 'bg-success-500' },
                   { name: 'Away User', status: 'away', color: 'bg-warning-500' },
-                  { name: 'Offline User', status: 'offline', color: 'bg-gray-400' }
+                  { name: 'Offline User', status: 'offline', color: 'bg-text-tertiary' }
                 ].map(({ name, status, color }) => (
                   <div key={name} className="flex items-center space-x-3">
                     <div className="relative">
@@ -325,57 +327,110 @@ const AtomsTab: React.FC<AtomsTabProps> = ({ removedBadges, onRemoveBadge, onRes
       {/* Typography */}
       <Card>
         <Card.Header>
-          <h3 className="font-semibold text-text-primary">Typography</h3>
-          <p className="text-sm text-text-secondary">Semantic text component with consistent styling</p>
+          <h3 className="font-semibold text-text-primary">Enhanced Typography System</h3>
+          <p className="text-sm text-text-secondary">Comprehensive typography with 15+ semantic variants, responsive support, and advanced features</p>
         </Card.Header>
         <Card.Body>
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Headings */}
+            {/* Display & Headings */}
             <div>
-              <h4 className="font-medium text-text-primary mb-3">Headings</h4>
+              <h4 className="font-medium text-text-primary mb-3">Display & Headings</h4>
               <div className="space-y-3">
-                <Text as="h1" variant="h1">Heading 1</Text>
-                <Text as="h2" variant="h2">Heading 2</Text>
-                <Text as="h3" variant="h3">Heading 3</Text>
-                <Text as="h4" variant="h4">Heading 4</Text>
-                <Text as="h5" variant="h5">Heading 5</Text>
-                <Text as="h6" variant="h6">Heading 6</Text>
+                <Text variant="display" size="4xl">Display Text</Text>
+                <Text variant="headline" size="3xl">Headline</Text>
+                <Text variant="title" size="2xl">Title</Text>
+                <Text variant="subtitle" size="lg">Subtitle</Text>
               </div>
             </div>
 
-            {/* Body Text */}
+            {/* Body Text Variants */}
             <div>
-              <h4 className="font-medium text-text-primary mb-3">Body Text</h4>
+              <h4 className="font-medium text-text-primary mb-3">Body Text Variants</h4>
               <div className="space-y-3">
-                <Text variant="body-lg">Large body text for important content.</Text>
-                <Text variant="body">Regular body text for general content.</Text>
-                <Text variant="body-sm">Small body text for secondary information.</Text>
-                <Text variant="caption">Caption text for labels and metadata.</Text>
+                <Text variant="lead" size="xl">Lead paragraph for introductions</Text>
+                <Text variant="body-large">Large body text for emphasis</Text>
+                <Text variant="body">Regular body text for content</Text>
+                <Text variant="body-small">Small body text for details</Text>
+                <Text variant="caption">Caption text for metadata</Text>
+                <Text variant="helper">Helper text for guidance</Text>
               </div>
             </div>
 
-            {/* Colors */}
+            {/* Specialized Variants */}
             <div>
-              <h4 className="font-medium text-text-primary mb-3">Text Colors</h4>
-              <div className="space-y-2">
-                <Text color="primary">Primary text color</Text>
-                <Text color="secondary">Secondary text color</Text>
-                <Text color="success">Success text color</Text>
-                <Text color="warning">Warning text color</Text>
-                <Text color="danger">Danger text color</Text>
-                <Text color="muted">Muted text color</Text>
+              <h4 className="font-medium text-text-primary mb-3">Specialized Text</h4>
+              <div className="space-y-3">
+                <Text variant="code">const example = 'inline code';</Text>
+                <Text variant="kbd">Ctrl+K</Text>
+                <Text variant="quote">"This is a quote"</Text>
+                <Text variant="overline">OVERLINE TEXT</Text>
+                <Text variant="label">Form Label</Text>
+                <Text variant="muted">Muted text with reduced emphasis</Text>
               </div>
             </div>
 
-            {/* Weights */}
+            {/* Advanced Features */}
             <div>
-              <h4 className="font-medium text-text-primary mb-3">Font Weights</h4>
+              <h4 className="font-medium text-text-primary mb-3">Advanced Features</h4>
+              <div className="space-y-3">
+                <Text gradient size="xl" weight="bold">Gradient Text Effect</Text>
+                <Text copyable>Click to copy this text</Text>
+                <Text lineClamp={2}>This is a very long text that will be clamped to exactly two lines when it exceeds the available space, showing an ellipsis at the end.</Text>
+                <Text truncate>This text will be truncated with ellipsis</Text>
+              </div>
+            </div>
+
+            {/* Responsive Typography */}
+            <div>
+              <h4 className="font-medium text-text-primary mb-3">Responsive Typography</h4>
+              <div className="space-y-3">
+                <Text 
+                  size={{ base: 'sm', md: 'lg', xl: '2xl' }}
+                  weight={{ base: 'normal', md: 'semibold' }}
+                  align={{ base: 'left', md: 'center' }}
+                >
+                  Responsive text that adapts to screen size
+                </Text>
+              </div>
+            </div>
+
+            {/* Typography Utilities */}
+            <div>
+              <h4 className="font-medium text-text-primary mb-3">Typography Utilities</h4>
               <div className="space-y-2">
-                <Text weight="light">Light weight text</Text>
-                <Text weight="normal">Normal weight text</Text>
-                <Text weight="medium">Medium weight text</Text>
-                <Text weight="semibold">Semibold weight text</Text>
-                <Text weight="bold">Bold weight text</Text>
+                <Text transform="uppercase">Uppercase Transform</Text>
+                <Text decoration="underline">Underlined Text</Text>
+                <Text leading="tight" tracking="wide">Tight Leading, Wide Tracking</Text>
+                <Text selectable={false}>Non-selectable Text</Text>
+              </div>
+            </div>
+          </div>
+
+          {/* New Component Examples */}
+          <div className="mt-8 pt-6 border-t border-border-primary">
+            <h4 className="font-medium text-text-primary mb-4">New Typography Components</h4>
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Heading Component */}
+              <div>
+                <h5 className="font-medium text-text-secondary mb-3">Heading Component</h5>
+                <div className="space-y-2">
+                  <Heading level={1} size="2xl">Semantic H1</Heading>
+                  <Heading level={2} size="xl">Semantic H2</Heading>
+                  <Heading level={3} size="lg">Semantic H3</Heading>
+                </div>
+              </div>
+
+              {/* Code Component */}
+              <div>
+                <h5 className="font-medium text-text-secondary mb-3">Code Component</h5>
+                <div className="space-y-3">
+                  <Code>Inline code example</Code>
+                  <Code inline={false} copyable language="typescript">
+{`function example() {
+  return 'Block code with copy';
+}`}
+                  </Code>
+                </div>
               </div>
             </div>
           </div>

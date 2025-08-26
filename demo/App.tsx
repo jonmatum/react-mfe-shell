@@ -7,6 +7,8 @@ import {
   Badge,
   Card,
   Modal,
+  Text,
+  Heading,
   useSettings,
 } from '../src';
 import { 
@@ -233,12 +235,22 @@ const DemoHeader: React.FC = () => {
           <div className="flex items-center space-x-3 min-w-0">
             <RocketLaunchIcon className="w-8 h-8 sm:w-10 sm:h-10 text-primary-600 flex-shrink-0" />
             <div className="min-w-0 flex-1">
-              <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-text-primary truncate">
+              <Heading 
+                level={1} 
+                variant="title"
+                size={{ base: "lg", sm: "xl", lg: "2xl" }}
+                weight="bold"
+                truncate
+              >
                 React MFE Shell
-              </h1>
-              <p className="text-xs sm:text-sm text-text-secondary">
-                v{VERSION} - Hybrid Approach
-              </p>
+              </Heading>
+              <Text 
+                variant="caption" 
+                size={{ base: "xs", sm: "sm" }}
+                color="secondary"
+              >
+                v{VERSION} - Enhanced Typography
+              </Text>
             </div>
           </div>
 
@@ -282,14 +294,58 @@ interface HeroSectionProps {
 const HeroSection: React.FC<HeroSectionProps> = ({ onTryIntegration }) => (
   <ShowcaseSection
     title={
-      <>
-        Production-Ready
-        <span className="text-primary-600"> Micro Frontend Shell</span>
-      </>
+      <Heading 
+        level={1} 
+        variant="display" 
+        size={{ base: "3xl", md: "4xl", lg: "5xl" }}
+        weight="bold"
+        align="center"
+        className="mb-6"
+      >
+        <Text 
+          as="span" 
+          variant="display" 
+          size={{ base: "3xl", md: "4xl", lg: "5xl" }}
+          weight="bold"
+        >
+          Production-Ready
+        </Text>{" "}
+        <Text 
+          as="span" 
+          variant="display" 
+          size={{ base: "3xl", md: "4xl", lg: "5xl" }}
+          weight="bold"
+          color="text-primary-600"
+        >
+          Micro Frontend Shell
+        </Text>
+      </Heading>
     }
-    description={`A comprehensive component library with hybrid integration options, featuring ${METRICS.dry?.componentsAnalyzed || 20} production-ready components with built-in theming, accessibility, and multiple styling approaches.`}
+    description={
+      <Text 
+        variant="lead" 
+        size={{ base: "lg", md: "xl" }}
+        align="center"
+        color="secondary"
+        className="max-w-4xl mx-auto"
+      >
+        A comprehensive component library with{" "}
+        <Text as="span" variant="lead" weight="semibold" color="primary">
+          hybrid integration options
+        </Text>
+        , featuring{" "}
+        <Text as="span" variant="lead" weight="semibold">
+          {METRICS.dry?.componentsAnalyzed || 22} production-ready components
+        </Text>
+        {" "}with built-in theming, accessibility, and{" "}
+        <Text as="span" variant="lead" weight="semibold" color="success">
+          15+ enhanced typography variants
+        </Text>
+        .
+      </Text>
+    }
     badge={{
-      text: "Zero-Friction Components",
+      text: "Enhanced Typography System",
       variant: "primary",
       size: "md",
       icon: <SparklesIcon className="w-4 h-4" />
@@ -298,16 +354,20 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onTryIntegration }) => (
   >
     <div className="flex flex-wrap justify-center gap-4 mb-12">
       <FeatureChip variant="success" icon={<CpuChipIcon />}>
-        {METRICS.tests.totalTests} Tests ({Math.round(METRICS.tests.coverage)}%+ Coverage)
+        <Text variant="caption" weight="medium">
+          {METRICS.tests.totalTests} Tests ({Math.round(METRICS.tests.coverage)}%+ Coverage)
+        </Text>
       </FeatureChip>
       <FeatureChip variant="success" icon={<ShieldCheckIcon />}>
-        100% Type Safe
+        <Text variant="caption" weight="medium">100% Type Safe</Text>
       </FeatureChip>
       <FeatureChip variant="success" icon={<LightBulbIcon />}>
-        WCAG AA Compliant
+        <Text variant="caption" weight="medium">WCAG AA Compliant</Text>
       </FeatureChip>
       <FeatureChip variant="primary" icon={<DocumentTextIcon />}>
-        {METRICS.dry?.componentsAnalyzed || 20} Components
+        <Text variant="caption" weight="medium">
+          {METRICS.dry?.componentsAnalyzed || 22} Components + Typography
+        </Text>
       </FeatureChip>
     </div>
     
@@ -397,18 +457,37 @@ const FooterBrand: React.FC = () => (
     <div className="flex items-center space-x-2 mb-4">
       <RocketLaunchIcon className="w-8 h-8 text-primary-600" />
       <div>
-        <h3 className="text-xl font-bold text-text-primary">React MFE Shell</h3>
-        <p className="text-sm text-text-secondary">v{VERSION}</p>
+        <Heading level={3} variant="title" size="xl" weight="bold">
+          React MFE Shell
+        </Heading>
+        <Text variant="caption" size="sm" color="secondary">
+          v{VERSION}
+        </Text>
       </div>
     </div>
-    <p className="text-text-secondary mb-4 max-w-md">
-      A production-ready micro frontend shell with comprehensive design system, 
-      form molecules, and accessibility-first components.
-    </p>
+    <Text variant="body" color="secondary" className="mb-4 max-w-md">
+      A production-ready micro frontend shell with{" "}
+      <Text as="span" variant="body" weight="semibold" color="primary">
+        enhanced typography system
+      </Text>
+      , comprehensive design system, form molecules, and accessibility-first components.
+    </Text>
     <div className="flex space-x-4">
-      <Badge variant="success" size="sm">{METRICS.tests.totalTests} Tests Passing</Badge>
-      <Badge variant="primary" size="sm">{Math.round(METRICS.tests.coverage)}%+ Coverage</Badge>
-      <Badge variant="secondary" size="sm">WCAG AA</Badge>
+      <Badge variant="success" size="sm">
+        <Text variant="caption" weight="medium">
+          {METRICS.tests.totalTests} Tests Passing
+        </Text>
+      </Badge>
+      <Badge variant="primary" size="sm">
+        <Text variant="caption" weight="medium">
+          {Math.round(METRICS.tests.coverage)}%+ Coverage
+        </Text>
+      </Badge>
+      <Badge variant="secondary" size="sm">
+        <Text variant="caption" weight="medium">
+          15+ Typography Variants
+        </Text>
+      </Badge>
     </div>
   </div>
 );

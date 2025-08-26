@@ -59,7 +59,9 @@ describe('Modal', () => {
     render(<Modal {...defaultProps} onClose={onClose} />);
 
     // Find backdrop by its specific classes (updated for blur backdrop)
-    const backdrop = document.querySelector('.bg-black.bg-opacity-25.backdrop-blur-sm');
+    const backdrop = document.querySelector(
+      '.bg-black.bg-opacity-25.backdrop-blur-sm'
+    );
     expect(backdrop).toBeInTheDocument();
 
     if (backdrop) {

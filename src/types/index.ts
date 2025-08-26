@@ -214,44 +214,211 @@ export interface DividerProps extends BaseComponentProps {
   as?: React.ElementType;
 }
 
-// Text/Typography component types
-export const TEXT_VARIANTS = ['body', 'caption', 'overline'] as const;
+// =============================================================================
+// TYPOGRAPHY SYSTEM TYPES
+// =============================================================================
+
+// Typography variants - semantic and contextual
+export const TEXT_VARIANTS = [
+  // Content variants
+  'body',
+  'body-large',
+  'body-small',
+  'caption',
+  'overline',
+  'label',
+  'helper',
+
+  // Display variants
+  'display',
+  'headline',
+  'title',
+  'subtitle',
+
+  // Specialized variants
+  'code',
+  'kbd',
+  'quote',
+  'lead',
+  'muted',
+] as const;
+
+// Typography sizes - comprehensive scale
 export const TEXT_SIZES = [
+  'xs', // 12px
+  'sm', // 14px
+  'base', // 16px (renamed from 'md' for clarity)
+  'lg', // 18px
+  'xl', // 20px
+  '2xl', // 24px
+  '3xl', // 30px
+  '4xl', // 36px
+  '5xl', // 48px
+  '6xl', // 60px
+  '7xl', // 72px
+  '8xl', // 96px
+  '9xl', // 128px
+] as const;
+
+// Typography weights - complete scale
+export const TEXT_WEIGHTS = [
+  'thin', // 100
+  'extralight', // 200
+  'light', // 300
+  'normal', // 400
+  'medium', // 500
+  'semibold', // 600
+  'bold', // 700
+  'extrabold', // 800
+  'black', // 900
+] as const;
+
+// Typography alignment options
+export const TEXT_ALIGNMENTS = [
+  'left',
+  'center',
+  'right',
+  'justify',
+  'start',
+  'end',
+] as const;
+
+// Typography transforms
+export const TEXT_TRANSFORMS = [
+  'none',
+  'uppercase',
+  'lowercase',
+  'capitalize',
+] as const;
+
+// Typography decoration options
+export const TEXT_DECORATIONS = [
+  'none',
+  'underline',
+  'overline',
+  'line-through',
+] as const;
+
+// Typography whitespace handling
+export const TEXT_WHITESPACE = [
+  'normal',
+  'nowrap',
+  'pre',
+  'pre-line',
+  'pre-wrap',
+  'break-spaces',
+] as const;
+
+// Typography overflow handling
+export const TEXT_OVERFLOW = ['visible', 'hidden', 'clip', 'ellipsis'] as const;
+
+// Line clamping options
+export const LINE_CLAMP_OPTIONS = [1, 2, 3, 4, 5, 6] as const;
+
+// Responsive typography breakpoints
+export const TYPOGRAPHY_BREAKPOINTS = [
   'xs',
   'sm',
   'md',
   'lg',
   'xl',
   '2xl',
-  '3xl',
-  '4xl',
-  '5xl',
-  '6xl',
-] as const;
-export const TEXT_WEIGHTS = [
-  'thin',
-  'light',
-  'normal',
-  'medium',
-  'semibold',
-  'bold',
-  'extrabold',
-  'black',
 ] as const;
 
+// Type definitions
 export type TextVariant = (typeof TEXT_VARIANTS)[number];
 export type TextSize = (typeof TEXT_SIZES)[number];
 export type TextWeight = (typeof TEXT_WEIGHTS)[number];
+export type TextAlignment = (typeof TEXT_ALIGNMENTS)[number];
+export type TextTransform = (typeof TEXT_TRANSFORMS)[number];
+export type TextDecoration = (typeof TEXT_DECORATIONS)[number];
+export type TextWhitespace = (typeof TEXT_WHITESPACE)[number];
+export type TextOverflow = (typeof TEXT_OVERFLOW)[number];
+export type LineClamp = (typeof LINE_CLAMP_OPTIONS)[number];
+export type TypographyBreakpoint = (typeof TYPOGRAPHY_BREAKPOINTS)[number];
 
+// Responsive typography type
+export type ResponsiveTypographyValue<T> =
+  | T
+  | Partial<Record<TypographyBreakpoint, T>>;
+
+// Enhanced text props interface
 export interface TextProps extends BaseComponentProps {
+  // Core typography properties
   variant?: TextVariant;
-  size?: TextSize;
-  weight?: TextWeight;
+  size?: ResponsiveTypographyValue<TextSize>;
+  weight?: ResponsiveTypographyValue<TextWeight>;
+
+  // Color and appearance
   color?: string;
-  align?: 'left' | 'center' | 'right' | 'justify';
-  transform?: 'none' | 'uppercase' | 'lowercase' | 'capitalize';
+  gradient?: boolean;
+
+  // Layout and alignment
+  align?: ResponsiveTypographyValue<TextAlignment>;
+  transform?: TextTransform;
+  decoration?: TextDecoration;
+  whitespace?: TextWhitespace;
+
+  // Text overflow and truncation
   truncate?: boolean;
+  lineClamp?: LineClamp;
+  overflow?: TextOverflow;
+
+  // Spacing and layout
+  leading?: 'none' | 'tight' | 'snug' | 'normal' | 'relaxed' | 'loose';
+  tracking?: 'tighter' | 'tight' | 'normal' | 'wide' | 'wider' | 'widest';
+
+  // Interactive states
+  selectable?: boolean;
+  copyable?: boolean;
+
+  // Accessibility
+  semanticLevel?: 1 | 2 | 3 | 4 | 5 | 6; // For headings
+
+  // Polymorphic component
   as?: React.ElementType;
+}
+
+// Typography context interface
+export interface TypographyContextValue {
+  baseSize: TextSize;
+  baseWeight: TextWeight;
+  baseColor: string;
+  scale: number;
+  lineHeight: number;
+}
+
+// Typography scale configuration
+export interface TypographyScale {
+  name: string;
+  sizes: Record<TextSize, { fontSize: string; lineHeight: string }>;
+  weights: Record<TextWeight, string>;
+}
+
+// Heading component props
+export interface HeadingProps extends Omit<TextProps, 'as' | 'semanticLevel'> {
+  level: 1 | 2 | 3 | 4 | 5 | 6;
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div' | 'span';
+}
+
+// Paragraph component props
+export interface ParagraphProps extends Omit<TextProps, 'as'> {
+  as?: 'p' | 'div' | 'span';
+}
+
+// Code component props
+export interface CodeProps extends Omit<TextProps, 'variant' | 'as'> {
+  inline?: boolean;
+  language?: string;
+  copyable?: boolean;
+  as?: 'code' | 'pre' | 'span';
+}
+
+// Quote component props
+export interface QuoteProps extends Omit<TextProps, 'variant' | 'as'> {
+  cite?: string;
+  author?: string;
+  as?: 'blockquote' | 'q' | 'div';
 }
 
 export interface ModalProps extends BaseComponentProps {

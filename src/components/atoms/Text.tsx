@@ -1,113 +1,191 @@
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
 import {
   TextProps,
   TEXT_VARIANTS,
   TEXT_SIZES,
   TEXT_WEIGHTS,
+  TEXT_ALIGNMENTS,
+  TEXT_TRANSFORMS,
+  TEXT_DECORATIONS,
+  TEXT_WHITESPACE,
+  TEXT_OVERFLOW,
+  LINE_CLAMP_OPTIONS,
 } from '../../types';
 import { classNames } from '../../utils';
+import {
+  generateTypographyClasses,
+  getSemanticElement,
+  validateTypographyProps,
+  getVariantConfig,
+} from '../../utils/typography';
 
-const Text = forwardRef<HTMLParagraphElement, TextProps>(
+/**
+ * Enhanced Text Component
+ *
+ * A flexible, accessible text component with comprehensive typography support.
+ * Follows DRY principles with semantic variants and responsive capabilities.
+ *
+ * Features:
+ * - Semantic typography variants (body, headline, caption, etc.)
+ * - Responsive typography (size, weight, alignment)
+ * - Advanced text handling (truncation, line clamping, overflow)
+ * - Accessibility-first design with proper semantic elements
+ * - Gradient text support
+ * - Copy functionality
+ * - Full Tailwind CSS integration
+ */
+const Text = forwardRef<any, TextProps>(
   (
     {
       children,
       className,
       variant = 'body',
-      size = 'md',
-      weight = 'normal',
+      size,
+      weight,
       color,
-      align = 'left',
-      transform = 'none',
+      gradient = false,
+      align,
+      transform,
+      decoration,
+      whitespace,
+      overflow,
+      leading,
+      tracking,
       truncate = false,
-      as: Component = 'p',
+      lineClamp,
+      selectable,
+      copyable = false,
+      semanticLevel,
+      as,
       ...props
     },
     ref
   ) => {
-    const variantClasses = {
-      body: 'text-text-primary',
-      caption: 'text-text-secondary text-sm',
-      overline: 'text-text-secondary text-xs uppercase tracking-wide',
+    // Validate props in development
+    if (process.env.NODE_ENV === 'development') {
+      const errors = validateTypographyProps({ variant, size, weight });
+      if (errors.length > 0) {
+        console.warn('Text component validation errors:', errors);
+      }
+    }
+
+    // Determine the semantic element to use
+    const Component = useMemo(() => {
+      if (semanticLevel) {
+        return `h${semanticLevel}` as React.ElementType;
+      }
+      return getSemanticElement(variant, as);
+    }, [variant, as, semanticLevel]);
+
+    // Generate typography classes using DRY utility
+    const typographyClasses = useMemo(() => {
+      return generateTypographyClasses({
+        variant,
+        size,
+        weight,
+        align,
+        transform,
+        decoration,
+        whitespace,
+        overflow,
+        leading,
+        tracking,
+        lineClamp,
+        truncate,
+        color,
+        gradient,
+        selectable,
+      });
+    }, [
+      variant,
+      size,
+      weight,
+      align,
+      transform,
+      decoration,
+      whitespace,
+      overflow,
+      leading,
+      tracking,
+      lineClamp,
+      truncate,
+      color,
+      gradient,
+      selectable,
+    ]);
+
+    // Handle copy functionality
+    const handleCopy = async () => {
+      if (!copyable || typeof children !== 'string') return;
+
+      try {
+        await navigator.clipboard.writeText(children);
+        // You could add a toast notification here
+      } catch (err) {
+        console.error('Failed to copy text:', err);
+      }
     };
 
-    const sizeClasses = {
-      xs: 'text-xs',
-      sm: 'text-sm',
-      md: 'text-base',
-      lg: 'text-lg',
-      xl: 'text-xl',
-      '2xl': 'text-2xl',
-      '3xl': 'text-3xl',
-      '4xl': 'text-4xl',
-      '5xl': 'text-5xl',
-      '6xl': 'text-6xl',
+    // Prepare props for the component
+    const { 'aria-label': ariaLabel, ...restProps } = props as any;
+
+    const componentProps = {
+      ref,
+      className: classNames(typographyClasses, className),
+      onClick: copyable ? handleCopy : restProps.onClick,
+      role: copyable ? 'button' : restProps.role,
+      tabIndex: copyable ? 0 : restProps.tabIndex,
+      'aria-label': copyable
+        ? `${ariaLabel || 'Copy text'}: ${children}`
+        : ariaLabel,
+      ...restProps,
     };
 
-    const weightClasses = {
-      thin: 'font-thin',
-      light: 'font-light',
-      normal: 'font-normal',
-      medium: 'font-medium',
-      semibold: 'font-semibold',
-      bold: 'font-bold',
-      extrabold: 'font-extrabold',
-      black: 'font-black',
-    };
-
-    const alignClasses = {
-      left: 'text-left',
-      center: 'text-center',
-      right: 'text-right',
-      justify: 'text-justify',
-    };
-
-    const transformClasses = {
-      none: '',
-      uppercase: 'uppercase',
-      lowercase: 'lowercase',
-      capitalize: 'capitalize',
-    };
-
-    const truncateClasses = truncate ? 'truncate' : '';
-
-    // Support both CSS classes (starting with text-) and inline styles
-    const isColorClass = color?.startsWith('text-');
-    const colorClasses = isColorClass ? color : '';
-    const colorStyle = !isColorClass && color ? { color } : undefined;
-
-    return (
-      <Component
-        ref={ref}
-        className={classNames(
-          !colorClasses && variantClasses[variant], // Only apply variant color if no custom color class
-          sizeClasses[size],
-          weightClasses[weight],
-          alignClasses[align],
-          transformClasses[transform],
-          truncateClasses,
-          colorClasses,
-          className
-        )}
-        style={colorStyle}
-        {...props}
-      >
-        {children}
-      </Component>
-    );
+    return <Component {...componentProps}>{children}</Component>;
   }
 );
 
 Text.displayName = 'Text';
 
-// Add static properties
+// =============================================================================
+// STATIC PROPERTIES AND UTILITIES
+// =============================================================================
+
+// Add static properties for easy access to constants
 type TextWithStatics = typeof Text & {
   variants: typeof TEXT_VARIANTS;
   sizes: typeof TEXT_SIZES;
   weights: typeof TEXT_WEIGHTS;
+  alignments: typeof TEXT_ALIGNMENTS;
+  transforms: typeof TEXT_TRANSFORMS;
+  decorations: typeof TEXT_DECORATIONS;
+  whitespace: typeof TEXT_WHITESPACE;
+  overflow: typeof TEXT_OVERFLOW;
+  lineClampOptions: typeof LINE_CLAMP_OPTIONS;
+
+  // Utility methods
+  getVariantConfig: (variant: string) => any;
+  generateClasses: (props: any) => string;
 };
 
+// Attach static properties
 (Text as TextWithStatics).variants = TEXT_VARIANTS;
 (Text as TextWithStatics).sizes = TEXT_SIZES;
 (Text as TextWithStatics).weights = TEXT_WEIGHTS;
+(Text as TextWithStatics).alignments = TEXT_ALIGNMENTS;
+(Text as TextWithStatics).transforms = TEXT_TRANSFORMS;
+(Text as TextWithStatics).decorations = TEXT_DECORATIONS;
+(Text as TextWithStatics).whitespace = TEXT_WHITESPACE;
+(Text as TextWithStatics).overflow = TEXT_OVERFLOW;
+(Text as TextWithStatics).lineClampOptions = LINE_CLAMP_OPTIONS;
 
-export default Text;
+// Utility methods
+(Text as TextWithStatics).getVariantConfig = (variant: string) => {
+  return getVariantConfig(variant as any);
+};
+
+(Text as TextWithStatics).generateClasses = (props: any) => {
+  return generateTypographyClasses(props);
+};
+
+export default Text as TextWithStatics;
