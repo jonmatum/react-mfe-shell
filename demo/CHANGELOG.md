@@ -1,5 +1,16 @@
 # Changelog
 
+## [7.0.0](https://github.com/jonmatum/react-mfe-shell/compare/demo-v6.0.0...demo-v7.0.0) (2025-08-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* preset import path changed from /preset to /preset (now .cjs extension)
+
+### Bug Fixes
+
+* resolve CSS import issues and update documentation ([82c029d](https://github.com/jonmatum/react-mfe-shell/commit/82c029d5d01a13a57cb1a43ff9905cb8809398d4))
+
 ## [6.0.0](https://github.com/jonmatum/react-mfe-shell/compare/demo-v5.2.0...demo-v6.0.0) (2025-08-26)
 
 

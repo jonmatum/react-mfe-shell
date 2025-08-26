@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [10.0.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v9.0.0...react-mfe-shell-v10.0.0) (2025-08-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* preset import path changed from /preset to /preset (now .cjs extension)
+
+### Bug Fixes
+
+* resolve CSS import issues and update documentation ([82c029d](https://github.com/jonmatum/react-mfe-shell/commit/82c029d5d01a13a57cb1a43ff9905cb8809398d4))
+
 ## [9.0.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v8.2.0...react-mfe-shell-v9.0.0) (2025-08-26)
 
 
