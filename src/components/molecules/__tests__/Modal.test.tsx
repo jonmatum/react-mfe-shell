@@ -58,8 +58,8 @@ describe('Modal', () => {
     const onClose = vi.fn();
     render(<Modal {...defaultProps} onClose={onClose} />);
 
-    // Find backdrop by its specific classes
-    const backdrop = document.querySelector('.bg-black.bg-opacity-50');
+    // Find backdrop by its specific classes (updated for blur backdrop)
+    const backdrop = document.querySelector('.bg-black.bg-opacity-25.backdrop-blur-sm');
     expect(backdrop).toBeInTheDocument();
 
     if (backdrop) {

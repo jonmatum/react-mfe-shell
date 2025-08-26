@@ -168,6 +168,28 @@ export interface BadgeProps extends BaseComponentProps {
   removable?: boolean;
   onRemove?: () => void;
   as?: React.ElementType;
+  icon?: React.ReactNode;
+}
+
+// FeatureChip component types (larger than badges, with icon color variants)
+export const FEATURE_CHIP_VARIANTS = [
+  'default',
+  'primary',
+  'secondary',
+  'success',
+  'warning',
+  'danger',
+] as const;
+export const FEATURE_CHIP_SIZES = ['sm', 'md', 'lg'] as const;
+
+export type FeatureChipVariant = (typeof FEATURE_CHIP_VARIANTS)[number];
+export type FeatureChipSize = (typeof FEATURE_CHIP_SIZES)[number];
+
+export interface FeatureChipProps extends BaseComponentProps {
+  variant?: FeatureChipVariant;
+  size?: FeatureChipSize;
+  icon?: React.ReactNode;
+  as?: React.ElementType;
 }
 
 // Avatar component types

@@ -2,7 +2,11 @@
 
 A production-ready micro frontend shell with comprehensive design system, form molecules, and accessibility-first components.
 
-## Quick Start
+## Integration Options
+
+Choose the integration method that best fits your project:
+
+### Option 1: Zero-Config (Recommended for quick start)
 
 ```bash
 npm install @jonmatum/react-mfe-shell
@@ -15,6 +19,7 @@ import {
   FormField, 
   Input 
 } from '@jonmatum/react-mfe-shell';
+import '@jonmatum/react-mfe-shell/standalone';
 
 function App() {
   return (
@@ -23,6 +28,49 @@ function App() {
         <Input type="email" placeholder="Enter email" />
       </FormField>
       <Button variant="primary">Submit</Button>
+    </SettingsProvider>
+  );
+}
+```
+
+### Option 2: Tailwind Integration (Recommended for Tailwind users)
+
+```bash
+npm install @jonmatum/react-mfe-shell
+npm install -D tailwindcss
+```
+
+```js
+// tailwind.config.js
+const { mfeShellPreset } = require('@jonmatum/react-mfe-shell/preset');
+
+module.exports = {
+  presets: [mfeShellPreset],
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@jonmatum/react-mfe-shell/dist/**/*.js'
+  ]
+}
+```
+
+```tsx
+import { 
+  SettingsProvider, 
+  Button, 
+  FormField, 
+  Input 
+} from '@jonmatum/react-mfe-shell';
+import '@jonmatum/react-mfe-shell/styles';
+
+function App() {
+  return (
+    <SettingsProvider>
+      <div className="p-4 space-y-4">
+        <FormField label="Email" required>
+          <Input type="email" placeholder="Enter email" className="border-2" />
+        </FormField>
+        <Button variant="primary" className="w-full">Submit</Button>
+      </div>
     </SettingsProvider>
   );
 }
@@ -53,7 +101,7 @@ function App() {
 - **FileUpload**: Drag-and-drop with preview and validation
 
 ### Design System
-- **556 Tests**: 100% passing with comprehensive coverage
+- **556 Tests**: 100% passing with 75%+ coverage
 - **WCAG AA Compliant**: Full accessibility support
 - **Theme System**: Light/dark/system modes with persistence
 - **Design Tokens**: Consistent colors, spacing, typography
@@ -65,9 +113,10 @@ function App() {
 - **Tree Shakeable**: Import only what you need
 - **Responsive**: Mobile-first design approach
 - **Accessible**: WCAG AA compliance built-in
-- **Themeable**: Light/dark mode with custom themes
+- **Themeable**: Light/dark mode with custom brand colors and design tokens
 - **Form Ready**: Complete form ecosystem with validation
 - **Production Ready**: Used in real applications
+- **Flexible Integration**: Multiple integration paths (zero-config, Tailwind preset, CSS-in-JS)
 
 ## Usage Examples
 
@@ -164,6 +213,42 @@ function App() {
 }
 ```
 
+### Custom Brand Colors
+```js
+// tailwind.config.js - Use your own brand colors
+const { mfeShellPreset } = require('@jonmatum/react-mfe-shell/preset');
+
+module.exports = {
+  presets: [mfeShellPreset],
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@jonmatum/react-mfe-shell/dist/**/*.js'
+  ],
+  theme: {
+    extend: {
+      colors: {
+        // Your brand colors
+        brand: {
+          500: '#3b82f6', // Your primary brand color
+          600: '#2563eb',
+        },
+        // Override our primary colors
+        primary: {
+          500: '#3b82f6', // Components use your brand color
+          600: '#2563eb',
+        }
+      }
+    }
+  }
+}
+```
+
+```tsx
+// Components automatically use your custom colors
+<Button variant="primary">Uses your brand color</Button>
+<Badge variant="primary">Matches your theme</Badge>
+```
+
 ## API Reference
 
 ### Component Props Patterns
@@ -224,12 +309,81 @@ The library uses Tailwind CSS with CSS custom properties for theming:
 }
 ```
 
+## Automated Metrics System
+
+The demo app uses an automated metrics generation system to ensure all displayed statistics are accurate and up-to-date.
+
+### Metrics Generation
+
+```bash
+# Generate fresh metrics from current build
+npm run generate:metrics
+
+# Build library and generate metrics in one command
+npm run build:with-metrics
+```
+
+### What Gets Measured
+
+**Bundle Sizes:**
+- ESM and CJS bundle sizes (raw and gzipped)
+- CSS bundle sizes (main and standalone)
+- TypeScript definition file sizes
+
+**Test Metrics:**
+- Total test count and test files
+- Test coverage percentage
+- Pass rate statistics
+
+**Code Quality:**
+- DRY score from design system analysis
+- Component analysis results
+- Code complexity metrics
+
+**Architecture:**
+- Total files and lines of code
+- Component count and structure
+- Utility function usage
+
+### Automatic Updates
+
+Metrics are automatically updated:
+- After every `npm run build:lib` (via post-build hook)
+- In CI/CD pipeline (validates metrics are current)
+- When running `npm run generate:metrics` manually
+
+### Files Generated
+
+- `demo/utils/metrics.ts` - TypeScript metrics for demo app
+- `metrics.json` - JSON metrics for external tools
+- Auto-updates demo components with live data
+
+This ensures the demo always shows real, verifiable metrics without manual maintenance.
+
 ## Bundle Size
 
 - **Core Library**: ~124KB (24KB gzipped)
+- **Standalone CSS**: ~12KB (2.9KB gzipped)
+- **Tailwind CSS**: ~38KB (processed with utilities)
+- **Tailwind Preset**: ~4.1KB
 - **Tree Shakeable**: Import only what you use
 - **Zero Dependencies**: No external runtime dependencies
 - **Modern Build**: ESM and CJS formats included
+
+## Documentation
+
+### Getting Started
+- **[Integration Guide](docs/integration-guide.md)**: Complete setup instructions for all integration methods
+- **[Hybrid Approach](docs/hybrid-approach.md)**: Technical details about our multi-path integration system
+
+### Component Documentation
+- **[Component Library](docs/components.md)**: Complete component API reference
+- **[Theming Guide](docs/theming.md)**: Customization and theme management
+- **[Form Components](docs/form-components.md)**: Form-specific components and patterns
+
+### Migration and Troubleshooting
+- **[Migration Guide](docs/migration-guide.md)**: Upgrading from previous versions
+- **[Troubleshooting](docs/troubleshooting.md)**: Common issues and solutions
 
 ## Links
 
@@ -516,7 +670,8 @@ Creates optimized builds:
 Current bundle sizes:
 - **ESM**: ~124KB (gzipped: ~24KB)
 - **CJS**: ~132KB (gzipped: ~26KB)
-- **CSS**: ~4.4KB (gzipped: ~1.2KB)
+- **Tailwind CSS**: ~38KB (processed with utilities)
+- **Standalone CSS**: ~12KB (gzipped: ~2.9KB)
 
 ## Micro Frontend Integration
 
@@ -612,7 +767,7 @@ export default {
 
 - **[Design Tokens](docs/design-tokens.md)**: Comprehensive design token documentation
 - **[Implementation Guide](docs/implementation-guide.md)**: Detailed implementation instructions
-- **[GitHub Pages Setup](docs/github-pages-setup.md)**: Demo deployment guide
+- **[API Reference](docs/api-reference.md)**: Complete API documentation
 
 ## Contributing
 
@@ -629,7 +784,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 
 ## License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 

@@ -1,0 +1,73 @@
+/**
+ * Auto-generated metrics
+ * Generated on: 2025-08-25T22:06:47.654Z
+ * DO NOT EDIT MANUALLY - Run 'npm run generate:metrics' to update
+ */
+
+export const METRICS = {
+  "generated": "2025-08-25T22:06:47.654Z",
+  "version": "8.1.0",
+  "bundle": {
+    "esm": {
+      "size": 127360,
+      "sizeFormatted": "124.4KB",
+      "gzipped": 24583,
+      "gzippedFormatted": "24KB"
+    },
+    "cjs": {
+      "size": 135852,
+      "sizeFormatted": "132.7KB",
+      "gzipped": 25174,
+      "gzippedFormatted": "24.6KB"
+    },
+    "css": {
+      "size": 42094,
+      "sizeFormatted": "41.1KB",
+      "gzipped": 7453,
+      "gzippedFormatted": "7.3KB"
+    },
+    "standalone": {
+      "size": 12505,
+      "sizeFormatted": "12.2KB",
+      "gzipped": 2850,
+      "gzippedFormatted": "2.8KB"
+    },
+    "types": {
+      "size": 72565,
+      "sizeFormatted": "70.9KB"
+    }
+  },
+  "tests": {
+    "totalTests": 539,
+    "testFiles": 25,
+    "coverage": 74.9,
+    "passRate": 100
+  },
+  "dry": {
+    "score": 9.8,
+    "scoreFormatted": "9.8/10",
+    "componentsAnalyzed": 22,
+    "targetScore": 8.5
+  },
+  "code": {
+    "totalFiles": 148,
+    "totalLines": 23877,
+    "complexity": 0,
+    "commentRatio": 0
+  },
+  "scc": {
+    "estimatedCost": 378050,
+    "estimatedCostFormatted": "$378,050",
+    "scheduleMonths": 9.5,
+    "scheduleMonthsFormatted": "9.50 months",
+    "peopleRequired": 3.53,
+    "peopleRequiredFormatted": "3.53 devs",
+    "totalLines": 16030,
+    "codeLines": 12342,
+    "bytesProcessed": 449061,
+    "model": "COCOMO (organic)",
+    "disclaimer": "Estimates based on COCOMO model analysis of production code"
+  }
+} as const;
+
+export type MetricsData = typeof METRICS;

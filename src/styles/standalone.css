@@ -1,0 +1,527 @@
+/* React MFE Shell - Standalone CSS Bundle */
+/* Use this file if you DON'T want to use Tailwind CSS in your project */
+/* This provides all necessary styles for MFE Shell components */
+
+/* ============================================================================= */
+/* CSS CUSTOM PROPERTIES (DESIGN TOKENS) */
+/* ============================================================================= */
+
+:root {
+  /* Brand Colors - Override these to customize your theme */
+  --mfe-primary-50: 239 246 255;
+  --mfe-primary-100: 219 234 254;
+  --mfe-primary-200: 191 219 254;
+  --mfe-primary-300: 147 197 253;
+  --mfe-primary-400: 96 165 250;
+  --mfe-primary-500: 59 130 246;
+  --mfe-primary-600: 37 99 235;
+  --mfe-primary-700: 29 78 216;
+  --mfe-primary-800: 30 64 175;
+  --mfe-primary-900: 30 58 138;
+  
+  --mfe-success-50: 240 253 244;
+  --mfe-success-100: 220 252 231;
+  --mfe-success-500: 34 197 94;
+  --mfe-success-600: 22 163 74;
+  --mfe-success-700: 21 128 61;
+  
+  --mfe-warning-50: 255 251 235;
+  --mfe-warning-100: 254 243 199;
+  --mfe-warning-500: 245 158 11;
+  --mfe-warning-600: 217 119 6;
+  --mfe-warning-700: 180 83 9;
+  
+  --mfe-danger-50: 254 242 242;
+  --mfe-danger-100: 254 226 226;
+  --mfe-danger-500: 239 68 68;
+  --mfe-danger-600: 220 38 38;
+  --mfe-danger-700: 185 28 28;
+  
+  /* Semantic Colors - Light Theme */
+  --mfe-text-primary: 31 41 55;
+  --mfe-text-secondary: 107 114 128;
+  --mfe-text-tertiary: 156 163 175;
+  --mfe-text-inverse: 255 255 255;
+  --mfe-text-disabled: 209 213 219;
+  
+  --mfe-background-primary: 255 255 255;
+  --mfe-background-secondary: 249 250 251;
+  --mfe-background-tertiary: 243 244 246;
+  
+  --mfe-surface-primary: 255 255 255;
+  --mfe-surface-secondary: 243 244 246;
+  --mfe-surface-tertiary: 229 231 235;
+  --mfe-surface-elevated: 255 255 255;
+  
+  --mfe-border-primary: 229 231 235;
+  --mfe-border-secondary: 209 213 219;
+  --mfe-border-tertiary: 156 163 175;
+  --mfe-border-focus: var(--mfe-primary-500);
+  
+  /* Spacing */
+  --mfe-spacing-xs: 0.25rem;
+  --mfe-spacing-sm: 0.5rem;
+  --mfe-spacing-md: 1rem;
+  --mfe-spacing-lg: 1.5rem;
+  --mfe-spacing-xl: 2rem;
+  
+  /* Border Radius */
+  --mfe-radius-sm: 0.125rem;
+  --mfe-radius-md: 0.375rem;
+  --mfe-radius-lg: 0.5rem;
+  --mfe-radius-xl: 0.75rem;
+  --mfe-radius-full: 9999px;
+  
+  /* Shadows */
+  --mfe-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --mfe-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --mfe-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
+  /* Typography */
+  --mfe-font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --mfe-font-size-xs: 0.75rem;
+  --mfe-font-size-sm: 0.875rem;
+  --mfe-font-size-base: 1rem;
+  --mfe-font-size-lg: 1.125rem;
+  --mfe-font-size-xl: 1.25rem;
+}
+
+/* Dark Theme */
+.dark {
+  --mfe-text-primary: 243 244 246;
+  --mfe-text-secondary: 156 163 175;
+  --mfe-text-tertiary: 107 114 128;
+  --mfe-text-inverse: 17 24 39;
+  --mfe-text-disabled: 75 85 99;
+  
+  --mfe-background-primary: 17 24 39;
+  --mfe-background-secondary: 31 41 55;
+  --mfe-background-tertiary: 55 65 81;
+  
+  --mfe-surface-primary: 31 41 55;
+  --mfe-surface-secondary: 55 65 81;
+  --mfe-surface-tertiary: 75 85 99;
+  --mfe-surface-elevated: 55 65 81;
+  
+  --mfe-border-primary: 75 85 99;
+  --mfe-border-secondary: 107 114 128;
+  --mfe-border-tertiary: 156 163 175;
+  --mfe-border-focus: var(--mfe-primary-400);
+}
+
+/* ============================================================================= */
+/* BASE COMPONENT STYLES */
+/* ============================================================================= */
+
+/* Button Styles */
+.mfe-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mfe-font-family);
+  font-weight: 500;
+  border-radius: var(--mfe-radius-md);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  outline: none;
+}
+
+.mfe-button:focus-visible {
+  outline: 2px solid rgb(var(--mfe-border-focus));
+  outline-offset: 2px;
+}
+
+.mfe-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Button Variants */
+.mfe-button--primary {
+  background-color: rgb(var(--mfe-primary-600));
+  color: rgb(var(--mfe-text-inverse));
+}
+
+.mfe-button--primary:hover:not(:disabled) {
+  background-color: rgb(var(--mfe-primary-700));
+}
+
+.mfe-button--secondary {
+  background-color: rgb(var(--mfe-surface-secondary));
+  color: rgb(var(--mfe-text-primary));
+  border: 1px solid rgb(var(--mfe-border-primary));
+}
+
+.mfe-button--secondary:hover:not(:disabled) {
+  background-color: rgb(var(--mfe-surface-tertiary));
+}
+
+.mfe-button--success {
+  background-color: rgb(var(--mfe-success-600));
+  color: rgb(var(--mfe-text-inverse));
+}
+
+.mfe-button--success:hover:not(:disabled) {
+  background-color: rgb(var(--mfe-success-700));
+}
+
+.mfe-button--warning {
+  background-color: rgb(var(--mfe-warning-600));
+  color: rgb(var(--mfe-text-inverse));
+}
+
+.mfe-button--warning:hover:not(:disabled) {
+  background-color: rgb(var(--mfe-warning-700));
+}
+
+.mfe-button--danger {
+  background-color: rgb(var(--mfe-danger-600));
+  color: rgb(var(--mfe-text-inverse));
+}
+
+.mfe-button--danger:hover:not(:disabled) {
+  background-color: rgb(var(--mfe-danger-700));
+}
+
+.mfe-button--ghost {
+  background-color: transparent;
+  color: rgb(var(--mfe-text-primary));
+}
+
+.mfe-button--ghost:hover:not(:disabled) {
+  background-color: rgb(var(--mfe-surface-secondary));
+}
+
+/* Button Sizes */
+.mfe-button--xs {
+  padding: 0.375rem 0.625rem;
+  font-size: var(--mfe-font-size-xs);
+}
+
+.mfe-button--sm {
+  padding: 0.5rem 0.75rem;
+  font-size: var(--mfe-font-size-sm);
+}
+
+.mfe-button--md {
+  padding: 0.625rem 1rem;
+  font-size: var(--mfe-font-size-sm);
+}
+
+.mfe-button--lg {
+  padding: 0.75rem 1.5rem;
+  font-size: var(--mfe-font-size-base);
+}
+
+.mfe-button--xl {
+  padding: 1rem 2rem;
+  font-size: var(--mfe-font-size-lg);
+}
+
+.mfe-button--full-width {
+  width: 100%;
+}
+
+/* Input Styles */
+.mfe-input {
+  display: block;
+  width: 100%;
+  font-family: var(--mfe-font-family);
+  font-size: var(--mfe-font-size-sm);
+  line-height: 1.5;
+  color: rgb(var(--mfe-text-primary));
+  background-color: rgb(var(--mfe-surface-primary));
+  border: 1px solid rgb(var(--mfe-border-primary));
+  border-radius: var(--mfe-radius-md);
+  padding: 0.625rem 0.75rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.mfe-input:focus {
+  outline: none;
+  border-color: rgb(var(--mfe-border-focus));
+  box-shadow: 0 0 0 3px rgb(var(--mfe-primary-500) / 0.1);
+}
+
+.mfe-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: rgb(var(--mfe-surface-secondary));
+}
+
+.mfe-input--error {
+  border-color: rgb(var(--mfe-danger-500));
+}
+
+.mfe-input--error:focus {
+  border-color: rgb(var(--mfe-danger-500));
+  box-shadow: 0 0 0 3px rgb(var(--mfe-danger-500) / 0.1);
+}
+
+/* Card Styles */
+.mfe-card {
+  background-color: rgb(var(--mfe-surface-primary));
+  border: 1px solid rgb(var(--mfe-border-primary));
+  border-radius: var(--mfe-radius-lg);
+  box-shadow: var(--mfe-shadow-sm);
+}
+
+.mfe-card__header {
+  padding: var(--mfe-spacing-lg);
+  border-bottom: 1px solid rgb(var(--mfe-border-primary));
+}
+
+.mfe-card__body {
+  padding: var(--mfe-spacing-lg);
+}
+
+.mfe-card__footer {
+  padding: var(--mfe-spacing-lg);
+  border-top: 1px solid rgb(var(--mfe-border-primary));
+  background-color: rgb(var(--mfe-surface-secondary));
+  border-bottom-left-radius: var(--mfe-radius-lg);
+  border-bottom-right-radius: var(--mfe-radius-lg);
+}
+
+/* Badge Styles */
+.mfe-badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--mfe-font-family);
+  font-size: var(--mfe-font-size-xs);
+  font-weight: 500;
+  border-radius: var(--mfe-radius-full);
+  padding: 0.25rem 0.625rem;
+}
+
+.mfe-badge--primary {
+  background-color: rgb(var(--mfe-primary-100));
+  color: rgb(var(--mfe-primary-800));
+}
+
+.mfe-badge--success {
+  background-color: rgb(var(--mfe-success-100));
+  color: rgb(var(--mfe-success-800));
+}
+
+.mfe-badge--warning {
+  background-color: rgb(var(--mfe-warning-100));
+  color: rgb(var(--mfe-warning-800));
+}
+
+.mfe-badge--danger {
+  background-color: rgb(var(--mfe-danger-100));
+  color: rgb(var(--mfe-danger-800));
+}
+
+/* Modal Styles */
+.mfe-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgb(0 0 0 / 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: var(--mfe-spacing-md);
+}
+
+.mfe-modal-content {
+  background-color: rgb(var(--mfe-surface-primary));
+  border-radius: var(--mfe-radius-lg);
+  box-shadow: var(--mfe-shadow-xl);
+  max-width: 32rem;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Loading Spinner */
+.mfe-spinner {
+  display: inline-block;
+  border: 2px solid rgb(var(--mfe-border-primary));
+  border-top: 2px solid rgb(var(--mfe-primary-600));
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.mfe-spinner--xs {
+  width: 1rem;
+  height: 1rem;
+}
+
+.mfe-spinner--sm {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.mfe-spinner--md {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.mfe-spinner--lg {
+  width: 2rem;
+  height: 2rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Switch Styles */
+.mfe-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.mfe-switch__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.mfe-switch__track {
+  width: 2.75rem;
+  height: 1.5rem;
+  background-color: rgb(var(--mfe-border-secondary));
+  border-radius: var(--mfe-radius-full);
+  transition: background-color 0.2s ease-in-out;
+  position: relative;
+}
+
+.mfe-switch__thumb {
+  position: absolute;
+  top: 0.125rem;
+  left: 0.125rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.2s ease-in-out;
+  box-shadow: var(--mfe-shadow-sm);
+}
+
+.mfe-switch__input:checked + .mfe-switch__track {
+  background-color: rgb(var(--mfe-primary-600));
+}
+
+.mfe-switch__input:checked + .mfe-switch__track .mfe-switch__thumb {
+  transform: translateX(1.25rem);
+}
+
+.mfe-switch__input:focus-visible + .mfe-switch__track {
+  outline: 2px solid rgb(var(--mfe-border-focus));
+  outline-offset: 2px;
+}
+
+.mfe-switch__input:disabled + .mfe-switch__track {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Form Field Styles */
+.mfe-form-field {
+  margin-bottom: var(--mfe-spacing-md);
+}
+
+.mfe-form-field__label {
+  display: block;
+  font-family: var(--mfe-font-family);
+  font-size: var(--mfe-font-size-sm);
+  font-weight: 500;
+  color: rgb(var(--mfe-text-primary));
+  margin-bottom: 0.375rem;
+}
+
+.mfe-form-field__label--required::after {
+  content: ' *';
+  color: rgb(var(--mfe-danger-500));
+}
+
+.mfe-form-field__description {
+  font-family: var(--mfe-font-family);
+  font-size: var(--mfe-font-size-xs);
+  color: rgb(var(--mfe-text-secondary));
+  margin-bottom: 0.375rem;
+}
+
+.mfe-form-field__error {
+  font-family: var(--mfe-font-family);
+  font-size: var(--mfe-font-size-xs);
+  color: rgb(var(--mfe-danger-600));
+  margin-top: 0.375rem;
+}
+
+/* Utility Classes */
+.mfe-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.mfe-focus-ring {
+  outline: 2px solid rgb(var(--mfe-border-focus));
+  outline-offset: 2px;
+}
+
+.mfe-transition {
+  transition: all 0.2s ease-in-out;
+}
+
+/* ============================================================================= */
+/* RESPONSIVE DESIGN */
+/* ============================================================================= */
+
+@media (max-width: 640px) {
+  .mfe-modal-content {
+    margin: var(--mfe-spacing-sm);
+    max-width: calc(100vw - 2rem);
+  }
+  
+  .mfe-button--lg,
+  .mfe-button--xl {
+    padding: 0.625rem 1rem;
+    font-size: var(--mfe-font-size-sm);
+  }
+}
+
+/* ============================================================================= */
+/* THEME CUSTOMIZATION EXAMPLES */
+/* ============================================================================= */
+
+/*
+Example: Custom Brand Colors
+Override these CSS custom properties to customize your theme:
+
+:root {
+  --mfe-primary-500: 16 185 129;  // Emerald
+  --mfe-primary-600: 5 150 105;
+  --mfe-primary-700: 4 120 87;
+}
+
+Example: Custom Spacing
+:root {
+  --mfe-spacing-md: 1.25rem;  // Larger default spacing
+  --mfe-spacing-lg: 2rem;
+}
+
+Example: Custom Typography
+:root {
+  --mfe-font-family: 'Inter', sans-serif;
+  --mfe-font-size-base: 1.125rem;  // Larger base font
+}
+*/

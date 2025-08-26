@@ -57,6 +57,7 @@ export { default as Icon } from './components/atoms/Icon';
 export { default as Badge } from './components/atoms/Badge';
 export { default as Avatar } from './components/atoms/Avatar';
 export { default as Divider } from './components/atoms/Divider';
+export { default as FeatureChip } from './components/atoms/FeatureChip';
 export { default as Text } from './components/atoms/Text';
 export { default as LoadingSpinner } from './components/atoms/LoadingSpinner';
 export { default as Switch } from './components/atoms/Switch';

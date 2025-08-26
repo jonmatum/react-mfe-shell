@@ -1,21 +1,56 @@
 {
-  "name": "React MFE Shell",
+  "name": "React MFE Shell - Production-Ready Component Library",
   "short_name": "MFE Shell",
-  "description": "A production-ready micro frontend shell with React, TypeScript, and modern tooling",
+  "description": "A comprehensive React component library with 22 production-ready components, hybrid Tailwind integration, accessibility compliance, and zero-config setup. Perfect for micro frontend architectures.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#ffffff",
   "theme_color": "#2563eb",
+  "categories": ["developer", "productivity", "utilities"],
+  "lang": "en",
+  "dir": "ltr",
   "icons": [
     {
       "src": "favicon.svg",
       "sizes": "any",
-      "type": "image/svg+xml"
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     },
     {
       "src": "apple-touch-icon.svg",
       "sizes": "180x180",
-      "type": "image/svg+xml"
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "React MFE Shell Component Library Demo"
+    },
+    {
+      "src": "screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "React MFE Shell Mobile Demo"
     }
   ]
 }

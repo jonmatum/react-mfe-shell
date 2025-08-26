@@ -7,37 +7,35 @@ import {
   Switch, 
   LoadingSpinner,
   Modal,
+  Avatar,
+  Text,
+  Divider,
+  FeatureChip,
   useSettings 
 } from '../../src';
 import { 
   SwatchIcon,
   CubeIcon,
   PuzzlePieceIcon,
-  StarIcon,
-  HeartIcon,
-  BoltIcon,
-  ShieldCheckIcon,
-  EyeIcon,
-  TrashIcon
+  StarIcon
 } from '@heroicons/react/24/outline';
 
 const ComponentShowcase: React.FC = () => {
   const [activeTab, setActiveTab] = useState('atoms');
   const [modalOpen, setModalOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    notifications: true,
-    theme: 'light'
-  });
   const [removedBadges, setRemovedBadges] = useState<Set<string>>(new Set());
+  const [interactiveState, setInteractiveState] = useState({
+    notifications: 3,
+    status: 'Online' as 'Online' | 'Away' | 'Offline',
+    tags: ['React', 'TypeScript', 'Tailwind']
+  });
 
-  const { settings } = useSettings();
+  const { settings: _settings } = useSettings();
 
   const tabs = [
     { id: 'atoms', label: 'Atoms', icon: CubeIcon },
     { id: 'molecules', label: 'Molecules', icon: PuzzlePieceIcon },
-    { id: 'showcase', label: 'Interactive', icon: StarIcon }
+    { id: 'interactive', label: 'Interactive', icon: StarIcon }
   ];
 
   const handleRemoveBadge = (badgeId: string) => {
@@ -48,17 +46,28 @@ const ComponentShowcase: React.FC = () => {
     setRemovedBadges(new Set());
   };
 
+  const updateInteractiveState = (updates: Partial<typeof interactiveState>) => {
+    setInteractiveState(prev => ({ ...prev, ...updates }));
+  };
+
+  const addTag = (tag: string) => {
+    if (!interactiveState.tags.includes(tag)) {
+      setInteractiveState(prev => ({ ...prev, tags: [...prev.tags, tag] }));
+    }
+  };
+
+  const removeTag = (tag: string) => {
+    setInteractiveState(prev => ({ ...prev, tags: prev.tags.filter(t => t !== tag) }));
+  };
+
   return (
-    <section className="py-16">
+    <section id="component-showcase" className="py-16">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <div className="flex justify-center mb-4">
-            <div className="flex items-center space-x-2 bg-primary-50 dark:bg-primary-900/30 px-4 py-2 rounded-full">
-              <SwatchIcon className="w-5 h-5 text-primary-600" />
-              <span className="text-primary-700 dark:text-primary-300 font-medium">
-                Component Library
-              </span>
-            </div>
+            <FeatureChip variant="primary" icon={<SwatchIcon />}>
+              Component Library
+            </FeatureChip>
           </div>
           
           <h2 className="text-4xl font-bold text-text-primary mb-4">
@@ -86,386 +95,540 @@ const ComponentShowcase: React.FC = () => {
                   }`}
                 >
                   <Icon className="w-4 h-4" />
-                  <span>{tab.label}</span>
+                  <span className="font-medium">{tab.label}</span>
                 </button>
               );
             })}
           </div>
         </div>
 
-        {/* Atoms Tab */}
-        {activeTab === 'atoms' && (
-          <div className="space-y-8">
-            {/* Buttons */}
-            <Card className="p-6">
-              <h3 className="text-xl font-bold text-text-primary mb-4 flex items-center space-x-2">
-                <BoltIcon className="w-5 h-5 text-primary-600" />
-                <span>Buttons</span>
-                <Badge variant="success" size="sm">DRY Optimized</Badge>
-              </h3>
-              
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-medium text-text-primary mb-3">Variants</h4>
-                  <div className="flex flex-wrap gap-3">
-                    <Button variant="primary">Primary</Button>
-                    <Button variant="secondary">Secondary</Button>
-                    <Button variant="ghost">Ghost</Button>
-                    <Button variant="success">Success</Button>
-                    <Button variant="warning">Warning</Button>
-                    <Button variant="danger">Danger</Button>
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium text-text-primary mb-3">Sizes</h4>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <Button size="xs">Extra Small</Button>
-                    <Button size="sm">Small</Button>
-                    <Button size="md">Medium</Button>
-                    <Button size="lg">Large</Button>
-                    <Button size="xl">Extra Large</Button>
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium text-text-primary mb-3">States & Icons</h4>
-                  <div className="flex flex-wrap gap-3">
-                    <Button leftIcon={<HeartIcon className="w-4 h-4" />}>With Icon</Button>
-                    <Button loading>Loading</Button>
-                    <Button disabled>Disabled</Button>
-                    <Button fullWidth>Full Width</Button>
-                  </div>
-                </div>
-              </div>
-            </Card>
-
-            {/* Badges */}
-            <Card className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-text-primary flex items-center space-x-2">
-                  <ShieldCheckIcon className="w-5 h-5 text-primary-600" />
-                  <span>Badges</span>
-                  <Badge variant="success" size="sm">Theme Aware</Badge>
-                </h3>
-                {removedBadges.size > 0 && (
-                  <Button size="sm" variant="ghost" onClick={resetBadges}>
-                    Reset Badges
-                  </Button>
-                )}
-              </div>
-              
-              <div className="space-y-6">
-                <div>
-                  <h4 className="font-medium text-text-primary mb-3">Variants</h4>
-                  <div className="flex flex-wrap gap-3">
-                    <Badge variant="default">Default</Badge>
-                    <Badge variant="primary">Primary</Badge>
-                    <Badge variant="secondary">Secondary</Badge>
-                    <Badge variant="success">Success</Badge>
-                    <Badge variant="warning">Warning</Badge>
-                    <Badge variant="danger">Danger</Badge>
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium text-text-primary mb-3">Sizes & Dots</h4>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <Badge size="sm">Small</Badge>
-                    <Badge size="md">Medium</Badge>
-                    <Badge size="lg">Large</Badge>
-                    <Badge variant="success" dot size="sm" />
-                    <Badge variant="warning" dot size="md" />
-                    <Badge variant="danger" dot size="lg" />
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium text-text-primary mb-3">Removable</h4>
-                  <div className="flex flex-wrap gap-3">
-                    {['React', 'TypeScript', 'Tailwind', 'Vite'].map((tech) => {
-                      const badgeId = `tech-${tech}`;
-                      if (removedBadges.has(badgeId)) return null;
-                      
-                      return (
-                        <Badge
-                          key={badgeId}
-                          variant="primary"
-                          removable
-                          onRemove={() => handleRemoveBadge(badgeId)}
-                        >
-                          {tech}
-                        </Badge>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            </Card>
-
-            {/* Inputs */}
-            <Card className="p-6">
-              <h3 className="text-xl font-bold text-text-primary mb-4 flex items-center space-x-2">
-                <EyeIcon className="w-5 h-5 text-primary-600" />
-                <span>Inputs</span>
-                <Badge variant="success" size="sm">Validation Ready</Badge>
-              </h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <Input
-                    label="Default Input"
-                    placeholder="Enter text..."
-                  />
-                  <Input
-                    label="With Description"
-                    placeholder="Enter email..."
-                    description="We'll never share your email"
-                  />
-                  <Input
-                    label="Error State"
-                    placeholder="Enter password..."
-                    error="Password is required"
-                  />
-                </div>
-                
-                <div className="space-y-4">
-                  <Input
-                    label="With Icons"
-                    placeholder="Search..."
-                    leftIcon={<EyeIcon className="w-4 h-4" />}
-                  />
-                  <Input
-                    label="Disabled"
-                    placeholder="Disabled input"
-                    disabled
-                  />
-                  <Input
-                    label="Read Only"
-                    value="Read only value"
-                    readOnly
-                  />
-                </div>
-              </div>
-            </Card>
-
-            {/* Switches & Loading */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card className="p-6">
-                <h3 className="text-xl font-bold text-text-primary mb-4">Switches</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-text-primary">Notifications</span>
-                    <Switch
-                      checked={formData.notifications}
-                      onChange={(checked) => setFormData(prev => ({ ...prev, notifications: checked }))}
-                    />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-text-primary">Dark Mode</span>
-                    <Switch
-                      checked={settings.theme === 'dark'}
-                      onChange={(checked) => console.warn('Theme toggle:', checked)}
-                      size="sm"
-                    />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-text-secondary">Disabled</span>
-                    <Switch disabled />
-                  </div>
-                </div>
-              </Card>
-
-              <Card className="p-6">
-                <h3 className="text-xl font-bold text-text-primary mb-4">Loading Spinners</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-4">
-                    <LoadingSpinner size="sm" />
-                    <span className="text-text-secondary">Small</span>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <LoadingSpinner size="md" />
-                    <span className="text-text-secondary">Medium</span>
-                  </div>
-                  <div className="flex items-center space-x-4">
-                    <LoadingSpinner size="lg" />
-                    <span className="text-text-secondary">Large</span>
-                  </div>
-                </div>
-              </Card>
-            </div>
-          </div>
-        )}
-
-        {/* Molecules Tab */}
-        {activeTab === 'molecules' && (
-          <div className="space-y-8">
-            <Card className="p-6">
-              <h3 className="text-xl font-bold text-text-primary mb-4">Cards</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card className="p-4">
-                  <Card.Header>
-                    <h4 className="font-semibold text-text-primary">Simple Card</h4>
-                  </Card.Header>
-                  <Card.Body>
-                    <p className="text-text-secondary">Basic card with header and body.</p>
-                  </Card.Body>
-                </Card>
-
-                <Card className="p-4">
-                  <Card.Header>
-                    <h4 className="font-semibold text-text-primary">With Footer</h4>
-                  </Card.Header>
-                  <Card.Body>
-                    <p className="text-text-secondary">Card with all sections.</p>
-                  </Card.Body>
-                  <Card.Footer>
-                    <Button size="sm" variant="primary">Action</Button>
-                  </Card.Footer>
-                </Card>
-
-                <Card className="p-4 border-primary-200 bg-primary-50 dark:bg-primary-900/20">
-                  <Card.Header>
-                    <h4 className="font-semibold text-primary-700 dark:text-primary-300">Themed Card</h4>
-                  </Card.Header>
-                  <Card.Body>
-                    <p className="text-primary-600 dark:text-primary-400">Custom styled card.</p>
-                  </Card.Body>
-                </Card>
-              </div>
-            </Card>
-
-            <Card className="p-6">
-              <h3 className="text-xl font-bold text-text-primary mb-4">Modals</h3>
-              <div className="space-y-4">
-                <Button onClick={() => setModalOpen(true)}>
-                  Open Modal
-                </Button>
-                
-                <Modal
-                  isOpen={modalOpen}
-                  onClose={() => setModalOpen(false)}
-                  title="Demo Modal"
-                >
-                  <div className="space-y-4">
-                    <p className="text-text-secondary">
-                      This is a demo modal showcasing the modal component with 
-                      proper accessibility features and theme support.
-                    </p>
-                    
-                    <div className="space-y-3">
-                      <Input
-                        label="Name"
-                        value={formData.name}
-                        onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                        placeholder="Enter your name"
-                      />
-                      <Input
-                        label="Email"
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                        placeholder="Enter your email"
-                      />
-                    </div>
-                    
-                    <div className="flex justify-end space-x-3 pt-4">
-                      <Button variant="secondary" onClick={() => setModalOpen(false)}>
-                        Cancel
-                      </Button>
-                      <Button variant="primary" onClick={() => setModalOpen(false)}>
-                        Save
-                      </Button>
-                    </div>
-                  </div>
-                </Modal>
-              </div>
-            </Card>
-          </div>
-        )}
-
-        {/* Interactive Showcase Tab */}
-        {activeTab === 'showcase' && (
-          <div className="space-y-8">
-            <Card className="p-6">
-              <h3 className="text-xl font-bold text-text-primary mb-4">
-                Interactive Component Demo
-              </h3>
-              <p className="text-text-secondary mb-6">
-                Experience how all components work together in a real-world scenario.
-              </p>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="font-semibold text-text-primary mb-3">User Profile</h4>
-                    <div className="space-y-4">
-                      <Input
-                        label="Full Name"
-                        value={formData.name}
-                        onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                        placeholder="John Doe"
-                      />
-                      <Input
-                        label="Email Address"
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                        placeholder="john@example.com"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h4 className="font-semibold text-text-primary mb-3">Preferences</h4>
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <span className="text-text-primary">Email Notifications</span>
-                        <Switch
-                          checked={formData.notifications}
-                          onChange={(checked) => setFormData(prev => ({ ...prev, notifications: checked }))}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="font-semibold text-text-primary mb-3">Status</h4>
-                    <div className="flex flex-wrap gap-2">
-                      <Badge variant="success">Active</Badge>
-                      <Badge variant="primary">Premium</Badge>
-                      {formData.notifications && <Badge variant="warning">Notifications On</Badge>}
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h4 className="font-semibold text-text-primary mb-3">Actions</h4>
-                    <div className="space-y-3">
-                      <Button fullWidth variant="primary">
-                        Save Profile
-                      </Button>
-                      <Button fullWidth variant="secondary">
-                        Reset Changes
-                      </Button>
-                      <Button 
-                        fullWidth 
-                        variant="danger"
-                        leftIcon={<TrashIcon className="w-4 h-4" />}
-                      >
-                        Delete Account
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          </div>
-        )}
+        {/* Tab Content */}
+        <div className="min-h-[600px]">
+          {activeTab === 'atoms' && (
+            <AtomsTab 
+              removedBadges={removedBadges}
+              onRemoveBadge={handleRemoveBadge}
+              onResetBadges={resetBadges}
+            />
+          )}
+          {activeTab === 'molecules' && <MoleculesTab />}
+          {activeTab === 'interactive' && (
+            <InteractiveTab 
+              state={interactiveState}
+              onUpdateState={updateInteractiveState}
+              onAddTag={addTag}
+              onRemoveTag={removeTag}
+              modalOpen={modalOpen}
+              setModalOpen={setModalOpen}
+            />
+          )}
+        </div>
       </div>
     </section>
   );
 };
+
+interface AtomsTabProps {
+  removedBadges: Set<string>;
+  onRemoveBadge: (badgeId: string) => void;
+  onResetBadges: () => void;
+}
+
+const AtomsTab: React.FC<AtomsTabProps> = ({ removedBadges, onRemoveBadge, onResetBadges }) => {
+  const badgeVariants = ['default', 'primary', 'secondary', 'success', 'warning', 'danger'] as const;
+  const badgeSizes = ['sm', 'md', 'lg'] as const;
+  const avatarSizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
+
+  return (
+    <div className="space-y-12">
+      {/* Buttons */}
+      <Card>
+        <Card.Header>
+          <h3 className="font-semibold text-text-primary">Buttons</h3>
+          <p className="text-sm text-text-secondary">Interactive button components with multiple variants</p>
+        </Card.Header>
+        <Card.Body>
+          <div className="space-y-4">
+            <div className="flex flex-wrap gap-3">
+              <Button variant="primary">Primary</Button>
+              <Button variant="secondary">Secondary</Button>
+              <Button variant="success">Success</Button>
+              <Button variant="warning">Warning</Button>
+              <Button variant="danger">Danger</Button>
+              <Button variant="ghost">Ghost</Button>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Button size="xs">Extra Small</Button>
+              <Button size="sm">Small</Button>
+              <Button size="md">Medium</Button>
+              <Button size="lg">Large</Button>
+              <Button size="xl">Extra Large</Button>
+            </div>
+          </div>
+        </Card.Body>
+      </Card>
+
+      {/* Badges */}
+      <Card>
+        <Card.Header>
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="font-semibold text-text-primary">Badges</h3>
+              <p className="text-sm text-text-secondary">Status indicators with full theme support</p>
+            </div>
+            <Button size="sm" variant="secondary" onClick={onResetBadges}>
+              Reset All
+            </Button>
+          </div>
+        </Card.Header>
+        <Card.Body>
+          <div className="space-y-6">
+            {/* Variants */}
+            <div>
+              <h4 className="font-medium text-text-primary mb-3">Variants</h4>
+              <div className="flex flex-wrap gap-3">
+                {badgeVariants.map((variant) => (
+                  <Badge key={variant} variant={variant}>
+                    {variant.charAt(0).toUpperCase() + variant.slice(1)}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+
+            {/* Sizes */}
+            <div>
+              <h4 className="font-medium text-text-primary mb-3">Sizes</h4>
+              <div className="space-y-3">
+                {badgeSizes.map((size) => (
+                  <div key={size} className="flex items-center space-x-3">
+                    <span className="text-sm font-medium text-text-secondary w-8">{size}:</span>
+                    <div className="flex flex-wrap gap-2">
+                      {['default', 'primary', 'secondary', 'success'].map((variant) => (
+                        <Badge key={`${size}-${variant}`} variant={variant} size={size}>
+                          {variant}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Removable */}
+            <div>
+              <h4 className="font-medium text-text-primary mb-3">Removable Badges</h4>
+              <div className="flex flex-wrap gap-2">
+                {badgeVariants.map((variant) => (
+                  !removedBadges.has(`removable-${variant}`) && (
+                    <Badge 
+                      key={`removable-${variant}`} 
+                      variant={variant}
+                      removable
+                      onRemove={() => onRemoveBadge(`removable-${variant}`)}
+                    >
+                      {variant.charAt(0).toUpperCase() + variant.slice(1)}
+                    </Badge>
+                  )
+                ))}
+              </div>
+              {removedBadges.size > 0 && (
+                <p className="text-sm text-text-secondary mt-2">
+                  Removed {removedBadges.size} badge{removedBadges.size !== 1 ? 's' : ''}
+                </p>
+              )}
+            </div>
+
+            {/* Numbers */}
+            <div>
+              <h4 className="font-medium text-text-primary mb-3">With Numbers</h4>
+              <div className="flex flex-wrap gap-3">
+                <Badge variant="danger" size="sm">1</Badge>
+                <Badge variant="warning" size="md">12</Badge>
+                <Badge variant="success" size="lg">99+</Badge>
+                <Badge variant="primary">New</Badge>
+                <Badge variant="secondary">Beta</Badge>
+              </div>
+            </div>
+          </div>
+        </Card.Body>
+      </Card>
+
+      {/* Avatars */}
+      <Card>
+        <Card.Header>
+          <h3 className="font-semibold text-text-primary">Avatars</h3>
+          <p className="text-sm text-text-secondary">User avatars with image support and fallbacks</p>
+        </Card.Header>
+        <Card.Body>
+          <div className="space-y-6">
+            {/* Sizes */}
+            <div>
+              <h4 className="font-medium text-text-primary mb-3">Sizes</h4>
+              <div className="flex items-center justify-center space-x-4">
+                {avatarSizes.map((size) => (
+                  <div key={size} className="text-center">
+                    <Avatar size={size} name="John Doe" />
+                    <p className="text-xs text-text-secondary mt-1">{size}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* With Images */}
+            <div>
+              <h4 className="font-medium text-text-primary mb-3">With Images</h4>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3">
+                  <Avatar 
+                    size="md" 
+                    src="https://github.com/jonmatum.png" 
+                    name="GitHub User" 
+                  />
+                  <div>
+                    <p className="font-medium text-text-primary">GitHub User</p>
+                    <p className="text-sm text-text-secondary">Software Engineer</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Avatar size="md" name="Fallback User" />
+                  <div>
+                    <p className="font-medium text-text-primary">Fallback User</p>
+                    <p className="text-sm text-text-secondary">No image provided</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Status Indicators */}
+            <div>
+              <h4 className="font-medium text-text-primary mb-3">Status Indicators</h4>
+              <div className="space-y-4">
+                {[
+                  { name: 'Online User', status: 'online', color: 'bg-success-500' },
+                  { name: 'Away User', status: 'away', color: 'bg-warning-500' },
+                  { name: 'Offline User', status: 'offline', color: 'bg-gray-400' }
+                ].map(({ name, status, color }) => (
+                  <div key={name} className="flex items-center space-x-3">
+                    <div className="relative">
+                      <Avatar size="md" name={name} />
+                      <div className={`absolute -bottom-1 -right-1 w-4 h-4 ${color} border-2 border-white rounded-full`} />
+                    </div>
+                    <span className="text-text-secondary">{status.charAt(0).toUpperCase() + status.slice(1)}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Card.Body>
+      </Card>
+
+      {/* Typography */}
+      <Card>
+        <Card.Header>
+          <h3 className="font-semibold text-text-primary">Typography</h3>
+          <p className="text-sm text-text-secondary">Semantic text component with consistent styling</p>
+        </Card.Header>
+        <Card.Body>
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Headings */}
+            <div>
+              <h4 className="font-medium text-text-primary mb-3">Headings</h4>
+              <div className="space-y-3">
+                <Text as="h1" variant="h1">Heading 1</Text>
+                <Text as="h2" variant="h2">Heading 2</Text>
+                <Text as="h3" variant="h3">Heading 3</Text>
+                <Text as="h4" variant="h4">Heading 4</Text>
+                <Text as="h5" variant="h5">Heading 5</Text>
+                <Text as="h6" variant="h6">Heading 6</Text>
+              </div>
+            </div>
+
+            {/* Body Text */}
+            <div>
+              <h4 className="font-medium text-text-primary mb-3">Body Text</h4>
+              <div className="space-y-3">
+                <Text variant="body-lg">Large body text for important content.</Text>
+                <Text variant="body">Regular body text for general content.</Text>
+                <Text variant="body-sm">Small body text for secondary information.</Text>
+                <Text variant="caption">Caption text for labels and metadata.</Text>
+              </div>
+            </div>
+
+            {/* Colors */}
+            <div>
+              <h4 className="font-medium text-text-primary mb-3">Text Colors</h4>
+              <div className="space-y-2">
+                <Text color="primary">Primary text color</Text>
+                <Text color="secondary">Secondary text color</Text>
+                <Text color="success">Success text color</Text>
+                <Text color="warning">Warning text color</Text>
+                <Text color="danger">Danger text color</Text>
+                <Text color="muted">Muted text color</Text>
+              </div>
+            </div>
+
+            {/* Weights */}
+            <div>
+              <h4 className="font-medium text-text-primary mb-3">Font Weights</h4>
+              <div className="space-y-2">
+                <Text weight="light">Light weight text</Text>
+                <Text weight="normal">Normal weight text</Text>
+                <Text weight="medium">Medium weight text</Text>
+                <Text weight="semibold">Semibold weight text</Text>
+                <Text weight="bold">Bold weight text</Text>
+              </div>
+            </div>
+          </div>
+        </Card.Body>
+      </Card>
+
+      {/* Other Atoms */}
+      <Card>
+        <Card.Header>
+          <h3 className="font-semibold text-text-primary">Other Components</h3>
+          <p className="text-sm text-text-secondary">Additional atomic components</p>
+        </Card.Header>
+        <Card.Body>
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Inputs */}
+            <div>
+              <h4 className="font-medium text-text-primary mb-3">Inputs</h4>
+              <div className="space-y-3">
+                <Input placeholder="Default input" />
+                <Input placeholder="With error" error />
+                <Input type="email" placeholder="Email input" />
+              </div>
+            </div>
+
+            {/* Switches */}
+            <div>
+              <h4 className="font-medium text-text-primary mb-3">Switches</h4>
+              <div className="space-y-3">
+                <div className="flex items-center space-x-2">
+                  <Switch checked={true} onChange={() => {}} />
+                  <span className="text-text-secondary">Enabled</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Switch checked={false} onChange={() => {}} />
+                  <span className="text-text-secondary">Disabled</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Loading Spinners */}
+            <div>
+              <h4 className="font-medium text-text-primary mb-3">Loading</h4>
+              <div className="flex items-center space-x-4">
+                <LoadingSpinner size="sm" />
+                <LoadingSpinner size="md" />
+                <LoadingSpinner size="lg" />
+              </div>
+            </div>
+          </div>
+        </Card.Body>
+      </Card>
+    </div>
+  );
+};
+
+const MoleculesTab: React.FC = () => (
+  <div className="space-y-8">
+    <Card>
+      <Card.Header>
+        <h3 className="font-semibold text-text-primary">Cards</h3>
+        <p className="text-sm text-text-secondary">Compound card patterns with Header, Body, and Footer</p>
+      </Card.Header>
+      <Card.Body>
+        <div className="grid md:grid-cols-3 gap-6">
+          <Card className="border border-border-primary">
+            <Card.Header>
+              <h4 className="font-semibold text-text-primary">Simple Card</h4>
+            </Card.Header>
+            <Card.Body>
+              <p className="text-text-secondary">Card with header and body only.</p>
+            </Card.Body>
+          </Card>
+
+          <Card className="border border-border-primary">
+            <Card.Header>
+              <h4 className="font-semibold text-text-primary">With Footer</h4>
+            </Card.Header>
+            <Card.Body>
+              <p className="text-text-secondary">Card with all sections.</p>
+            </Card.Body>
+            <Card.Footer>
+              <Button size="sm" variant="primary">Action</Button>
+            </Card.Footer>
+          </Card>
+
+          <Card className="border-primary-200 bg-primary-50 dark:bg-primary-900/20 border">
+            <Card.Header>
+              <h4 className="font-semibold text-primary-700 dark:text-primary-300">Themed Card</h4>
+            </Card.Header>
+            <Card.Body>
+              <p className="text-primary-600 dark:text-primary-400">Card with custom theme colors.</p>
+            </Card.Body>
+          </Card>
+        </div>
+      </Card.Body>
+    </Card>
+
+    <Card>
+      <Card.Header>
+        <h3 className="font-semibold text-text-primary">Other Molecules</h3>
+        <p className="text-sm text-text-secondary">Additional compound components</p>
+      </Card.Header>
+      <Card.Body>
+        <div className="space-y-4">
+          <Divider />
+          <p className="text-text-secondary text-center">More molecule components coming soon...</p>
+          <Divider />
+        </div>
+      </Card.Body>
+    </Card>
+  </div>
+);
+
+interface InteractiveTabProps {
+  state: {
+    notifications: number;
+    status: 'Online' | 'Away' | 'Offline';
+    tags: string[];
+  };
+  onUpdateState: (updates: any) => void;
+  onAddTag: (tag: string) => void;
+  onRemoveTag: (tag: string) => void;
+  modalOpen: boolean;
+  setModalOpen: (open: boolean) => void;
+}
+
+const InteractiveTab: React.FC<InteractiveTabProps> = ({ 
+  state, 
+  onUpdateState, 
+  onAddTag, 
+  onRemoveTag, 
+  modalOpen, 
+  setModalOpen 
+}) => (
+  <div className="space-y-8">
+    <Card>
+      <Card.Header>
+        <h3 className="font-semibold text-text-primary">Interactive Examples</h3>
+        <p className="text-sm text-text-secondary">Real-world usage scenarios</p>
+      </Card.Header>
+      <Card.Body>
+        <div className="space-y-6">
+          {/* Notifications */}
+          <div className="flex items-center space-x-3">
+            <span className="text-text-secondary">Notifications:</span>
+            <Badge variant="danger" size="sm">{state.notifications}</Badge>
+            <div className="flex space-x-2">
+              <Button 
+                size="xs" 
+                variant="secondary"
+                onClick={() => onUpdateState({ notifications: Math.max(0, state.notifications - 1) })}
+              >
+                -
+              </Button>
+              <Button 
+                size="xs" 
+                variant="secondary"
+                onClick={() => onUpdateState({ notifications: state.notifications + 1 })}
+              >
+                +
+              </Button>
+            </div>
+          </div>
+
+          {/* Status */}
+          <div className="flex items-center space-x-3">
+            <span className="text-text-secondary">Status:</span>
+            <Badge 
+              variant={
+                state.status === 'Online' ? 'success' : 
+                state.status === 'Away' ? 'warning' : 
+                'secondary'
+              }
+            >
+              {state.status}
+            </Badge>
+            <select 
+              value={state.status}
+              onChange={(e) => onUpdateState({ status: e.target.value })}
+              className="text-sm border border-border-primary rounded px-2 py-1 bg-surface-primary text-text-primary"
+            >
+              <option value="Online">Online</option>
+              <option value="Away">Away</option>
+              <option value="Offline">Offline</option>
+            </select>
+          </div>
+
+          {/* Tags */}
+          <div className="space-y-2">
+            <div className="flex items-center space-x-3">
+              <span className="text-text-secondary">Tags:</span>
+              <div className="flex flex-wrap gap-2">
+                {state.tags.map((tag) => (
+                  <Badge 
+                    key={tag}
+                    variant="primary" 
+                    size="sm"
+                    removable
+                    onRemove={() => onRemoveTag(tag)}
+                  >
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+            <div className="flex space-x-2">
+              <Button size="xs" variant="secondary" onClick={() => onAddTag('Vite')}>
+                Add Vite
+              </Button>
+              <Button size="xs" variant="secondary" onClick={() => onAddTag('Jest')}>
+                Add Jest
+              </Button>
+              <Button size="xs" variant="secondary" onClick={() => onAddTag('ESLint')}>
+                Add ESLint
+              </Button>
+            </div>
+          </div>
+        </div>
+      </Card.Body>
+    </Card>
+
+    <Card>
+      <Card.Header>
+        <h3 className="font-semibold text-text-primary">Modal Example</h3>
+        <p className="text-sm text-text-secondary">Accessible dialog with focus management</p>
+      </Card.Header>
+      <Card.Body>
+        <Button onClick={() => setModalOpen(true)}>
+          Open Modal
+        </Button>
+        
+        <Modal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          title="Example Modal"
+        >
+          <div className="space-y-4">
+            <p className="text-text-secondary">
+              This is an example modal with proper focus management and accessibility features.
+            </p>
+            <div className="flex justify-end space-x-2">
+              <Button variant="secondary" onClick={() => setModalOpen(false)}>
+                Cancel
+              </Button>
+              <Button variant="primary" onClick={() => setModalOpen(false)}>
+                Confirm
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      </Card.Body>
+    </Card>
+  </div>
+);
 
 export default ComponentShowcase;
