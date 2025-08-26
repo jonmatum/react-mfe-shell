@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.2.0](https://github.com/jonmatum/react-mfe-shell/compare/demo-v5.1.1...demo-v5.2.0) (2025-08-26)
+
+
+### Features
+
+* comprehensive demo improvements and new features ([086031a](https://github.com/jonmatum/react-mfe-shell/commit/086031ad82b37bfb28206c64eb141672c66c129d))
+
 ## [5.1.1](https://github.com/jonmatum/react-mfe-shell/compare/demo-v5.1.0...demo-v5.1.1) (2025-08-24)
 
 
