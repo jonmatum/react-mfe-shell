@@ -29,7 +29,7 @@
     },
     "./styles": "./dist/styles.css",
     "./standalone": "./dist/standalone.css",
-    "./preset": "./dist/preset.js",
+    "./preset": "./dist/preset.cjs",
     "./package.json": "./package.json"
   },
   "files": [

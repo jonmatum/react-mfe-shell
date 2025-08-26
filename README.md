@@ -78,30 +78,36 @@ function App() {
 
 ## What's Included
 
-### Core Components (10)
-- **Button**: All variants, sizes, states, and icons
-- **Input**: Text inputs with validation and icons
-- **Badge**: Status indicators with removable option
+### Atomic Components (14)
 - **Avatar**: User avatars with fallbacks
-- **Card**: Content containers with consistent styling
-- **Modal**: Accessible overlays with focus management
+- **Badge**: Status indicators with removable option
+- **Button**: All variants, sizes, states, and icons
+- **Code**: Inline and block code formatting
+- **Divider**: Section separators (horizontal/vertical)
+- **FeatureChip**: Feature indicators and tags
+- **Heading**: Semantic headings with typography scale
+- **Icon**: Heroicons integration with size variants
+- **Input**: Text inputs with validation and icons
+- **Label**: Form labels with accessibility features
+- **LoadingSpinner**: Loading states in multiple sizes
+- **Paragraph**: Text blocks with spacing control
 - **Switch**: Toggle controls with theme integration
 - **Text**: Typography with semantic variants
-- **LoadingSpinner**: Loading states in multiple sizes
-- **Divider**: Section separators (horizontal/vertical)
 
-### Form Molecules (8)
+### Molecular Components (10)
+- **Card**: Content containers with consistent styling
+- **Checkbox**: Accessible checkboxes with indeterminate state
+- **FileUpload**: Drag-and-drop with preview and validation
 - **FormField**: Universal wrapper with label/error handling
+- **Modal**: Accessible overlays with focus management
+- **Radio**: RadioGroup with full accessibility
 - **SearchBox**: Debounced search with clear functionality
 - **Select**: Dropdown with search and multi-select
-- **Checkbox**: Accessible checkboxes with indeterminate state
-- **Radio**: RadioGroup with full accessibility
 - **SwitchField**: Enhanced switch with form integration
 - **Textarea**: Auto-resizing text areas
-- **FileUpload**: Drag-and-drop with preview and validation
 
 ### Design System
-- **556 Tests**: 100% passing with 75%+ coverage
+- **666 Tests**: 100% passing with 75%+ coverage
 - **WCAG AA Compliant**: Full accessibility support
 - **Theme System**: Light/dark/system modes with persistence
 - **Design Tokens**: Consistent colors, spacing, typography
@@ -362,10 +368,11 @@ This ensures the demo always shows real, verifiable metrics without manual maint
 
 ## Bundle Size
 
-- **Core Library**: ~124KB (24KB gzipped)
-- **Standalone CSS**: ~12KB (2.9KB gzipped)
-- **Tailwind CSS**: ~38KB (processed with utilities)
+- **Core Library**: ~152KB (29.5KB gzipped)
+- **Standalone CSS**: ~12.2KB (2.8KB gzipped)
+- **Tailwind CSS**: ~48.8KB (8.4KB gzipped)
 - **Tailwind Preset**: ~4.1KB
+- **TypeScript Definitions**: ~81.4KB
 - **Tree Shakeable**: Import only what you use
 - **Zero Dependencies**: No external runtime dependencies
 - **Modern Build**: ESM and CJS formats included
@@ -518,7 +525,14 @@ setTheme('system');  // Follow system preference
 **Available themes:**
 - `light`: Light theme with high contrast
 - `dark`: Dark theme optimized for low light
-- `system`: Automatically follows system preference
+- `system`: Automatically follows system preference with real-time updates
+
+**Features:**
+- Persistent theme preferences (localStorage)
+- Real-time system theme detection
+- CSS custom properties for theme-aware styling
+- Automatic DOM class management
+- TypeScript support with theme validation
 
 ## Development
 
@@ -668,10 +682,11 @@ Creates optimized builds:
 ### Bundle Analysis
 
 Current bundle sizes:
-- **ESM**: ~124KB (gzipped: ~24KB)
-- **CJS**: ~132KB (gzipped: ~26KB)
-- **Tailwind CSS**: ~38KB (processed with utilities)
-- **Standalone CSS**: ~12KB (gzipped: ~2.9KB)
+- **ESM**: ~152KB (gzipped: ~29.5KB)
+- **CJS**: ~161.5KB (gzipped: ~30.2KB)
+- **Tailwind CSS**: ~48.8KB (gzipped: ~8.4KB)
+- **Standalone CSS**: ~12.2KB (gzipped: ~2.8KB)
+- **TypeScript Definitions**: ~81.4KB
 
 ## Micro Frontend Integration
 
@@ -750,14 +765,17 @@ The design tokens are automatically integrated with Tailwind CSS:
 
 ```typescript
 // tailwind.config.js
-import { tokens } from '@jonmatum/react-mfe-shell';
+const { mfeShellPreset } = require('@jonmatum/react-mfe-shell/preset');
 
 export default {
+  presets: [mfeShellPreset],
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@jonmatum/react-mfe-shell/dist/**/*.js'
+  ],
   theme: {
     extend: {
-      colors: tokens.colors.base,
-      spacing: tokens.spacing,
-      fontFamily: tokens.typography.fontFamily,
+      // Your custom overrides here
     },
   },
 };

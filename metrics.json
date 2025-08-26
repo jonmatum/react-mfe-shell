@@ -1,17 +1,17 @@
 {
-  "generated": "2025-08-26T01:09:11.361Z",
-  "version": "8.1.1",
+  "generated": "2025-08-26T04:11:36.605Z",
+  "version": "9.0.0",
   "bundle": {
     "esm": {
-      "size": 155326,
-      "sizeFormatted": "151.7KB",
-      "gzipped": 30228,
+      "size": 155624,
+      "sizeFormatted": "152KB",
+      "gzipped": 30252,
       "gzippedFormatted": "29.5KB"
     },
     "cjs": {
-      "size": 165074,
-      "sizeFormatted": "161.2KB",
-      "gzipped": 30917,
+      "size": 165372,
+      "sizeFormatted": "161.5KB",
+      "gzipped": 30937,
       "gzippedFormatted": "30.2KB"
     },
     "css": {
@@ -45,7 +45,7 @@
   },
   "code": {
     "totalFiles": 158,
-    "totalLines": 26190,
+    "totalLines": 26263,
     "complexity": 0,
     "commentRatio": 0
   },

@@ -62,7 +62,7 @@ ${customStyles}
     const tempInputPath = path.join(__dirname, '../temp-input.css');
     fs.writeFileSync(tempInputPath, inputCSS, 'utf8');
     
-    // Generate CSS using Tailwind CLI
+    // Generate main styles.css using Tailwind CLI
     const outputPath = path.join(distDir, 'styles.css');
     
     execSync(`npx tailwindcss -i ${tempInputPath} -o ${outputPath} --minify`, {
@@ -71,6 +71,37 @@ ${customStyles}
     
     // Clean up temp file
     fs.unlinkSync(tempInputPath);
+    
+    // Copy standalone.css (zero-config option)
+    const standaloneSrc = path.join(srcDir, 'styles', 'standalone.css');
+    const standaloneDest = path.join(distDir, 'standalone.css');
+    
+    if (fs.existsSync(standaloneSrc)) {
+      fs.copyFileSync(standaloneSrc, standaloneDest);
+      console.log('SUCCESS: Standalone CSS copied');
+    } else {
+      console.warn('WARNING: standalone.css not found in src/styles/');
+    }
+    
+    // Copy and fix preset.cjs (Tailwind preset)
+    const presetSrc = path.join(srcDir, 'styles', 'tailwind-preset.js');
+    const presetDest = path.join(distDir, 'preset.cjs');
+    
+    if (fs.existsSync(presetSrc)) {
+      // Read the preset file and fix the import path
+      let presetContent = fs.readFileSync(presetSrc, 'utf8');
+      
+      // Replace the relative import with the correct import for the built package
+      presetContent = presetContent.replace(
+        "const { tokens } = require('../utils/tokens');",
+        "const { tokens } = require('./index.cjs');"
+      );
+      
+      fs.writeFileSync(presetDest, presetContent, 'utf8');
+      console.log('SUCCESS: Tailwind preset copied and fixed');
+    } else {
+      console.warn('WARNING: tailwind-preset.js not found in src/styles/');
+    }
     
     console.log('SUCCESS: Dynamic CSS generated with Tailwind CLI\n');
     return true;
@@ -86,10 +117,42 @@ ${customStyles}
 function copyStaticCSS() {
   try {
     console.log('Using static CSS copy as fallback...');
+    
+    // Copy main styles.css
     const sourcePath = path.join(srcDir, 'styles.css');
     const destPath = path.join(distDir, 'styles.css');
-    
     fs.copyFileSync(sourcePath, destPath);
+    
+    // Copy standalone.css
+    const standaloneSrc = path.join(srcDir, 'styles', 'standalone.css');
+    const standaloneDest = path.join(distDir, 'standalone.css');
+    
+    if (fs.existsSync(standaloneSrc)) {
+      fs.copyFileSync(standaloneSrc, standaloneDest);
+      console.log('SUCCESS: Standalone CSS copied');
+    } else {
+      console.warn('WARNING: standalone.css not found in src/styles/');
+    }
+    
+    // Copy and fix preset.cjs
+    const presetSrc = path.join(srcDir, 'styles', 'tailwind-preset.js');
+    const presetDest = path.join(distDir, 'preset.cjs');
+    
+    if (fs.existsSync(presetSrc)) {
+      // Read the preset file and fix the import path
+      let presetContent = fs.readFileSync(presetSrc, 'utf8');
+      
+      // Replace the relative import with the correct import for the built package
+      presetContent = presetContent.replace(
+        "const { tokens } = require('../utils/tokens');",
+        "const { tokens } = require('./index.cjs');"
+      );
+      
+      fs.writeFileSync(presetDest, presetContent, 'utf8');
+      console.log('SUCCESS: Tailwind preset copied and fixed');
+    } else {
+      console.warn('WARNING: tailwind-preset.js not found in src/styles/');
+    }
     
     const size = (fs.statSync(destPath).size / 1024).toFixed(2);
     console.log(`SUCCESS: Static CSS copied: ${size}KB\n`);
@@ -105,9 +168,21 @@ function copyStaticCSS() {
  */
 function validateCSS() {
   const cssPath = path.join(distDir, 'styles.css');
+  const standalonePath = path.join(distDir, 'standalone.css');
+  const presetPath = path.join(distDir, 'preset.cjs');
   
   if (!fs.existsSync(cssPath)) {
-    console.error('ERROR: No CSS file generated');
+    console.error('ERROR: No styles.css file generated');
+    return false;
+  }
+  
+  if (!fs.existsSync(standalonePath)) {
+    console.error('ERROR: No standalone.css file generated');
+    return false;
+  }
+  
+  if (!fs.existsSync(presetPath)) {
+    console.error('ERROR: No preset.cjs file generated');
     return false;
   }
   
@@ -126,8 +201,14 @@ function validateCSS() {
     console.warn('WARNING: Missing design tokens:', missingTokens.join(', '));
   }
   
-  const size = (fs.statSync(cssPath).size / 1024).toFixed(2);
-  console.log(`CSS validation complete: ${size}KB`);
+  const stylesSize = (fs.statSync(cssPath).size / 1024).toFixed(2);
+  const standaloneSize = (fs.statSync(standalonePath).size / 1024).toFixed(2);
+  const presetSize = (fs.statSync(presetPath).size / 1024).toFixed(2);
+  
+  console.log(`CSS validation complete:`);
+  console.log(`  - styles.css: ${stylesSize}KB`);
+  console.log(`  - standalone.css: ${standaloneSize}KB`);
+  console.log(`  - preset.cjs: ${presetSize}KB`);
   
   return true;
 }
