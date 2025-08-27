@@ -1,5 +1,21 @@
 # Changelog
 
+## [8.0.0](https://github.com/jonmatum/react-mfe-shell/compare/demo-v7.0.0...demo-v8.0.0) (2025-08-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* Modal component now uses HeadlessUI for better accessibility. Legacy props are still supported but compound components are recommended.
+
+### Features
+
+* add fullscreen modal support with improved accessibility ([ae89d9a](https://github.com/jonmatum/react-mfe-shell/commit/ae89d9a928391efe15ad355bc0a8846159bc78df))
+
+
+### Bug Fixes
+
+* resolve all TypeScript lint warnings ([ae89d9a](https://github.com/jonmatum/react-mfe-shell/commit/ae89d9a928391efe15ad355bc0a8846159bc78df))
+
 ## [7.0.0](https://github.com/jonmatum/react-mfe-shell/compare/demo-v6.0.0...demo-v7.0.0) (2025-08-26)
 
 

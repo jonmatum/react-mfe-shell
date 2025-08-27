@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [11.0.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v10.0.0...react-mfe-shell-v11.0.0) (2025-08-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* Modal component now uses HeadlessUI for better accessibility. Legacy props are still supported but compound components are recommended.
+
+### Features
+
+* add fullscreen modal support with improved accessibility ([ae89d9a](https://github.com/jonmatum/react-mfe-shell/commit/ae89d9a928391efe15ad355bc0a8846159bc78df))
+
+
+### Bug Fixes
+
+* resolve all TypeScript lint warnings ([ae89d9a](https://github.com/jonmatum/react-mfe-shell/commit/ae89d9a928391efe15ad355bc0a8846159bc78df))
+
 ## [10.0.0](https://github.com/jonmatum/react-mfe-shell/compare/react-mfe-shell-v9.0.0...react-mfe-shell-v10.0.0) (2025-08-26)
 
 
