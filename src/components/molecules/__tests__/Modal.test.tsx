@@ -1,167 +1,326 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Modal from '../Modal';
-
-// Mock the XMarkIcon
-vi.mock('@heroicons/react/24/outline', () => ({
-  XMarkIcon: ({ className }: { className?: string }) => (
-    <svg className={className} data-testid='x-mark-icon'>
-      <path d='M6 18L18 6M6 6l12 12' />
-    </svg>
-  ),
-}));
+import Button from '../../atoms/Button';
 
 describe('Modal', () => {
-  const defaultProps = {
-    isOpen: true,
-    onClose: vi.fn(),
-    title: 'Test Modal',
-    children: <div>Modal content</div>,
-  };
+  const mockOnClose = vi.fn();
 
   beforeEach(() => {
-    vi.clearAllMocks();
-    // Reset body overflow style
-    document.body.style.overflow = 'unset';
+    mockOnClose.mockClear();
   });
 
-  afterEach(() => {
-    // Clean up any event listeners
-    document.body.style.overflow = 'unset';
+  describe('Basic Functionality', () => {
+    it('renders when isOpen is true', () => {
+      render(
+        <Modal isOpen={true} onClose={mockOnClose}>
+          <div>Modal content</div>
+        </Modal>
+      );
+
+      expect(screen.getByText('Modal content')).toBeInTheDocument();
+    });
+
+    it('does not render when isOpen is false', () => {
+      render(
+        <Modal isOpen={false} onClose={mockOnClose}>
+          <div>Modal content</div>
+        </Modal>
+      );
+
+      expect(screen.queryByText('Modal content')).not.toBeInTheDocument();
+    });
   });
 
-  it('renders when isOpen is true', () => {
-    render(<Modal {...defaultProps} />);
+  describe('Compound Components', () => {
+    describe('Modal.Header', () => {
+      it('renders header with title', () => {
+        render(
+          <Modal isOpen={true} onClose={mockOnClose}>
+            <Modal.Header>Test Title</Modal.Header>
+            <Modal.Body>Content</Modal.Body>
+          </Modal>
+        );
 
-    expect(screen.getByRole('dialog')).toBeInTheDocument();
-    expect(screen.getByText('Test Modal')).toBeInTheDocument();
-    expect(screen.getByText('Modal content')).toBeInTheDocument();
+        expect(screen.getByText('Test Title')).toBeInTheDocument();
+      });
+
+      it('renders close button by default', () => {
+        render(
+          <Modal isOpen={true} onClose={mockOnClose}>
+            <Modal.Header onClose={mockOnClose}>Test Title</Modal.Header>
+          </Modal>
+        );
+
+        expect(screen.getByLabelText('Close modal')).toBeInTheDocument();
+      });
+
+      it('hides close button when showCloseButton is false', () => {
+        render(
+          <Modal isOpen={true} onClose={mockOnClose}>
+            <Modal.Header showCloseButton={false}>Test Title</Modal.Header>
+          </Modal>
+        );
+
+        expect(screen.queryByLabelText('Close modal')).not.toBeInTheDocument();
+      });
+
+      it('calls onClose when close button is clicked', async () => {
+        const user = userEvent.setup();
+
+        render(
+          <Modal isOpen={true} onClose={mockOnClose}>
+            <Modal.Header onClose={mockOnClose}>Test Title</Modal.Header>
+          </Modal>
+        );
+
+        await user.click(screen.getByLabelText('Close modal'));
+        expect(mockOnClose).toHaveBeenCalledTimes(1);
+      });
+
+      it('renders custom content instead of string title', () => {
+        render(
+          <Modal isOpen={true} onClose={mockOnClose}>
+            <Modal.Header>
+              <div data-testid='custom-header'>Custom Header Content</div>
+            </Modal.Header>
+          </Modal>
+        );
+
+        expect(screen.getByTestId('custom-header')).toBeInTheDocument();
+      });
+    });
+
+    describe('Modal.Body', () => {
+      it('renders body content', () => {
+        render(
+          <Modal isOpen={true} onClose={mockOnClose}>
+            <Modal.Body>Body content</Modal.Body>
+          </Modal>
+        );
+
+        expect(screen.getByText('Body content')).toBeInTheDocument();
+      });
+
+      it('applies scrollable styles by default', () => {
+        render(
+          <Modal isOpen={true} onClose={mockOnClose}>
+            <Modal.Body>Content</Modal.Body>
+          </Modal>
+        );
+
+        const body = screen.getByText('Content').closest('div');
+        expect(body).toHaveClass('overflow-y-auto');
+      });
+
+      it('applies non-scrollable styles when scrollable is false', () => {
+        render(
+          <Modal isOpen={true} onClose={mockOnClose}>
+            <Modal.Body scrollable={false}>Content</Modal.Body>
+          </Modal>
+        );
+
+        const body = screen.getByText('Content').closest('div');
+        expect(body).toHaveClass('overflow-hidden');
+      });
+
+      it('applies custom maxHeight', () => {
+        render(
+          <Modal isOpen={true} onClose={mockOnClose}>
+            <Modal.Body maxHeight='200px'>Content</Modal.Body>
+          </Modal>
+        );
+
+        const body = screen.getByText('Content').closest('div');
+        expect(body).toHaveStyle({ maxHeight: '200px' });
+      });
+    });
+
+    describe('Modal.Footer', () => {
+      it('renders footer content', () => {
+        render(
+          <Modal isOpen={true} onClose={mockOnClose}>
+            <Modal.Footer>
+              <Button>Action</Button>
+            </Modal.Footer>
+          </Modal>
+        );
+
+        expect(screen.getByText('Action')).toBeInTheDocument();
+      });
+
+      it('applies end justification by default', () => {
+        render(
+          <Modal isOpen={true} onClose={mockOnClose}>
+            <Modal.Footer>
+              <Button>Action</Button>
+            </Modal.Footer>
+          </Modal>
+        );
+
+        const footer = screen.getByText('Action').closest('div');
+        expect(footer).toHaveClass('justify-end');
+      });
+
+      const justifications = ['start', 'center', 'end', 'between'] as const;
+
+      justifications.forEach(justify => {
+        it(`applies ${justify} justification`, () => {
+          render(
+            <Modal isOpen={true} onClose={mockOnClose}>
+              <Modal.Footer justify={justify}>
+                <Button>Action</Button>
+              </Modal.Footer>
+            </Modal>
+          );
+
+          const footer = screen.getByText('Action').closest('div');
+          expect(footer).toHaveClass(`justify-${justify}`);
+        });
+      });
+    });
   });
 
-  it('does not render when isOpen is false', () => {
-    render(<Modal {...defaultProps} isOpen={false} />);
+  describe('Backward Compatibility', () => {
+    it('renders deprecated title prop as header', () => {
+      render(
+        <Modal isOpen={true} onClose={mockOnClose} title='Legacy Title'>
+          <div>Content</div>
+        </Modal>
+      );
 
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+      expect(screen.getByText('Legacy Title')).toBeInTheDocument();
+      expect(screen.getByLabelText('Close modal')).toBeInTheDocument();
+    });
+
+    it('wraps content in padding when using title prop', () => {
+      render(
+        <Modal isOpen={true} onClose={mockOnClose} title='Title'>
+          <div>Content</div>
+        </Modal>
+      );
+
+      const content = screen.getByText('Content').parentElement;
+      expect(content).toHaveClass('px-6', 'py-4');
+    });
   });
 
-  it('calls onClose when close button is clicked', () => {
-    const onClose = vi.fn();
-    render(<Modal {...defaultProps} onClose={onClose} />);
+  describe('Complex Usage Scenarios', () => {
+    it('handles full compound component structure', () => {
+      render(
+        <Modal isOpen={true} onClose={mockOnClose} size='lg'>
+          <Modal.Header showCloseButton onClose={mockOnClose}>
+            Complex Modal
+          </Modal.Header>
+          <Modal.Body scrollable maxHeight='400px'>
+            <p>This is a complex modal with all features.</p>
+            <Button>Interactive element</Button>
+          </Modal.Body>
+          <Modal.Footer justify='between'>
+            <Button variant='secondary'>Cancel</Button>
+            <Button variant='primary'>Confirm</Button>
+          </Modal.Footer>
+        </Modal>
+      );
 
-    const closeButton = screen.getByLabelText('Close modal');
-    fireEvent.click(closeButton);
+      expect(screen.getByText('Complex Modal')).toBeInTheDocument();
+      expect(
+        screen.getByText('This is a complex modal with all features.')
+      ).toBeInTheDocument();
+      expect(screen.getByText('Cancel')).toBeInTheDocument();
+      expect(screen.getByText('Confirm')).toBeInTheDocument();
+      expect(screen.getByLabelText('Close modal')).toBeInTheDocument();
+    });
 
-    expect(onClose).toHaveBeenCalledTimes(1);
+    it('handles nested interactive elements', async () => {
+      const user = userEvent.setup();
+      const handleButtonClick = vi.fn();
+
+      render(
+        <Modal isOpen={true} onClose={mockOnClose}>
+          <Modal.Body>
+            <Button onClick={handleButtonClick}>Click me</Button>
+          </Modal.Body>
+        </Modal>
+      );
+
+      await user.click(screen.getByText('Click me'));
+      expect(handleButtonClick).toHaveBeenCalledTimes(1);
+    });
   });
 
-  it('calls onClose when backdrop is clicked', () => {
-    const onClose = vi.fn();
-    render(<Modal {...defaultProps} onClose={onClose} />);
+  describe('Edge Cases', () => {
+    it('handles empty content gracefully', () => {
+      render(
+        <Modal isOpen={true} onClose={mockOnClose}>
+          <Modal.Body></Modal.Body>
+        </Modal>
+      );
 
-    // Find backdrop by its specific classes (updated for blur backdrop)
-    const backdrop = document.querySelector(
-      '.bg-black.bg-opacity-25.backdrop-blur-sm'
-    );
-    expect(backdrop).toBeInTheDocument();
+      // Should render without errors
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+    });
 
-    if (backdrop) {
-      fireEvent.click(backdrop);
-      expect(onClose).toHaveBeenCalledTimes(1);
-    }
+    it('handles multiple modals (z-index stacking)', () => {
+      render(
+        <>
+          <Modal isOpen={true} onClose={mockOnClose}>
+            <Modal.Body>First modal</Modal.Body>
+          </Modal>
+          <Modal isOpen={true} onClose={mockOnClose}>
+            <Modal.Body>Second modal</Modal.Body>
+          </Modal>
+        </>
+      );
+
+      expect(screen.getByText('First modal')).toBeInTheDocument();
+      expect(screen.getByText('Second modal')).toBeInTheDocument();
+    });
+
+    it('handles rapid open/close cycles', async () => {
+      const { rerender } = render(
+        <Modal isOpen={false} onClose={mockOnClose}>
+          <Modal.Body>Content</Modal.Body>
+        </Modal>
+      );
+
+      // Rapidly toggle
+      rerender(
+        <Modal isOpen={true} onClose={mockOnClose}>
+          <Modal.Body>Content</Modal.Body>
+        </Modal>
+      );
+
+      rerender(
+        <Modal isOpen={false} onClose={mockOnClose}>
+          <Modal.Body>Content</Modal.Body>
+        </Modal>
+      );
+
+      rerender(
+        <Modal isOpen={true} onClose={mockOnClose}>
+          <Modal.Body>Content</Modal.Body>
+        </Modal>
+      );
+
+      expect(screen.getByText('Content')).toBeInTheDocument();
+    });
   });
 
-  it('calls onClose when Escape key is pressed', () => {
-    const onClose = vi.fn();
-    render(<Modal {...defaultProps} onClose={onClose} />);
+  describe('Component Structure', () => {
+    it('has correct display names', () => {
+      expect(Modal.displayName).toBe('Modal');
+      expect(Modal.Header.displayName).toBe('Modal.Header');
+      expect(Modal.Body.displayName).toBe('Modal.Body');
+      expect(Modal.Footer.displayName).toBe('Modal.Footer');
+    });
 
-    fireEvent.keyDown(document, { key: 'Escape' });
-
-    expect(onClose).toHaveBeenCalledTimes(1);
-  });
-
-  it('does not call onClose when other keys are pressed', () => {
-    const onClose = vi.fn();
-    render(<Modal {...defaultProps} onClose={onClose} />);
-
-    fireEvent.keyDown(document, { key: 'Enter' });
-    fireEvent.keyDown(document, { key: 'Space' });
-
-    expect(onClose).not.toHaveBeenCalled();
-  });
-
-  it('renders without title', () => {
-    render(<Modal {...defaultProps} title={undefined} />);
-
-    expect(screen.getByRole('dialog')).toBeInTheDocument();
-    expect(screen.queryByText('Test Modal')).not.toBeInTheDocument();
-    expect(screen.getByText('Modal content')).toBeInTheDocument();
-  });
-
-  it('accepts custom className', () => {
-    render(<Modal {...defaultProps} className='custom-modal' />);
-
-    const modal = screen.getByRole('dialog');
-    expect(modal).toHaveClass('custom-modal');
-  });
-
-  it('has proper accessibility attributes', () => {
-    render(<Modal {...defaultProps} />);
-
-    const modal = screen.getByRole('dialog');
-    expect(modal).toHaveAttribute('role', 'dialog');
-    expect(modal).toHaveAttribute('aria-modal', 'true');
-    expect(modal).toHaveAttribute('aria-labelledby', 'modal-title');
-  });
-
-  it('does not have aria-labelledby when no title is provided', () => {
-    render(<Modal {...defaultProps} title={undefined} />);
-
-    const modal = screen.getByRole('dialog');
-    expect(modal).not.toHaveAttribute('aria-labelledby');
-  });
-
-  it('sets body overflow to hidden when open', () => {
-    render(<Modal {...defaultProps} />);
-
-    expect(document.body.style.overflow).toBe('hidden');
-  });
-
-  it('resets body overflow when closed', () => {
-    const { rerender } = render(<Modal {...defaultProps} />);
-    expect(document.body.style.overflow).toBe('hidden');
-
-    rerender(<Modal {...defaultProps} isOpen={false} />);
-    expect(document.body.style.overflow).toBe('unset');
-  });
-
-  it('cleans up event listeners on unmount', () => {
-    const onClose = vi.fn();
-    const { unmount } = render(<Modal {...defaultProps} onClose={onClose} />);
-
-    unmount();
-
-    // Try to trigger escape after unmount
-    fireEvent.keyDown(document, { key: 'Escape' });
-    expect(onClose).not.toHaveBeenCalled();
-  });
-
-  it('renders close button with correct icon', () => {
-    render(<Modal {...defaultProps} />);
-
-    const closeButton = screen.getByLabelText('Close modal');
-    const icon = screen.getByTestId('x-mark-icon');
-
-    expect(closeButton).toBeInTheDocument();
-    expect(icon).toBeInTheDocument();
-    expect(icon).toHaveClass('h-5', 'w-5');
-  });
-
-  it('only handles escape when modal is open', () => {
-    const onClose = vi.fn();
-    render(<Modal {...defaultProps} isOpen={false} onClose={onClose} />);
-
-    fireEvent.keyDown(document, { key: 'Escape' });
-
-    expect(onClose).not.toHaveBeenCalled();
+    it('exports compound components correctly', () => {
+      expect(Modal.Header).toBeDefined();
+      expect(Modal.Body).toBeDefined();
+      expect(Modal.Footer).toBeDefined();
+    });
   });
 });

@@ -19,7 +19,7 @@ import {
  * - Accessibility-first design
  * - Responsive typography support
  */
-const Heading = forwardRef<any, HeadingProps>(
+const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(
   (
     {
       children,

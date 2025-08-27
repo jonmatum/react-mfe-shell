@@ -54,6 +54,7 @@ export function TypographyProvider({
 /**
  * Hook to use typography context
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export function useTypography(): TypographyContextValue {
   const context = useContext(TypographyContext);
 
@@ -74,6 +75,7 @@ export function useTypography(): TypographyContextValue {
 /**
  * Hook to get scaled typography values
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export function useScaledTypography() {
   const { scale, baseSize, baseWeight, baseColor } = useTypography();
 

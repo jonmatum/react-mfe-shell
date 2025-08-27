@@ -4,6 +4,7 @@ import {
   Badge, 
   Button, 
   Input, 
+  Label,
   Switch, 
   LoadingSpinner,
   Modal,
@@ -13,18 +14,21 @@ import {
   Code,
   Divider,
   FeatureChip,
+  Icon,
   useSettings 
 } from '../../src';
 import { 
   SwatchIcon,
   CubeIcon,
   PuzzlePieceIcon,
-  StarIcon
+  StarIcon,
+  ShieldCheckIcon
 } from '@heroicons/react/24/outline';
 
 const ComponentShowcase: React.FC = () => {
   const [activeTab, setActiveTab] = useState('atoms');
   const [modalOpen, setModalOpen] = useState(false);
+  const [fullscreenModalOpen, setFullscreenModalOpen] = useState(false);
   const [removedBadges, setRemovedBadges] = useState<Set<string>>(new Set());
   const [interactiveState, setInteractiveState] = useState({
     notifications: 3,
@@ -75,10 +79,44 @@ const ComponentShowcase: React.FC = () => {
           <h2 className="text-4xl font-bold text-text-primary mb-4">
             Atomic Design System
           </h2>
-          <p className="text-lg text-text-secondary max-w-3xl mx-auto">
-            A comprehensive collection of reusable components built with DRY principles, 
-            accessibility-first design, and seamless theme integration.
+          <p className="text-lg text-text-secondary max-w-4xl mx-auto mb-6">
+            A comprehensive collection of 24 production-ready components built with DRY principles, 
+            accessibility-first design, and seamless theme integration. Features enhanced Modal system 
+            with Headless UI, compound components, and responsive design.
           </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto text-sm">
+            <div className="p-4 bg-surface-secondary rounded-lg">
+              <div className="flex items-center gap-2 mb-2">
+                <PuzzlePieceIcon className="w-4 h-4 text-primary-500" />
+                <h3 className="font-semibold text-text-primary">Enhanced Components</h3>
+              </div>
+              <p className="text-text-secondary">
+                Modal with Headless UI integration, compound patterns, 9 sizes, 3 positions, 
+                and mobile-first responsive design
+              </p>
+            </div>
+            <div className="p-4 bg-surface-secondary rounded-lg">
+              <div className="flex items-center gap-2 mb-2">
+                <ShieldCheckIcon className="w-4 h-4 text-success-500" />
+                <h3 className="font-semibold text-text-primary">Accessibility First</h3>
+              </div>
+              <p className="text-text-secondary">
+                WCAG AA compliant with proper focus management, keyboard navigation, 
+                and screen reader support
+              </p>
+            </div>
+            <div className="p-4 bg-surface-secondary rounded-lg">
+              <div className="flex items-center gap-2 mb-2">
+                <SwatchIcon className="w-4 h-4 text-secondary-500" />
+                <h3 className="font-semibold text-text-primary">Design Tokens</h3>
+              </div>
+              <p className="text-text-secondary">
+                Consistent theming with design tokens, light/dark modes, 
+                and seamless Tailwind integration
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Tab Navigation */}
@@ -113,7 +151,12 @@ const ComponentShowcase: React.FC = () => {
               onResetBadges={resetBadges}
             />
           )}
-          {activeTab === 'molecules' && <MoleculesTab />}
+          {activeTab === 'molecules' && (
+            <MoleculesTab 
+              setModalOpen={setModalOpen}
+              setFullscreenModalOpen={setFullscreenModalOpen}
+            />
+          )}
           {activeTab === 'interactive' && (
             <InteractiveTab 
               state={interactiveState}
@@ -122,10 +165,149 @@ const ComponentShowcase: React.FC = () => {
               onRemoveTag={removeTag}
               modalOpen={modalOpen}
               setModalOpen={setModalOpen}
+              setFullscreenModalOpen={setFullscreenModalOpen}
             />
           )}
         </div>
       </div>
+      
+      {/* Fullscreen Modal - at component level for global access */}
+      <Modal
+        isOpen={fullscreenModalOpen}
+        onClose={() => setFullscreenModalOpen(false)}
+        size="fullscreen"
+      >
+        <Modal.Header showCloseButton onClose={() => setFullscreenModalOpen(false)}>
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-warning-500 rounded-full flex items-center justify-center">
+              <Icon name="ArrowsPointingOutIcon" className="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-text-primary">Fullscreen Modal Experience</h3>
+              <p className="text-sm text-text-secondary">Maximum space utilization for complex interfaces</p>
+            </div>
+          </div>
+        </Modal.Header>
+        
+        <Modal.Body scrollable>
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <h4 className="text-lg font-semibold text-text-primary">Fullscreen Benefits</h4>
+                <ul className="space-y-2 text-text-secondary">
+                  <li className="flex items-start gap-2">
+                    <Icon name="CheckIcon" className="w-4 h-4 text-success-500 mt-0.5 flex-shrink-0" />
+                    <span>Maximum viewport utilization - no wasted space</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Icon name="CheckIcon" className="w-4 h-4 text-success-500 mt-0.5 flex-shrink-0" />
+                    <span>Perfect for complex forms, dashboards, and data tables</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Icon name="CheckIcon" className="w-4 h-4 text-success-500 mt-0.5 flex-shrink-0" />
+                    <span>Immersive experience without distractions</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Icon name="CheckIcon" className="w-4 h-4 text-success-500 mt-0.5 flex-shrink-0" />
+                    <span>Mobile-friendly with proper responsive behavior</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Icon name="CheckIcon" className="w-4 h-4 text-success-500 mt-0.5 flex-shrink-0" />
+                    <span>Smooth transitions and animations</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="space-y-4">
+                <h4 className="text-lg font-semibold text-text-primary">Use Cases</h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="p-4 bg-surface-secondary rounded-lg">
+                    <h5 className="font-medium text-text-primary mb-2">Data Management</h5>
+                    <p className="text-sm text-text-secondary">Large tables, spreadsheets, and data entry forms</p>
+                  </div>
+                  <div className="p-4 bg-surface-secondary rounded-lg">
+                    <h5 className="font-medium text-text-primary mb-2">Media Viewers</h5>
+                    <p className="text-sm text-text-secondary">Image galleries, video players, document viewers</p>
+                  </div>
+                  <div className="p-4 bg-surface-secondary rounded-lg">
+                    <h5 className="font-medium text-text-primary mb-2">Dashboards</h5>
+                    <p className="text-sm text-text-secondary">Analytics, monitoring, and reporting interfaces</p>
+                  </div>
+                  <div className="p-4 bg-surface-secondary rounded-lg">
+                    <h5 className="font-medium text-text-primary mb-2">Editors</h5>
+                    <p className="text-sm text-text-secondary">Code editors, rich text editors, design tools</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="p-6 bg-primary-50 border border-primary-200 rounded-lg">
+              <h4 className="font-medium text-primary-800 mb-2">Implementation Example</h4>
+              <Code className="text-sm">
+{`<Modal
+  isOpen={isFullscreenOpen}
+  onClose={handleClose}
+  size="fullscreen"
+>
+  <Modal.Header showCloseButton onClose={handleClose}>
+    <h3>Fullscreen Interface</h3>
+  </Modal.Header>
+  
+  <Modal.Body scrollable>
+    {/* Your complex interface here */}
+    <YourComplexComponent />
+  </Modal.Body>
+  
+  <Modal.Footer justify="between">
+    <Button variant="secondary" onClick={handleClose}>
+      Cancel
+    </Button>
+    <Button variant="primary" onClick={handleSave}>
+      Save Changes
+    </Button>
+  </Modal.Footer>
+</Modal>`}
+              </Code>
+            </div>
+            
+            <div className="space-y-4">
+              <h4 className="text-lg font-semibold text-text-primary">Technical Features</h4>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-4 bg-surface-secondary rounded-lg">
+                  <Icon name="DevicePhoneMobileIcon" className="w-6 h-6 text-primary-500 mb-2" />
+                  <h5 className="font-medium text-text-primary mb-1">Responsive</h5>
+                  <p className="text-sm text-text-secondary">Adapts perfectly to all screen sizes</p>
+                </div>
+                <div className="p-4 bg-surface-secondary rounded-lg">
+                  <Icon name="EyeIcon" className="w-6 h-6 text-primary-500 mb-2" />
+                  <h5 className="font-medium text-text-primary mb-1">Accessible</h5>
+                  <p className="text-sm text-text-secondary">Full keyboard navigation and screen reader support</p>
+                </div>
+                <div className="p-4 bg-surface-secondary rounded-lg">
+                  <Icon name="BoltIcon" className="w-6 h-6 text-primary-500 mb-2" />
+                  <h5 className="font-medium text-text-primary mb-1">Performant</h5>
+                  <p className="text-sm text-text-secondary">Optimized animations and smooth interactions</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+        
+        <Modal.Footer justify="between">
+          <div className="flex items-center gap-2">
+            <Icon name="InformationCircleIcon" className="w-4 h-4 text-text-secondary" />
+            <span className="text-sm text-text-secondary">Press ESC to close</span>
+          </div>
+          <div className="flex gap-2">
+            <Button variant="secondary" onClick={() => setFullscreenModalOpen(false)}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={() => setFullscreenModalOpen(false)}>
+              Awesome!
+            </Button>
+          </div>
+        </Modal.Footer>
+      </Modal>
     </section>
   );
 };
@@ -440,24 +622,27 @@ const AtomsTab: React.FC<AtomsTabProps> = ({ removedBadges, onRemoveBadge, onRes
       {/* Other Atoms */}
       <Card>
         <Card.Header>
-          <h3 className="font-semibold text-text-primary">Other Components</h3>
-          <p className="text-sm text-text-secondary">Additional atomic components</p>
+          <h3 className="font-semibold text-text-primary">Additional Atoms</h3>
+          <p className="text-sm text-text-secondary">Essential building blocks for forms and UI elements</p>
         </Card.Header>
         <Card.Body>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Inputs */}
             <div>
-              <h4 className="font-medium text-text-primary mb-3">Inputs</h4>
+              <h4 className="font-medium text-text-primary mb-3">Inputs & Labels</h4>
               <div className="space-y-3">
-                <Input placeholder="Default input" />
-                <Input placeholder="With error" error />
-                <Input type="email" placeholder="Email input" />
+                <div>
+                  <Label htmlFor="demo-input">Email Address</Label>
+                  <Input id="demo-input" placeholder="Enter email" />
+                </div>
+                <Input placeholder="With error state" error />
+                <Input type="password" placeholder="Password input" />
               </div>
             </div>
 
-            {/* Switches */}
+            {/* Switches & Interactive */}
             <div>
-              <h4 className="font-medium text-text-primary mb-3">Switches</h4>
+              <h4 className="font-medium text-text-primary mb-3">Interactive Elements</h4>
               <div className="space-y-3">
                 <div className="flex items-center space-x-2">
                   <Switch checked={true} onChange={() => {}} />
@@ -467,16 +652,48 @@ const AtomsTab: React.FC<AtomsTabProps> = ({ removedBadges, onRemoveBadge, onRes
                   <Switch checked={false} onChange={() => {}} />
                   <span className="text-text-secondary">Disabled</span>
                 </div>
+                <div className="flex items-center space-x-4">
+                  <LoadingSpinner size="sm" />
+                  <LoadingSpinner size="md" />
+                  <LoadingSpinner size="lg" />
+                </div>
               </div>
             </div>
 
-            {/* Loading Spinners */}
+            {/* Layout & Visual */}
             <div>
-              <h4 className="font-medium text-text-primary mb-3">Loading</h4>
-              <div className="flex items-center space-x-4">
-                <LoadingSpinner size="sm" />
-                <LoadingSpinner size="md" />
-                <LoadingSpinner size="lg" />
+              <h4 className="font-medium text-text-primary mb-3">Layout Elements</h4>
+              <div className="space-y-3">
+                <div>
+                  <p className="text-text-secondary text-sm mb-2">Horizontal Divider</p>
+                  <Divider />
+                </div>
+                <div className="flex items-center space-x-4">
+                  <span className="text-text-secondary text-sm">Vertical</span>
+                  <Divider orientation="vertical" className="h-8" />
+                  <span className="text-text-secondary text-sm">Divider</span>
+                </div>
+                <FeatureChip variant="primary">Feature Chip</FeatureChip>
+              </div>
+            </div>
+
+            {/* Icons */}
+            <div>
+              <h4 className="font-medium text-text-primary mb-3">Icons & Visual</h4>
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3">
+                  <Icon name="StarIcon" size="sm" />
+                  <Icon name="StarIcon" size="md" />
+                  <Icon name="StarIcon" size="lg" />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Icon name="CheckIcon" className="text-success-500" />
+                  <span className="text-text-secondary text-sm">Success state</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Icon name="XMarkIcon" className="text-danger-500" />
+                  <span className="text-text-secondary text-sm">Error state</span>
+                </div>
               </div>
             </div>
           </div>
@@ -486,7 +703,12 @@ const AtomsTab: React.FC<AtomsTabProps> = ({ removedBadges, onRemoveBadge, onRes
   );
 };
 
-const MoleculesTab: React.FC = () => (
+interface MoleculesTabProps {
+  setModalOpen: (open: boolean) => void;
+  setFullscreenModalOpen: (open: boolean) => void;
+}
+
+const MoleculesTab: React.FC<MoleculesTabProps> = ({ setModalOpen, setFullscreenModalOpen }) => (
   <div className="space-y-8">
     <Card>
       <Card.Header>
@@ -530,14 +752,92 @@ const MoleculesTab: React.FC = () => (
 
     <Card>
       <Card.Header>
-        <h3 className="font-semibold text-text-primary">Other Molecules</h3>
-        <p className="text-sm text-text-secondary">Additional compound components</p>
+        <h3 className="font-semibold text-text-primary">Enhanced Modal System</h3>
+        <p className="text-sm text-text-secondary">
+          Flexible, accessible modals with Headless UI integration and compound components
+        </p>
       </Card.Header>
       <Card.Body>
-        <div className="space-y-4">
-          <Divider />
-          <p className="text-text-secondary text-center">More molecule components coming soon...</p>
-          <Divider />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div className="space-y-3">
+            <h4 className="font-medium text-text-primary">Key Features:</h4>
+            <ul className="text-sm text-text-secondary space-y-1">
+              <li>• Headless UI integration for accessibility</li>
+              <li>• Compound components (Header, Body, Footer)</li>
+              <li>• 10 responsive size variants (including fullscreen)</li>
+              <li>• 3 position options (center, top, bottom)</li>
+              <li>• Mobile-first responsive design</li>
+              <li>• Custom styling and backdrop options</li>
+            </ul>
+          </div>
+          <div className="space-y-3">
+            <h4 className="font-medium text-text-primary">Accessibility:</h4>
+            <ul className="text-sm text-text-secondary space-y-1">
+              <li>• WCAG AA compliant</li>
+              <li>• Automatic focus management</li>
+              <li>• Keyboard navigation support</li>
+              <li>• Screen reader optimized</li>
+              <li>• Proper ARIA attributes</li>
+              <li>• Focus trap implementation</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div className="p-4 bg-primary-50 border border-primary-200 rounded-lg mb-4">
+          <p className="text-sm text-primary-800">
+            <strong>New API:</strong> The Modal now uses compound components for better flexibility. 
+            The old <code className="bg-primary-100 px-1 rounded">title</code> prop is deprecated 
+            in favor of <code className="bg-primary-100 px-1 rounded">Modal.Header</code>.
+          </p>
+        </div>
+        
+        <div className="flex gap-3 mb-4">
+          <Button onClick={() => setModalOpen(true)} variant="primary">
+            Try Enhanced Modal
+          </Button>
+          <Button onClick={() => setFullscreenModalOpen(true)} variant="warning">
+            Try Fullscreen
+          </Button>
+        </div>
+      </Card.Body>
+    </Card>
+
+    <Card>
+      <Card.Header>
+        <h3 className="font-semibold text-text-primary">Form Molecules</h3>
+        <p className="text-sm text-text-secondary">
+          Advanced form components with validation and accessibility features
+        </p>
+      </Card.Header>
+      <Card.Body>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+          <div>
+            <h4 className="font-medium text-text-primary mb-2">Available Components:</h4>
+            <ul className="text-sm text-text-secondary space-y-1">
+              <li>• FormField - Universal form wrapper</li>
+              <li>• SearchBox - Debounced search with clear</li>
+              <li>• Select - Dropdown with search & multi-select</li>
+              <li>• Checkbox - Accessible with indeterminate state</li>
+              <li>• Radio - RadioGroup with full accessibility</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-medium text-text-primary mb-2">Advanced Features:</h4>
+            <ul className="text-sm text-text-secondary space-y-1">
+              <li>• SwitchField - Enhanced switch with labels</li>
+              <li>• Textarea - Auto-resizing text areas</li>
+              <li>• FileUpload - Drag-and-drop with preview</li>
+              <li>• Built-in validation support</li>
+              <li>• Consistent error handling</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div className="p-4 bg-primary-50 border border-primary-200 rounded-lg">
+          <p className="text-sm text-primary-800">
+            <strong>Form Showcase:</strong> See the dedicated Form Molecules section below 
+            for interactive examples of all form components with validation and real-world usage patterns.
+          </p>
         </div>
       </Card.Body>
     </Card>
@@ -550,11 +850,12 @@ interface InteractiveTabProps {
     status: 'Online' | 'Away' | 'Offline';
     tags: string[];
   };
-  onUpdateState: (updates: any) => void;
+  onUpdateState: (updates: Partial<InteractiveTabProps['state']>) => void;
   onAddTag: (tag: string) => void;
   onRemoveTag: (tag: string) => void;
   modalOpen: boolean;
   setModalOpen: (open: boolean) => void;
+  setFullscreenModalOpen: (open: boolean) => void;
 }
 
 const InteractiveTab: React.FC<InteractiveTabProps> = ({ 
@@ -563,7 +864,8 @@ const InteractiveTab: React.FC<InteractiveTabProps> = ({
   onAddTag, 
   onRemoveTag, 
   modalOpen, 
-  setModalOpen 
+  setModalOpen,
+  setFullscreenModalOpen
 }) => (
   <div className="space-y-8">
     <Card>
@@ -654,32 +956,116 @@ const InteractiveTab: React.FC<InteractiveTabProps> = ({
 
     <Card>
       <Card.Header>
-        <h3 className="font-semibold text-text-primary">Modal Example</h3>
-        <p className="text-sm text-text-secondary">Accessible dialog with focus management</p>
+        <h3 className="font-semibold text-text-primary">Enhanced Modal System</h3>
+        <p className="text-sm text-text-secondary">
+          Flexible, accessible modals with Headless UI integration, compound components, and responsive design
+        </p>
       </Card.Header>
       <Card.Body>
-        <Button onClick={() => setModalOpen(true)}>
-          Open Modal
-        </Button>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <Button 
+            onClick={() => setModalOpen(true)}
+            variant="primary"
+          >
+            Basic Modal
+          </Button>
+          <Button 
+            onClick={() => setModalOpen(true)}
+            variant="secondary"
+          >
+            Compound Components
+          </Button>
+          <Button 
+            onClick={() => setModalOpen(true)}
+            variant="success"
+          >
+            Responsive Sizes
+          </Button>
+          <Button 
+            onClick={() => setFullscreenModalOpen(true)}
+            variant="warning"
+          >
+            Fullscreen Modal
+          </Button>
+        </div>
         
+        <div className="p-4 bg-surface-secondary rounded-lg mb-4">
+          <h4 className="font-medium text-text-primary mb-2">Key Features:</h4>
+          <ul className="text-sm text-text-secondary space-y-1">
+            <li>• <strong>Headless UI Integration:</strong> Robust accessibility and focus management</li>
+            <li>• <strong>Compound Components:</strong> Modal.Header, Modal.Body, Modal.Footer</li>
+            <li>• <strong>10 Size Variants:</strong> xs, sm, md, lg, xl, 2xl, 3xl, 4xl, full, fullscreen</li>
+            <li>• <strong>3 Positions:</strong> center, top, bottom</li>
+            <li>• <strong>Mobile-First:</strong> Responsive design with adaptive spacing</li>
+            <li>• <strong>Customizable:</strong> Backdrop, styling, and behavior options</li>
+          </ul>
+        </div>
+        
+        {/* Enhanced Modal with compound components */}
         <Modal
           isOpen={modalOpen}
           onClose={() => setModalOpen(false)}
-          title="Example Modal"
+          size="lg"
+          position="center"
         >
-          <div className="space-y-4">
-            <p className="text-text-secondary">
-              This is an example modal with proper focus management and accessibility features.
-            </p>
-            <div className="flex justify-end space-x-2">
+          <Modal.Header showCloseButton onClose={() => setModalOpen(false)}>
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
+                <StarIcon className="w-4 h-4 text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-text-primary">Enhanced Modal System</h3>
+                <p className="text-sm text-text-secondary">Powered by Headless UI</p>
+              </div>
+            </div>
+          </Modal.Header>
+          
+          <Modal.Body scrollable maxHeight="300px">
+            <div className="space-y-4">
+              <p className="text-text-secondary">
+                This modal demonstrates the new compound component pattern with enhanced features:
+              </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="p-3 bg-surface-secondary rounded-lg">
+                  <h4 className="font-medium text-text-primary mb-1">Accessibility</h4>
+                  <p className="text-xs text-text-secondary">WCAG AA compliant with proper focus management</p>
+                </div>
+                <div className="p-3 bg-surface-secondary rounded-lg">
+                  <h4 className="font-medium text-text-primary mb-1">Responsive</h4>
+                  <p className="text-xs text-text-secondary">Mobile-first design with adaptive behavior</p>
+                </div>
+                <div className="p-3 bg-surface-secondary rounded-lg">
+                  <h4 className="font-medium text-text-primary mb-1">Flexible</h4>
+                  <p className="text-xs text-text-secondary">9 sizes, 3 positions, custom styling</p>
+                </div>
+                <div className="p-3 bg-surface-secondary rounded-lg">
+                  <h4 className="font-medium text-text-primary mb-1">Modern</h4>
+                  <p className="text-xs text-text-secondary">Smooth animations and transitions</p>
+                </div>
+              </div>
+              
+              <div className="p-4 bg-primary-50 border border-primary-200 rounded-lg">
+                <p className="text-sm text-primary-800">
+                  <strong>New API:</strong> Use compound components for better flexibility and maintainability.
+                </p>
+              </div>
+            </div>
+          </Modal.Body>
+          
+          <Modal.Footer justify="between">
+            <Button variant="ghost" onClick={() => setModalOpen(false)}>
+              Learn More
+            </Button>
+            <div className="flex gap-2">
               <Button variant="secondary" onClick={() => setModalOpen(false)}>
                 Cancel
               </Button>
               <Button variant="primary" onClick={() => setModalOpen(false)}>
-                Confirm
+                Got It!
               </Button>
             </div>
-          </div>
+          </Modal.Footer>
         </Modal>
       </Card.Body>
     </Card>

@@ -1,24 +1,24 @@
 {
-  "generated": "2025-08-26T04:11:36.605Z",
-  "version": "9.0.0",
+  "generated": "2025-08-27T01:00:19.105Z",
+  "version": "10.0.0",
   "bundle": {
     "esm": {
-      "size": 155624,
-      "sizeFormatted": "152KB",
-      "gzipped": 30252,
-      "gzippedFormatted": "29.5KB"
+      "size": 158383,
+      "sizeFormatted": "154.7KB",
+      "gzipped": 30817,
+      "gzippedFormatted": "30.1KB"
     },
     "cjs": {
-      "size": 165372,
-      "sizeFormatted": "161.5KB",
-      "gzipped": 30937,
-      "gzippedFormatted": "30.2KB"
+      "size": 168361,
+      "sizeFormatted": "164.4KB",
+      "gzipped": 31491,
+      "gzippedFormatted": "30.8KB"
     },
     "css": {
-      "size": 49973,
-      "sizeFormatted": "48.8KB",
-      "gzipped": 8580,
-      "gzippedFormatted": "8.4KB"
+      "size": 51664,
+      "sizeFormatted": "50.5KB",
+      "gzipped": 8853,
+      "gzippedFormatted": "8.6KB"
     },
     "standalone": {
       "size": 12505,
@@ -27,14 +27,14 @@
       "gzippedFormatted": "2.8KB"
     },
     "types": {
-      "size": 83365,
-      "sizeFormatted": "81.4KB"
+      "size": 85018,
+      "sizeFormatted": "83KB"
     }
   },
   "tests": {
-    "totalTests": 666,
+    "totalTests": 677,
     "testFiles": 28,
-    "coverage": 75.05,
+    "coverage": 75.56,
     "passRate": 100
   },
   "dry": {
@@ -45,20 +45,20 @@
   },
   "code": {
     "totalFiles": 158,
-    "totalLines": 26263,
+    "totalLines": 26975,
     "complexity": 0,
     "commentRatio": 0
   },
   "scc": {
-    "estimatedCost": 453259,
-    "estimatedCostFormatted": "$453,259",
-    "scheduleMonths": 10.18,
-    "scheduleMonthsFormatted": "10.18 months",
-    "peopleRequired": 3.95,
-    "peopleRequiredFormatted": "3.95 devs",
-    "totalLines": 19100,
-    "codeLines": 14670,
-    "bytesProcessed": 539270,
+    "estimatedCost": 463646,
+    "estimatedCostFormatted": "$463,646",
+    "scheduleMonths": 10.27,
+    "scheduleMonthsFormatted": "10.27 months",
+    "peopleRequired": 4.01,
+    "peopleRequiredFormatted": "4.01 devs",
+    "totalLines": 19440,
+    "codeLines": 14990,
+    "bytesProcessed": 549218,
     "model": "COCOMO (organic)",
     "disclaimer": "Estimates based on COCOMO model analysis of production code"
   }

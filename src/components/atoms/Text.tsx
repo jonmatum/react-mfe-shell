@@ -1,6 +1,9 @@
 import { forwardRef, useMemo } from 'react';
 import {
   TextProps,
+  TextVariant,
+  TextSize,
+  TextWeight,
   TEXT_VARIANTS,
   TEXT_SIZES,
   TEXT_WEIGHTS,
@@ -34,7 +37,7 @@ import {
  * - Copy functionality
  * - Full Tailwind CSS integration
  */
-const Text = forwardRef<any, TextProps>(
+const Text = forwardRef<HTMLElement, TextProps>(
   (
     {
       children,
@@ -127,7 +130,8 @@ const Text = forwardRef<any, TextProps>(
     };
 
     // Prepare props for the component
-    const { 'aria-label': ariaLabel, ...restProps } = props as any;
+    const { 'aria-label': ariaLabel, ...restProps } =
+      props as React.HTMLAttributes<HTMLElement>;
 
     const componentProps = {
       ref,
@@ -164,8 +168,16 @@ type TextWithStatics = typeof Text & {
   lineClampOptions: typeof LINE_CLAMP_OPTIONS;
 
   // Utility methods
-  getVariantConfig: (variant: string) => any;
-  generateClasses: (props: any) => string;
+  getVariantConfig: (variant: string) =>
+    | {
+        defaultSize: TextSize;
+        defaultWeight: TextWeight;
+        defaultColor: string;
+        semanticElement?: string;
+        description: string;
+      }
+    | undefined;
+  generateClasses: (props: Partial<TextProps>) => string;
 };
 
 // Attach static properties
@@ -181,10 +193,10 @@ type TextWithStatics = typeof Text & {
 
 // Utility methods
 (Text as TextWithStatics).getVariantConfig = (variant: string) => {
-  return getVariantConfig(variant as any);
+  return getVariantConfig(variant as TextVariant);
 };
 
-(Text as TextWithStatics).generateClasses = (props: any) => {
+(Text as TextWithStatics).generateClasses = (props: Partial<TextProps>) => {
   return generateTypographyClasses(props);
 };
 

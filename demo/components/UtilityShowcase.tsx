@@ -369,7 +369,7 @@ All files          |   ${Math.round(METRICS.tests.coverage)} |    87.98 |    53.
                           variant="ghost"
                           onClick={() => {
                             navigator.clipboard.writeText(utility.example).then(() => {
-                              console.log('Example code copied to clipboard!');
+                              console.warn('Example code copied to clipboard!');
                             }).catch(() => {
                               // Fallback for older browsers
                               const textArea = document.createElement('textarea');
@@ -604,7 +604,7 @@ Component Analysis Results:
                   setActiveUtility('cli');
                   
                   // Visual feedback
-                  console.log('Navigating to CLI tools section...');
+                  console.warn('Navigating to CLI tools section...');
                 }}
               >
                 Try CLI Tools
@@ -615,7 +615,7 @@ Component Analysis Results:
                 onClick={() => {
                   // Open GitHub repository in new tab
                   window.open('https://github.com/jonmatum/react-mfe-shell#cli-tools', '_blank', 'noopener,noreferrer');
-                  console.log('Opening documentation in new tab...');
+                  console.warn('Opening documentation in new tab...');
                 }}
               >
                 View Documentation
@@ -626,7 +626,7 @@ Component Analysis Results:
                 onClick={() => {
                   // Copy installation command to clipboard
                   navigator.clipboard.writeText('npm install @jonmatum/react-mfe-shell').then(() => {
-                    console.log('✅ Installation command copied to clipboard!');
+                    console.warn('✅ Installation command copied to clipboard!');
                     // Show temporary visual feedback
                     const button = document.activeElement;
                     if (button && button.textContent) {
@@ -644,7 +644,7 @@ Component Analysis Results:
                     textArea.select();
                     document.execCommand('copy');
                     document.body.removeChild(textArea);
-                    console.log('✅ Installation command copied to clipboard! (fallback method)');
+                    console.warn('✅ Installation command copied to clipboard! (fallback method)');
                   });
                 }}
               >

@@ -9,6 +9,7 @@ import { generateTypographyClasses } from '../../utils/typography';
  * Specialized component for displaying code and monospace text.
  * Supports both inline and block code with syntax highlighting preparation.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Code = forwardRef<any, CodeProps>(
   (
     {

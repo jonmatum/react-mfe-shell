@@ -636,10 +636,16 @@ export function generateHeadingClasses(level: 1 | 2 | 3 | 4 | 5 | 6): {
 /**
  * Validate typography props
  */
-export function validateTypographyProps(props: Record<string, any>): string[] {
+export function validateTypographyProps(
+  props: Record<string, unknown>
+): string[] {
   const errors: string[] = [];
 
-  if (props.variant && !(props.variant in typographyVariants)) {
+  if (
+    props.variant &&
+    typeof props.variant === 'string' &&
+    !(props.variant in typographyVariants)
+  ) {
     errors.push(`Invalid variant: ${props.variant}`);
   }
 

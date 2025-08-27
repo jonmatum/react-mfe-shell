@@ -421,9 +421,18 @@ export interface QuoteProps extends Omit<TextProps, 'variant' | 'as'> {
   as?: 'blockquote' | 'q' | 'div';
 }
 
-export interface ModalProps extends BaseComponentProps {
+export interface ModalProps extends Omit<BaseComponentProps, 'children'> {
   isOpen: boolean;
   onClose: () => void;
+  children: React.ReactNode;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | 'full';
+  position?: 'center' | 'top' | 'bottom';
+  closeOnBackdropClick?: boolean;
+  showBackdrop?: boolean;
+  backdropClassName?: string;
+  panelClassName?: string;
+  initialFocus?: React.MutableRefObject<HTMLElement | null>;
+  /** @deprecated Use Modal.Header compound component instead */
   title?: string;
 }
 

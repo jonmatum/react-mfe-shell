@@ -15,7 +15,7 @@ import { generateTypographyClasses } from '../../utils/typography';
  * - Responsive typography
  * - Advanced text handling
  */
-const Paragraph = forwardRef<any, ParagraphProps>(
+const Paragraph = forwardRef<HTMLParagraphElement, ParagraphProps>(
   (
     {
       children,

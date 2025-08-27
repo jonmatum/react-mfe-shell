@@ -42,7 +42,7 @@ export const FormMoleculesShowcase: React.FC = () => {
   const [formData, setFormData] = useState<FormData>(INITIAL_FORM_DATA);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const updateField = (field: keyof FormData, value: any) => {
+  const updateField = (field: keyof FormData, value: FormData[keyof FormData]) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     
     // Clear error when user starts typing
@@ -51,7 +51,7 @@ export const FormMoleculesShowcase: React.FC = () => {
     }
   };
 
-  const validateField = (name: string, value: any): string => {
+  const validateField = (name: string, value: string | string[] | boolean): string => {
     switch (name) {
       case 'name':
         return value.length < 2 ? 'Name must be at least 2 characters' : '';
@@ -66,7 +66,7 @@ export const FormMoleculesShowcase: React.FC = () => {
     }
   };
 
-  const handleInputChange = (name: string, value: any) => {
+  const handleInputChange = (name: string, value: string | string[] | boolean) => {
     updateField(name as keyof FormData, value);
     const error = validateField(name, value);
     setErrors(prev => ({ ...prev, [name]: error }));
@@ -100,7 +100,7 @@ export const FormMoleculesShowcase: React.FC = () => {
 interface ContactFormCardProps {
   formData: FormData;
   errors: Record<string, string>;
-  onInputChange: (name: string, value: any) => void;
+  onInputChange: (name: string, value: string | string[] | boolean) => void;
 }
 
 const ContactFormCard: React.FC<ContactFormCardProps> = ({ formData, errors, onInputChange }) => {
@@ -193,7 +193,7 @@ const ContactFormCard: React.FC<ContactFormCardProps> = ({ formData, errors, onI
 
 interface FormComponentsGridProps {
   formData: FormData;
-  onUpdateField: (field: keyof FormData, value: any) => void;
+  onUpdateField: (field: keyof FormData, value: FormData[keyof FormData]) => void;
 }
 
 const FormComponentsGrid: React.FC<FormComponentsGridProps> = ({ formData, onUpdateField }) => {
