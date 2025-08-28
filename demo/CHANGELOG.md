@@ -1,5 +1,12 @@
 # Changelog
 
+## [8.0.1](https://github.com/jonmatum/react-mfe-shell/compare/demo-v8.0.0...demo-v8.0.1) (2025-08-28)
+
+
+### Bug Fixes
+
+* improve modal scrolling, input styling, and form functionality ([3e7da4a](https://github.com/jonmatum/react-mfe-shell/commit/3e7da4ace98b201fbcdb8e1644aabd5f66b6ab69))
+
 ## [8.0.0](https://github.com/jonmatum/react-mfe-shell/compare/demo-v7.0.0...demo-v8.0.0) (2025-08-27)
 
 
