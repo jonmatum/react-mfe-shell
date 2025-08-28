@@ -10,7 +10,7 @@ describe('Input', () => {
       render(<Input />);
       const input = screen.getByRole('textbox');
       expect(input).toBeInTheDocument();
-      expect(input).toHaveClass('border-border-primary');
+      expect(input).toHaveClass('border-primary');
     });
 
     it('renders with label', () => {
@@ -100,7 +100,7 @@ describe('Input', () => {
     it('renders default variant correctly', () => {
       render(<Input variant='default' />);
       const input = screen.getByRole('textbox');
-      expect(input).toHaveClass('border-border-primary');
+      expect(input).toHaveClass('border-primary');
     });
 
     it('renders error variant correctly', () => {
