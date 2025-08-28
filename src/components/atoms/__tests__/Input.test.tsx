@@ -406,6 +406,18 @@ describe('Input', () => {
       expect(input).not.toHaveClass('pl-10', 'pr-10');
     });
 
+    it('handles icon padding for different sizes', () => {
+      // Small size
+      const { rerender } = render(<Input size="sm" leftIcon={<span>@</span>} rightIcon={<span>👁</span>} />);
+      let input = screen.getByRole('textbox');
+      expect(input).toHaveClass('pl-10', 'pr-10');
+
+      // Large size  
+      rerender(<Input size="lg" leftIcon={<span>@</span>} rightIcon={<span>👁</span>} />);
+      input = screen.getByRole('textbox');
+      expect(input).toHaveClass('pl-12', 'pr-12');
+    });
+
     it('combines multiple CSS classes correctly', () => {
       const { container } = render(
         <Input className='custom-class' variant='error' size='lg' disabled />
@@ -419,6 +431,23 @@ describe('Input', () => {
       expect(input).toHaveClass('px-4');
       expect(input).toHaveClass('py-3');
       expect(input).toHaveClass('bg-surface-disabled');
+    });
+
+    it('handles both description and error with proper aria-describedby', () => {
+      render(
+        <Input
+          id="test-input"
+          description="Helper text"
+          error="Error message"
+        />
+      );
+      
+      const input = screen.getByRole('textbox');
+      // Both description and error IDs should be in aria-describedby
+      expect(input).toHaveAttribute('aria-describedby', 'test-input-description test-input-error');
+      // But description should not be visible when error is present
+      expect(screen.queryByText('Helper text')).not.toBeInTheDocument();
+      expect(screen.getByText('Error message')).toBeInTheDocument();
     });
   });
 });

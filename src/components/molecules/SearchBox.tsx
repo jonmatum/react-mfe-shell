@@ -3,7 +3,6 @@ import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { SearchBoxProps } from '../../types';
 import { classNames, generateId } from '../../utils';
 import Input from '../atoms/Input';
-import Button from '../atoms/Button';
 import LoadingSpinner from '../atoms/LoadingSpinner';
 
 /**
@@ -123,12 +122,6 @@ const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(
       };
     }, [debounceTimer]);
 
-    const sizeClasses = {
-      sm: 'h-8',
-      md: 'h-10',
-      lg: 'h-12',
-    };
-
     const iconSizeClasses = {
       sm: 'w-4 h-4',
       md: 'w-5 h-5',
@@ -140,7 +133,7 @@ const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(
 
     // Build right icon based on state
     const rightIcon = (
-      <div className='flex items-center gap-1'>
+      <div className='flex items-center gap-1 pointer-events-auto'>
         {loading && (
           <LoadingSpinner
             size={size === 'sm' ? 'xs' : size === 'lg' ? 'sm' : 'xs'}
@@ -148,19 +141,19 @@ const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(
           />
         )}
         {showClear && (
-          <Button
-            variant='ghost'
-            size='xs'
+          <button
+            type='button'
             onClick={handleClear}
             disabled={disabled}
             className={classNames(
-              'p-0 hover:bg-transparent focus:ring-1 focus:ring-primary-500',
-              sizeClasses[size]
+              'p-1 rounded hover:bg-surface-secondary focus:outline-none focus:ring-1 focus:ring-primary-500 transition-colors',
+              'text-text-secondary hover:text-text-primary',
+              disabled && 'opacity-50 cursor-not-allowed'
             )}
             aria-label='Clear search'
           >
             <XMarkIcon className={iconSizeClasses[size]} />
-          </Button>
+          </button>
         )}
       </div>
     );
@@ -171,7 +164,7 @@ const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(
           ref={ref}
           id={fieldId}
           name={name}
-          type='search'
+          type='text'
           value={internalValue}
           onChange={handleChange}
           onKeyPress={handleKeyPress}

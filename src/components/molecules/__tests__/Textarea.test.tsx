@@ -368,4 +368,49 @@ describe('Textarea', () => {
     const textarea = screen.getByRole('textbox');
     expect(textarea).toHaveValue('');
   });
+
+  it('handles auto-resize with no minRows/maxRows constraints', async () => {
+    const user = userEvent.setup();
+    
+    Object.defineProperty(HTMLTextAreaElement.prototype, 'scrollHeight', {
+      configurable: true,
+      get() {
+        return 100; // Fixed height for test
+      },
+    });
+
+    render(<Textarea autoResize onChange={mockOnChange} />);
+
+    const textarea = screen.getByRole('textbox');
+    await user.type(textarea, 'Some content');
+
+    await waitFor(() => {
+      expect(textarea.style.height).toBeTruthy();
+    });
+  });
+
+  it('handles auto-resize when content shrinks', async () => {
+    const user = userEvent.setup();
+    
+    let contentHeight = 100;
+    Object.defineProperty(HTMLTextAreaElement.prototype, 'scrollHeight', {
+      configurable: true,
+      get() {
+        return contentHeight;
+      },
+    });
+
+    render(<Textarea autoResize value="Initial long content" onChange={mockOnChange} />);
+
+    const textarea = screen.getByRole('textbox');
+    
+    // Simulate content shrinking
+    contentHeight = 50;
+    await user.clear(textarea);
+    await user.type(textarea, 'Short');
+
+    await waitFor(() => {
+      expect(textarea.style.height).toBeTruthy();
+    });
+  });
 });

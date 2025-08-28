@@ -35,7 +35,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     // Fixed variant classes to match test expectations
     const variantClasses = {
       default:
-        'border-border-primary bg-surface-primary text-text-primary placeholder-text-secondary focus:border-primary-500 focus:ring-primary-500',
+        'border-primary bg-surface-primary text-text-primary placeholder-text-secondary focus:border-primary-500 focus:ring-primary-500',
       error:
         'border-danger-500 bg-surface-primary text-text-primary placeholder-text-secondary focus:border-danger-500 focus:ring-danger-500',
       success:

@@ -441,6 +441,66 @@ export default {
     // Hover states for colored text
     'hover:text-primary-700',
     'dark:hover:text-primary-300',
+    
+    // Input component classes - ensure these are always generated
+    'border-border-primary',
+    'bg-surface-primary',
+    'text-text-primary',
+    'placeholder-text-secondary',
+    'focus:border-primary-500',
+    'focus:ring-primary-500',
+    'border-danger-500',
+    'focus:border-danger-500',
+    'focus:ring-danger-500',
+    'border-success-500',
+    'focus:border-success-500',
+    'focus:ring-success-500',
+    'bg-surface-disabled',
+    'bg-surface-secondary',
+    
+    // Input size and padding classes
+    'px-3',
+    'py-2',
+    'px-4',
+    'py-2.5',
+    'py-3',
+    'pl-10',
+    'pr-10',
+    'pl-11',
+    'pr-11',
+    'pl-12',
+    'pr-12',
+    
+    // Textarea resize classes
+    'resize-none',
+    'resize-y',
+    'resize-x',
+    'resize',
+    'overflow-hidden',
+    
+    // Icon positioning classes
+    'absolute',
+    'inset-y-0',
+    'left-0',
+    'right-0',
+    'left-3',
+    'right-3',
+    'flex',
+    'items-center',
+    'pointer-events-none',
+    'pointer-events-auto',
+    
+    // Focus ring classes
+    'focus:outline-none',
+    'focus:ring-2',
+    'focus:ring-offset-2',
+    'focus:ring-1',
+    
+    // Transition classes
+    'transition-colors',
+    'duration-200',
   ],
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
 };

@@ -172,7 +172,7 @@ const ContactFormCard: React.FC<ContactFormCardProps> = ({ formData, errors, onI
         >
           <Textarea
             value={formData.message}
-            onChange={(e) => onInputChange('message', e.target.value)}
+            onChange={(value) => onInputChange('message', value)}
             placeholder="Your message here..."
             rows={4}
           />

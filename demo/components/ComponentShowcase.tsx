@@ -130,7 +130,7 @@ const ComponentShowcase: React.FC = () => {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center space-x-2 px-4 py-2 rounded-md transition-colors ${
                     activeTab === tab.id
-                      ? 'bg-primary-600 text-white'
+                      ? 'bg-primary-600 text-white dark:bg-primary-500 dark:text-white'
                       : 'text-text-secondary hover:text-text-primary'
                   }`}
                 >
@@ -179,7 +179,7 @@ const ComponentShowcase: React.FC = () => {
       >
         <Modal.Header showCloseButton onClose={() => setFullscreenModalOpen(false)}>
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-warning-500 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-warning-500 dark:bg-warning-400 rounded-full flex items-center justify-center">
               <Icon name="ArrowsPointingOutIcon" className="w-4 h-4 text-white" />
             </div>
             <div>
@@ -241,8 +241,8 @@ const ComponentShowcase: React.FC = () => {
               </div>
             </div>
             
-            <div className="p-6 bg-primary-50 border border-primary-200 rounded-lg">
-              <h4 className="font-medium text-primary-800 mb-2">Implementation Example</h4>
+            <div className="p-6 bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-700 rounded-lg">
+              <h4 className="font-medium text-primary-800 dark:text-primary-200 mb-2">Implementation Example</h4>
               <Code className="text-sm">
 {`<Modal
   isOpen={isFullscreenOpen}
@@ -783,11 +783,11 @@ const MoleculesTab: React.FC<MoleculesTabProps> = ({ setModalOpen, setFullscreen
           </div>
         </div>
         
-        <div className="p-4 bg-primary-50 border border-primary-200 rounded-lg mb-4">
-          <p className="text-sm text-primary-800">
+        <div className="p-4 bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-700 rounded-lg mb-4">
+          <p className="text-sm text-primary-800 dark:text-primary-200">
             <strong>New API:</strong> The Modal now uses compound components for better flexibility. 
-            The old <code className="bg-primary-100 px-1 rounded">title</code> prop is deprecated 
-            in favor of <code className="bg-primary-100 px-1 rounded">Modal.Header</code>.
+            The old <code className="bg-primary-100 dark:bg-primary-800 px-1 rounded">title</code> prop is deprecated 
+            in favor of <code className="bg-primary-100 dark:bg-primary-800 px-1 rounded">Modal.Header</code>.
           </p>
         </div>
         
@@ -833,8 +833,8 @@ const MoleculesTab: React.FC<MoleculesTabProps> = ({ setModalOpen, setFullscreen
           </div>
         </div>
         
-        <div className="p-4 bg-primary-50 border border-primary-200 rounded-lg">
-          <p className="text-sm text-primary-800">
+        <div className="p-4 bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-700 rounded-lg">
+          <p className="text-sm text-primary-800 dark:text-primary-200">
             <strong>Form Showcase:</strong> See the dedicated Form Molecules section below 
             for interactive examples of all form components with validation and real-world usage patterns.
           </p>
@@ -1010,7 +1010,7 @@ const InteractiveTab: React.FC<InteractiveTabProps> = ({
         >
           <Modal.Header showCloseButton onClose={() => setModalOpen(false)}>
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
+              <div className="w-8 h-8 bg-primary-500 dark:bg-primary-400 rounded-full flex items-center justify-center">
                 <StarIcon className="w-4 h-4 text-white" />
               </div>
               <div>
@@ -1020,10 +1020,10 @@ const InteractiveTab: React.FC<InteractiveTabProps> = ({
             </div>
           </Modal.Header>
           
-          <Modal.Body scrollable maxHeight="300px">
+          <Modal.Body scrollable>
             <div className="space-y-4">
               <p className="text-text-secondary">
-                This modal demonstrates the new compound component pattern with enhanced features:
+                This modal demonstrates the enhanced compound component pattern with improved scrolling:
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1032,22 +1032,43 @@ const InteractiveTab: React.FC<InteractiveTabProps> = ({
                   <p className="text-xs text-text-secondary">WCAG AA compliant with proper focus management</p>
                 </div>
                 <div className="p-3 bg-surface-secondary rounded-lg">
+                  <h4 className="font-medium text-text-primary mb-1">Enhanced Scrolling</h4>
+                  <p className="text-xs text-text-secondary">Content grows indefinitely with proper scrolling</p>
+                </div>
+                <div className="p-3 bg-surface-secondary rounded-lg">
+                  <h4 className="font-medium text-text-primary mb-1">Flexible Layout</h4>
+                  <p className="text-xs text-text-secondary">Flex-based layout with optimal space distribution</p>
+                </div>
+                <div className="p-3 bg-surface-secondary rounded-lg">
                   <h4 className="font-medium text-text-primary mb-1">Responsive</h4>
                   <p className="text-xs text-text-secondary">Mobile-first design with adaptive behavior</p>
                 </div>
-                <div className="p-3 bg-surface-secondary rounded-lg">
-                  <h4 className="font-medium text-text-primary mb-1">Flexible</h4>
-                  <p className="text-xs text-text-secondary">9 sizes, 3 positions, custom styling</p>
-                </div>
-                <div className="p-3 bg-surface-secondary rounded-lg">
-                  <h4 className="font-medium text-text-primary mb-1">Modern</h4>
-                  <p className="text-xs text-text-secondary">Smooth animations and transitions</p>
-                </div>
               </div>
               
-              <div className="p-4 bg-primary-50 border border-primary-200 rounded-lg">
-                <p className="text-sm text-primary-800">
-                  <strong>New API:</strong> Use compound components for better flexibility and maintainability.
+              <div className="space-y-3">
+                <h4 className="font-medium text-text-primary">Scrolling Demonstration</h4>
+                <p className="text-sm text-text-secondary">
+                  The modal now allows content to grow without height constraints. 
+                  Scroll down to see more content:
+                </p>
+                
+                {/* Generate content to demonstrate scrolling */}
+                {Array.from({ length: 12 }, (_, i) => (
+                  <div key={i} className="p-3 border border-border-primary rounded-md">
+                    <h5 className="font-medium text-text-primary">Feature {i + 1}</h5>
+                    <p className="text-sm text-text-secondary">
+                      This demonstrates the improved scrolling behavior. The modal body 
+                      can now accommodate large amounts of content while maintaining 
+                      proper scrolling and fixed header/footer positioning.
+                    </p>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="p-4 bg-success-50 dark:bg-success-900/20 border border-success-200 dark:border-success-700 rounded-lg">
+                <p className="text-sm text-success-800 dark:text-success-200">
+                  <strong>Fixed:</strong> Modal content can now grow indefinitely without height constraints, 
+                  providing better UX for large content with proper scrolling behavior.
                 </p>
               </div>
             </div>

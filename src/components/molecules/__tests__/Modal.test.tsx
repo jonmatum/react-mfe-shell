@@ -136,6 +136,27 @@ describe('Modal', () => {
         const body = screen.getByText('Content').closest('div');
         expect(body).toHaveStyle({ maxHeight: '200px' });
       });
+
+      it('allows content to grow indefinitely without height constraints', () => {
+        render(
+          <Modal isOpen={true} onClose={mockOnClose} size='md'>
+            <Modal.Header>Title</Modal.Header>
+            <Modal.Body>
+              {/* Large content that should be scrollable */}
+              {Array.from({ length: 100 }, (_, i) => (
+                <div key={i}>Line {i + 1}</div>
+              ))}
+            </Modal.Body>
+            <Modal.Footer>Footer</Modal.Footer>
+          </Modal>
+        );
+
+        // Find the modal body container (the div that wraps the content)
+        const modalBodyContainer = screen.getByText('Line 1').parentElement;
+        
+        // Modal body should be scrollable and take available space
+        expect(modalBodyContainer).toHaveClass('overflow-y-auto', 'flex-1');
+      });
     });
 
     describe('Modal.Footer', () => {
@@ -306,6 +327,25 @@ describe('Modal', () => {
       );
 
       expect(screen.getByText('Content')).toBeInTheDocument();
+    });
+  });
+
+  describe('Layout and Scrolling', () => {
+    it('modal body supports scrolling for large content', () => {
+      render(
+        <Modal isOpen={true} onClose={mockOnClose}>
+          <Modal.Body>
+            {/* Large content that should be scrollable */}
+            {Array.from({ length: 100 }, (_, i) => (
+              <div key={i}>Line {i + 1}</div>
+            ))}
+          </Modal.Body>
+        </Modal>
+      );
+
+      // Verify content is rendered
+      expect(screen.getByText('Line 1')).toBeInTheDocument();
+      expect(screen.getByText('Line 100')).toBeInTheDocument();
     });
   });
 

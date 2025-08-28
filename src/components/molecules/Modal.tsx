@@ -65,7 +65,7 @@ const sizeClasses = {
   '2xl': 'max-w-2xl',
   '3xl': 'max-w-3xl',
   '4xl': 'max-w-4xl',
-  full: 'max-w-[calc(100vw-1rem)] sm:max-w-[calc(100vw-2rem)] max-h-[calc(100vh-1rem)] sm:max-h-[calc(100vh-2rem)]',
+  full: 'max-w-[calc(100vw-1rem)] sm:max-w-[calc(100vw-2rem)]',
   fullscreen: 'w-screen h-screen max-w-none max-h-none',
 } as const;
 
@@ -157,8 +157,8 @@ const Modal = React.memo<ModalProps>(
           >
             <div
               className={classNames(
-                'flex min-h-full',
-                size === 'fullscreen' ? 'p-0' : 'p-2 sm:p-4',
+                'flex',
+                size === 'fullscreen' ? 'min-h-full p-0' : 'min-h-full p-2 sm:p-4',
                 size === 'fullscreen'
                   ? 'items-stretch justify-stretch'
                   : positionClasses[position]
@@ -191,17 +191,18 @@ const Modal = React.memo<ModalProps>(
               >
                 <Dialog.Panel
                   className={classNames(
-                    'w-full transform overflow-hidden',
+                    'w-full transform',
                     size === 'fullscreen' ? 'rounded-none' : 'rounded-lg',
                     'bg-surface-primary shadow-xl transition-all',
                     'border border-border-primary',
+                    'flex flex-col', // Enable flex layout for proper scrolling
                     sizeClasses[size],
-                    // Responsive adjustments
+                    // Height constraints only for fullscreen and full sizes
                     size === 'fullscreen'
                       ? 'h-full max-h-none'
                       : size === 'full'
-                        ? 'max-h-[calc(100vh-1rem)] sm:max-h-[calc(100vh-4rem)] h-full sm:h-auto'
-                        : 'max-h-[calc(100vh-1rem)] sm:max-h-[calc(100vh-4rem)]',
+                        ? 'max-h-[calc(100vh-1rem)] sm:max-h-[calc(100vh-4rem)]'
+                        : '', // Remove height constraints for other sizes
                     panelClassName,
                     className
                   )}
@@ -247,6 +248,7 @@ const ModalHeader = React.memo<ModalHeaderProps>(
           'flex items-center justify-between',
           'px-4 py-3 sm:px-6 sm:py-4 border-b border-border-primary',
           'bg-surface-primary',
+          'flex-shrink-0', // Prevent header from shrinking
           className
         )}
         {...props}
@@ -282,7 +284,7 @@ const ModalHeader = React.memo<ModalHeaderProps>(
 );
 
 /**
- * Modal Body component with optional scrolling
+ * Modal Body component with proper scrolling behavior
  */
 const ModalBody = React.memo<ModalBodyProps>(
   ({ children, scrollable = true, maxHeight, className, ...props }) => {
@@ -290,6 +292,7 @@ const ModalBody = React.memo<ModalBodyProps>(
       <div
         className={classNames(
           'px-4 py-3 sm:px-6 sm:py-4',
+          'flex-1', // Take available space in flex container
           scrollable ? 'overflow-y-auto' : 'overflow-hidden',
           'bg-surface-primary text-text-primary',
           className
@@ -321,6 +324,7 @@ const ModalFooter = React.memo<ModalFooterProps>(
           'flex items-center gap-2 sm:gap-3',
           'px-4 py-3 sm:px-6 sm:py-4 border-t border-border-primary',
           'bg-surface-secondary',
+          'flex-shrink-0', // Prevent footer from shrinking
           justifyClasses[justify],
           // Stack buttons on mobile if there are many
           'flex-col-reverse sm:flex-row',
