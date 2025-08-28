@@ -32,7 +32,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const baseClasses =
       'block w-full rounded-md border transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
 
-    // Fixed variant classes to match test expectations
+    // Variant classes that match Textarea styling approach
     const variantClasses = {
       default:
         'border-border-primary bg-surface-primary text-text-primary placeholder-text-secondary focus:border-primary-500 focus:ring-primary-500',
@@ -50,19 +50,14 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
     const disabledClasses = disabled
       ? 'opacity-50 cursor-not-allowed bg-surface-disabled'
-      : '';
+      : 'hover:border-border-hover';
 
     const readOnlyClasses = readOnly
       ? 'bg-surface-secondary cursor-default'
       : '';
 
-    // Determine the effective variant
-    const getEffectiveVariant = () => {
-      if (error) return 'error';
-      return variant;
-    };
-
-    const effectiveVariant = getEffectiveVariant();
+    // Determine the effective variant (error takes precedence)
+    const effectiveVariant = error ? 'error' : variant;
 
     const iconPadding = {
       left: leftIcon
@@ -132,6 +127,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             disabled={disabled}
             readOnly={readOnly}
             placeholder={placeholder}
+            autoComplete="off"
+            spellCheck={type === 'text' ? 'false' : undefined}
+            autoCapitalize={type === 'email' || type === 'url' ? 'none' : undefined}
             aria-describedby={
               classNames(descriptionId, errorId).trim() || undefined
             }
